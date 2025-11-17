@@ -1,4 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "pillow",
+#     "requests",
+# ]
+# ///
 """
 Download and stitch Serebii map tiles into a single image
 
@@ -6,7 +13,7 @@ Usage:
 1. First, visit Serebii's map and pan around to see what tiles load
 2. Check the Network tab to see the tile pattern (e.g., tile_1-0-0.png to tile_1-10-10.png)
 3. Update the TILE_RANGE settings below
-4. Run: python3 scripts/download-and-stitch.py
+4. Run: ./scripts/download-and-stitch.py (or: uv run scripts/download-and-stitch.py)
 """
 
 import os

@@ -23,15 +23,14 @@ Scripts to download Serebii's map tiles and stitch them into a single image.
      }
      ```
 
-3. **Install dependencies**:
+3. **Run the script** (dependencies are automatically managed by uv):
    ```bash
-   pip install Pillow requests
+   ./scripts/download-and-stitch.py
+   # or
+   uv run scripts/download-and-stitch.py
    ```
 
-4. **Run the script**:
-   ```bash
-   python3 scripts/download-and-stitch.py
-   ```
+   Note: No manual dependency installation needed! The script uses uv's inline script metadata.
 
 5. **Enable the map** in `js/map.js`:
    - Uncomment line 31:
