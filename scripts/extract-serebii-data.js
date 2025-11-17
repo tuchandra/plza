@@ -117,6 +117,34 @@ function extractMapLabels() {
   return labels;
 }
 
+// Inspect all global variables to find Serebii's data
+function inspectGlobalVariables() {
+  console.log("\n=== INSPECTING GLOBAL VARIABLES ===");
+
+  // Common variable names Serebii might use
+  const possibleVars = [
+    'markers', 'markerData', 'mapMarkers', 'pokemonData',
+    'spawnerData', 'alphaData', 'zoneData', 'zones',
+    'tableData', 'locationData', 'areaData'
+  ];
+
+  console.log("Checking for data variables:");
+  possibleVars.forEach(varName => {
+    if (window[varName] !== undefined) {
+      console.log(`✓ Found: window.${varName}`);
+      console.log(`  Type: ${typeof window[varName]}`);
+      console.log(`  Value:`, window[varName]);
+    }
+  });
+
+  // Also check map object properties
+  if (window.map) {
+    console.log("\nMap object properties:");
+    console.log("  _layers count:", Object.keys(window.map._layers).length);
+    console.log("  Map properties:", Object.keys(window.map));
+  }
+}
+
 // Extract all marker data by inspecting the Leaflet map layers
 function extractFromLeafletLayers() {
   console.log("\n=== EXTRACTING FROM LEAFLET LAYERS ===");
@@ -133,36 +161,67 @@ function extractFromLeafletLayers() {
     labels: []
   };
 
+  const layers = Object.values(window.map._layers);
+  console.log(`Found ${layers.length} total layers`);
+
   // Iterate through all Leaflet layers
-  Object.values(window.map._layers).forEach((layer) => {
+  layers.forEach((layer, idx) => {
     // Check for markers with coordinates
     if (layer._latlng) {
       const coords = layer._latlng;
 
-      // Try to determine marker type from icon or options
-      const markerType = layer.options?.className || layer._icon?.className || '';
+      // Get all available info about the marker
+      const info = {
+        lat: coords.lat,
+        lng: coords.lng,
+        icon: layer.options?.icon,
+        className: layer.options?.className,
+        title: layer.options?.title,
+        alt: layer.options?.alt,
+        _iconUrl: layer.options?.icon?.options?.iconUrl,
+        layerType: layer.constructor.name
+      };
 
-      if (markerType.includes('alpha')) {
+      // Try to determine marker type from icon URL or class
+      const iconUrl = info._iconUrl || '';
+      const className = info.className || '';
+
+      if (iconUrl.includes('alpha') || className.includes('alpha')) {
         data.alphas.push({
           x: coords.lat,
           y: coords.lng,
-          pokemon: { id: null, name: "Unknown" }
+          pokemon: { id: null, name: info.title || "Unknown" }
         });
-      } else if (markerType.includes('spawn')) {
+      } else if (iconUrl.includes('poke') || iconUrl.includes('spawn') || className.includes('spawn')) {
         data.spawners.push({
           x: coords.lat,
           y: coords.lng,
-          pokemon: []
+          pokemon: [],
+          _debug: info
         });
       }
     }
 
     // Check for polygons (wild zones)
     if (layer._latlngs && Array.isArray(layer._latlngs)) {
+      const bounds = layer._latlngs[0] ? layer._latlngs[0].map(ll => [ll.lat, ll.lng]) : [];
       data.zones.push({
-        name: layer.options?.name || "Unknown Zone",
-        bounds: layer._latlngs[0].map(ll => [ll.lat, ll.lng])
+        name: layer.options?.name || layer.options?.title || `Zone ${data.zones.length + 1}`,
+        bounds: bounds
       });
+    }
+
+    // Check for tooltips/popups (labels)
+    if (layer._tooltip || layer._popup) {
+      const tooltip = layer._tooltip || layer._popup;
+      if (tooltip._content && layer._latlng) {
+        data.labels.push({
+          x: layer._latlng.lat,
+          y: layer._latlng.lng,
+          name: tooltip._content,
+          type: 'area'
+        });
+      }
     }
   });
 
@@ -170,6 +229,7 @@ function extractFromLeafletLayers() {
   console.log(`- ${data.spawners.length} spawners`);
   console.log(`- ${data.alphas.length} alphas`);
   console.log(`- ${data.zones.length} zones`);
+  console.log(`- ${data.labels.length} labels`);
 
   return data;
 }
@@ -206,12 +266,18 @@ function extractAllData() {
   return data;
 }
 
-// Auto-run
-console.log("Run extractAllData() to extract all map data from Serebii");
-console.log("Or run individual functions:");
+// Auto-run inspection
+console.log("SEREBII DATA EXTRACTION");
+console.log("======================\n");
+console.log("Step 1: Run inspectGlobalVariables() to find data sources");
+console.log("Step 2: Run extractAllData() to extract all map data");
+console.log("\nOther functions:");
 console.log("- extractSpawners()");
 console.log("- extractStaticAlphas()");
 console.log("- extractWildZones()");
 console.log("- extractMapLabels()");
 console.log("\nTo download extracted data:");
 console.log("downloadJSON(extractAllData(), 'serebii-data.json')");
+console.log("\n" + "=".repeat(50));
+
+inspectGlobalVariables();
