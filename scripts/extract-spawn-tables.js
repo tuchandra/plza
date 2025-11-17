@@ -27,18 +27,13 @@ function extractTableIDs() {
 
       // Check if this is a Pokemon spawner (pokeball icon)
       if (iconUrl.includes('pokeball')) {
-        // Serebii markers have a table ID for the spawn data popup
-        // It's usually in the onclick handler or custom properties
-        const tableId = layer.options?.tableId ||
-                       layer._tableId ||
-                       layer.options?.spawnTable ||
-                       null;
+        // Serebii stores the table ID in layer.options.tableID (capital ID!)
+        const tableId = layer.options?.tableID;
 
         spawners.push({
           x: coords.lng,
           y: coords.lat,
-          tableId: tableId,
-          layer: layer // Keep reference for inspection
+          tableId: tableId
         });
       }
     }
