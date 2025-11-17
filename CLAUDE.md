@@ -1,0 +1,77 @@
+# Claude Instructions for PLZA Project
+
+## Project Overview
+
+Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumiose City featuring precise spawner data from Serebii.
+
+**Tech Stack:** Leaflet.js, vanilla JS/HTML/CSS, no server required
+
+**Deploy Target:** GitHub Pages (static site)
+
+## Key Principles
+
+### 1. Verify Assumptions
+- **Never assume something works** - always test and verify
+- Read files before editing them
+- Check git status before committing
+- Inspect output after running commands
+
+### 2. Be Concise
+- Short, direct responses
+- No unnecessary explanations
+- Focus on action over narration
+- Avoid emoji unless explicitly requested
+
+### 3. Data-Driven Development
+- Serebii is the **source of truth** for game data
+- Precision matters: use exact coordinates, spawn rates, and Pokemon data
+- No generic placeholders - use real data or mark as TODO
+
+## What Makes This Project Different
+
+**Emulate Serebii's data precision:**
+- Individual spawner points (not zones)
+- Exact spawn percentages per Pokemon
+- Real Pokemon sprites (via PokeAPI)
+
+**Avoid these patterns from other maps:**
+- Large/ugly icons (keep markers small and clean)
+- Generic "monster" icons (always use actual Pokemon sprites)
+- Cluttered UI with one-time story events
+- Poor filtering systems
+- Zone-based spawns instead of precise points
+
+**Adopt game8's UX feature:**
+- Click benches/fly points to show spawn radius circles
+
+## Git Workflow
+
+- Commit directly to main (this is a vibe project)
+- Write clear commit messages
+- Test before committing
+
+## Current Architecture
+
+```
+/data
+  spawners.json    - Pokemon spawn points (1028 total, needs Pokemon data)
+  benches.json     - 50 rest points with 100px radius
+  fly_points.json  - 10 fast travel points with 150px radius
+
+/js
+  map.js          - Leaflet map initialization and logic
+
+/images
+  lumiose_map.png - Stitched 1024x1024 map from Serebii tiles
+  /tiles          - Individual 256x256 Serebii tiles
+
+/scripts
+  download-and-stitch.py  - Python script to grab tiles and stitch
+  download-map-tiles.js   - Browser console helper for tile detection
+```
+
+## Coordinate System
+
+Serebii uses: `x: 0-500, y: -500 to 0`
+
+Map bounds configured to match this system.
