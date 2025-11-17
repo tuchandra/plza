@@ -17,9 +17,10 @@ Usage:
 """
 
 import os
+import time
+
 import requests
 from PIL import Image
-import time
 
 # Configuration - UPDATE THESE based on what you see in Network tab
 BASE_URL = "https://www.serebii.net/pokearth/lumiosecity/map"
@@ -29,25 +30,27 @@ TILE_SIZE = 256  # Most tile systems use 256x256
 # UPDATE THESE RANGES based on Network tab inspection
 # Look at the tile URLs and find the min/max x and y values
 TILE_RANGE = {
-    'x_min': 0,
-    'x_max': 3,  # Update this!
-    'y_min': 0,
-    'y_max': 3,  # Update this!
+    "x_min": 0,
+    "x_max": 3,  # Update this!
+    "y_min": 0,
+    "y_max": 3,  # Update this!
 }
+
 
 def download_tiles():
     """Download all tiles from Serebii"""
-    os.makedirs('images/tiles', exist_ok=True)
+    os.makedirs("images/tiles", exist_ok=True)
 
     tiles = []
-    total = (TILE_RANGE['x_max'] - TILE_RANGE['x_min'] + 1) * \
-            (TILE_RANGE['y_max'] - TILE_RANGE['y_min'] + 1)
+    total = (TILE_RANGE["x_max"] - TILE_RANGE["x_min"] + 1) * (
+        TILE_RANGE["y_max"] - TILE_RANGE["y_min"] + 1
+    )
 
     print(f"Downloading {total} tiles...")
     downloaded = 0
 
-    for x in range(TILE_RANGE['x_min'], TILE_RANGE['x_max'] + 1):
-        for y in range(TILE_RANGE['y_min'], TILE_RANGE['y_max'] + 1):
+    for x in range(TILE_RANGE["x_min"], TILE_RANGE["x_max"] + 1):
+        for y in range(TILE_RANGE["y_min"], TILE_RANGE["y_max"] + 1):
             tile_name = f"tile_{ZOOM_LEVEL}-{x}-{y}.png"
             tile_path = f"images/tiles/{tile_name}"
             tile_url = f"{BASE_URL}/{tile_name}"
@@ -60,7 +63,7 @@ def download_tiles():
             try:
                 response = requests.get(tile_url, timeout=10)
                 if response.status_code == 200:
-                    with open(tile_path, 'wb') as f:
+                    with open(tile_path, "wb") as f:
                         f.write(response.content)
                     tiles.append((x, y, tile_path))
                     downloaded += 1
@@ -73,6 +76,7 @@ def download_tiles():
             time.sleep(0.1)  # Be nice to Serebii's servers
 
     return tiles
+
 
 def stitch_tiles(tiles):
     """Stitch downloaded tiles into a single image"""
@@ -95,7 +99,7 @@ def stitch_tiles(tiles):
     print(f"  Canvas size: {width}x{height}")
 
     # Create blank canvas
-    canvas = Image.new('RGB', (width, height), (240, 240, 240))
+    canvas = Image.new("RGB", (width, height), (240, 240, 240))
 
     # Paste tiles
     for x, y, path in tiles:
@@ -108,12 +112,13 @@ def stitch_tiles(tiles):
             print(f"  Error pasting tile {x},{y}: {e}")
 
     # Save
-    output_path = 'images/lumiose_map.png'
-    canvas.save(output_path, 'PNG')
+    output_path = "images/lumiose_map.png"
+    canvas.save(output_path, "PNG")
     print(f"\n✓ Saved to {output_path}")
     print(f"  Dimensions: {width}x{height}")
 
     return width, height
+
 
 def update_config(width, height):
     """Update the map configuration with the correct bounds"""
@@ -121,7 +126,8 @@ def update_config(width, height):
     print(f"Update CONFIG.mapBounds to:")
     print(f"  mapBounds: [[-{height}, 0], [0, {width}]]")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     print("Serebii Map Tile Downloader & Stitcher")
     print("=" * 50)
     print("\n⚠️  IMPORTANT: Update TILE_RANGE in this script first!")
