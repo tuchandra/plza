@@ -200,19 +200,61 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
 function createSpawnerPopup(spawner: Spawner): string {
   let html = '<div class="spawner-popup">';
   html += '<h4>Pokemon Spawner</h4>';
+
+  // Show respawn time if available
+  if (spawner.respawnTime) {
+    html += `<div class="respawn-time">Respawn: ${spawner.respawnTime}s</div>`;
+  }
+
+  if (spawner.pokemon.length === 0) {
+    html += '<p class="no-data">No spawn data available</p>';
+    html += '</div>';
+    return html;
+  }
+
   html += '<ul class="pokemon-list">';
 
   spawner.pokemon.forEach((poke) => {
-    const spriteUrl = getPokemonSprite(poke.id);
-    html += `
-            <li class="pokemon-item">
-                <img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />
-                <div class="pokemon-info">
-                    <div class="pokemon-name">${poke.name}</div>
-                    <div class="pokemon-chance">${poke.chance}% spawn rate</div>
-                </div>
-            </li>
-        `;
+    const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+
+    html += `<li class="pokemon-item">`;
+    html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />`;
+    html += `<div class="pokemon-info">`;
+    html += `<div class="pokemon-name">${poke.name}</div>`;
+
+    // Level range
+    html += `<div class="pokemon-level">Lv. ${poke.levelMin}-${poke.levelMax}</div>`;
+
+    // Types
+    if (poke.types.length > 0) {
+      html += `<div class="pokemon-types">`;
+      poke.types.forEach((type) => {
+        html += `<span class="type-badge type-${type}">${type}</span>`;
+      });
+      html += `</div>`;
+    }
+
+    // Rarity
+    if (poke.rarity !== undefined) {
+      html += `<div class="pokemon-rarity">${poke.rarity}% spawn rate</div>`;
+    }
+
+    // Alpha chance
+    if (poke.alphaChance > 0) {
+      html += `<div class="pokemon-alpha">⭐ ${poke.alphaChance}% Alpha`;
+      if (poke.alphaLevelMin && poke.alphaLevelMax) {
+        html += ` (Lv. ${poke.alphaLevelMin}-${poke.alphaLevelMax})`;
+      }
+      html += `</div>`;
+    }
+
+    // Time of day
+    if (poke.timeOfDay) {
+      html += `<div class="pokemon-time">🕐 ${poke.timeOfDay}</div>`;
+    }
+
+    html += `</div>`;
+    html += `</li>`;
   });
 
   html += '</ul></div>';

@@ -85,7 +85,8 @@ body {
 
 .leaflet-popup-content {
   margin: 0;
-  min-width: 200px;
+  min-width: 240px;
+  max-width: 320px;
 }
 
 /* Spawner Popup Styles */
@@ -130,11 +131,85 @@ body {
   font-weight: 600;
   font-size: 13px;
   color: #212529;
+  margin-bottom: 2px;
 }
 
-.pokemon-chance {
+.pokemon-level {
+  font-size: 11px;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.pokemon-types {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+/* Pokemon type colors */
+.type-normal { background-color: #A8A878; }
+.type-fire { background-color: #F08030; }
+.type-water { background-color: #6890F0; }
+.type-electric { background-color: #F8D030; color: #333; }
+.type-grass { background-color: #78C850; }
+.type-ice { background-color: #98D8D8; }
+.type-fighting { background-color: #C03028; }
+.type-poison { background-color: #A040A0; }
+.type-ground { background-color: #E0C068; }
+.type-flying { background-color: #A890F0; }
+.type-psychic { background-color: #F85888; }
+.type-bug { background-color: #A8B820; }
+.type-rock { background-color: #B8A038; }
+.type-ghost { background-color: #705898; }
+.type-dragon { background-color: #7038F8; }
+.type-dark { background-color: #705848; }
+.type-steel { background-color: #B8B8D0; }
+.type-fairy { background-color: #EE99AC; }
+
+.pokemon-rarity {
+  font-size: 11px;
+  color: #6c757d;
+  margin-bottom: 2px;
+}
+
+.pokemon-alpha {
+  font-size: 11px;
+  color: #dc3545;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.pokemon-time {
+  font-size: 11px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.respawn-time {
   font-size: 12px;
   color: #6c757d;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.no-data {
+  font-size: 12px;
+  color: #6c757d;
+  font-style: italic;
+  margin: 8px 0;
 }
 
 /* Bench/Fly Point Popup */
