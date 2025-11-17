@@ -172,12 +172,6 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
     map.removeLayer(activeRadiusCircles[existingIndex].circle);
     activeRadiusCircles.splice(existingIndex, 1);
   } else {
-    // Clear all existing radius circles first
-    activeRadiusCircles.forEach((rc) => {
-      map.removeLayer(rc.circle);
-    });
-    activeRadiusCircles = [];
-
     // Add new radius
     const radius = location.radius || 100;
     const circle = L.circle([location.y, location.x], {
@@ -191,6 +185,9 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
     });
 
     circle.addTo(map);
+    // Send circle to back so markers appear on top
+    circle.bringToBack();
+
     activeRadiusCircles.push({
       x: location.x,
       y: location.y,
