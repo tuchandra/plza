@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "x": 500,
+    "y": 300,
+    "radius": 150,
+    "name": "Central Plaza"
+  },
+  {
+    "id": 2,
+    "x": 700,
+    "y": 600,
+    "radius": 120,
+    "name": "North District"
+  }
+]

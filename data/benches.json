@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "x": 500,
+    "y": 500,
+    "radius": 100,
+    "name": "Central Bench"
+  },
+  {
+    "id": 2,
+    "x": 350,
+    "y": 450,
+    "radius": 80,
+    "name": "Park Bench"
+  },
+  {
+    "id": 3,
+    "x": 650,
+    "y": 550,
+    "radius": 90,
+    "name": "Plaza Bench"
+  }
+]

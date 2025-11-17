@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Legends: Z-A - Interactive Map</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Filter Sidebar -->
+        <div class="sidebar">
+            <h2>Filters</h2>
+
+            <div class="filter-section">
+                <h3>Map Features</h3>
+                <label>
+                    <input type="checkbox" id="filter-spawners" checked>
+                    Pokemon Spawners
+                </label>
+                <label>
+                    <input type="checkbox" id="filter-benches" checked>
+                    Benches
+                </label>
+                <label>
+                    <input type="checkbox" id="filter-fly-points" checked>
+                    Fly Points
+                </label>
+            </div>
+
+            <div class="filter-section">
+                <h3>Pokemon Types</h3>
+                <div id="type-filters">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Search Pokemon</h3>
+                <input type="text" id="pokemon-search" placeholder="Search by name...">
+            </div>
+        </div>
+
+        <!-- Map Container -->
+        <div id="map"></div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/map.js"></script>
+</body>
+</html>
