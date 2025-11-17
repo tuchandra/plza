@@ -201,6 +201,9 @@ function createSpawnerPopup(spawner: Spawner): string {
   let html = '<div class="spawner-popup">';
   html += '<h4>Pokemon Spawner</h4>';
 
+  // Debug info
+  html += `<div class="debug-info">ID: ${spawner.id} | X: ${spawner.x.toFixed(1)}, Y: ${spawner.y.toFixed(1)}</div>`;
+
   // Show respawn time if available
   if (spawner.respawnTime) {
     html += `<div class="respawn-time">Respawn: ${spawner.respawnTime}s</div>`;
@@ -208,6 +211,7 @@ function createSpawnerPopup(spawner: Spawner): string {
 
   if (spawner.pokemon.length === 0) {
     html += '<p class="no-data">No spawn data available</p>';
+    html += '<p class="debug-hint">Possible reasons: variant Pokemon forms, parsing failed, or no data from Serebii</p>';
     html += '</div>';
     return html;
   }

@@ -89,8 +89,9 @@ function parseSpawnTable(id: number, html: string): ParsedSpawn | null {
 
       const fullColumnHtml = columnData.join('\n');
 
-      // Extract Pokemon name and number
-      const imgMatch = fullColumnHtml.match(/\/legendsz-a\/pokemon\/(\d+)\.png[^>]*alt="([^"]+)"/);
+      // Extract Pokemon name and number (handle both normal and variant sprites)
+      // Variants: 669-w.png (Flabébé white), 678-f.png (Pyroar female), etc.
+      const imgMatch = fullColumnHtml.match(/\/legendsz-a\/pokemon\/(\d+)(?:-[a-z])?\.png[^>]*alt="([^"]+)"/);
       if (!imgMatch) continue;
 
       const pokedexNumber = parseInt(imgMatch[1]);
