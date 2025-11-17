@@ -30,9 +30,9 @@ TILE_SIZE = 256  # Most tile systems use 256x256
 # Look at the tile URLs and find the min/max x and y values
 TILE_RANGE = {
     'x_min': 0,
-    'x_max': 10,  # Update this!
+    'x_max': 3,  # Update this!
     'y_min': 0,
-    'y_max': 10,  # Update this!
+    'y_max': 3,  # Update this!
 }
 
 def download_tiles():
