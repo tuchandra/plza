@@ -1,63 +1,20 @@
 [
   {
     "id": 1,
-    "x": 400,
-    "y": 300,
-    "pokemon": [
-      {
-        "id": 1,
-        "name": "Bulbasaur",
-        "chance": 30
-      },
-      {
-        "id": 4,
-        "name": "Charmander",
-        "chance": 25
-      },
-      {
-        "id": 7,
-        "name": "Squirtle",
-        "chance": 45
-      }
-    ]
+    "x": 237.2755,
+    "y": -473.149625,
+    "pokemon": []
   },
   {
     "id": 2,
-    "x": 600,
-    "y": 400,
-    "pokemon": [
-      {
-        "id": 25,
-        "name": "Pikachu",
-        "chance": 60
-      },
-      {
-        "id": 133,
-        "name": "Eevee",
-        "chance": 40
-      }
-    ]
+    "x": 160.6875,
+    "y": -444.330625,
+    "pokemon": []
   },
   {
     "id": 3,
-    "x": 300,
-    "y": 600,
-    "pokemon": [
-      {
-        "id": 147,
-        "name": "Dratini",
-        "chance": 20
-      },
-      {
-        "id": 148,
-        "name": "Dragonair",
-        "chance": 15
-      },
-      {
-        "id": 129,
-        "name": "Magikarp",
-        "chance": 65
-      }
-    ]
+    "x": 227.340375,
+    "y": -398.002875,
+    "pokemon": []
   }
 ]

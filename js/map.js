@@ -1,7 +1,8 @@
 // Configuration
 const CONFIG = {
     mapImage: 'images/lumiose_map.png', // You'll need to provide this
-    mapBounds: [[0, 0], [1000, 1000]], // Adjust based on your map image size
+    // Serebii's coordinate system: x: ~19-491, y: ~-500 to -19
+    mapBounds: [[-500, 0], [0, 500]], // [southwest, northeast]
     pokespriteBase: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
 };
 
@@ -31,7 +32,8 @@ function initMap() {
     // L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
     map.fitBounds(imageBounds);
-    map.setView([500, 500], 0);
+    // Center view on Lumiose City (roughly the center of coordinates)
+    map.setView([-250, 250], -1);
 
     // Load data and create markers
     loadData();
