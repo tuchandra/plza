@@ -172,6 +172,12 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
     map.removeLayer(activeRadiusCircles[existingIndex].circle);
     activeRadiusCircles.splice(existingIndex, 1);
   } else {
+    // Clear all existing radius circles first
+    activeRadiusCircles.forEach((rc) => {
+      map.removeLayer(rc.circle);
+    });
+    activeRadiusCircles = [];
+
     // Add new radius
     const radius = location.radius || 100;
     const circle = L.circle([location.y, location.x], {
@@ -181,17 +187,7 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
       color: '#27ae60',
       weight: 2,
       opacity: 0.6,
-    });
-
-    // Make the circle clickable to remove itself
-    circle.on('click', () => {
-      const index = activeRadiusCircles.findIndex(
-        (r) => r.x === location.x && r.y === location.y
-      );
-      if (index >= 0) {
-        map.removeLayer(activeRadiusCircles[index].circle);
-        activeRadiusCircles.splice(index, 1);
-      }
+      interactive: false, // Don't block clicks to markers underneath
     });
 
     circle.addTo(map);
