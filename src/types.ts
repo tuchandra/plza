@@ -1,13 +1,23 @@
 export interface Pokemon {
-  id: number;
   name: string;
-  chance: number;
+  pokedexNumber: number;
+  types: string[];
+  levelMin: number;
+  levelMax: number;
+  rarity?: number;
+  timeOfDay?: string;
+  alphaChance: number;
+  alphaLevelMin?: number;
+  alphaLevelMax?: number;
 }
 
 export interface Spawner {
-  id?: number;
+  id: number;
   x: number;
   y: number;
+  respawnTime?: number;
+  spawnsInRadiusMin?: number;
+  spawnsInRadiusMax?: number;
   pokemon: Pokemon[];
 }
 
