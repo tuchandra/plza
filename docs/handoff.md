@@ -3,37 +3,56 @@
 ## Goal
 Interactive map for Pokemon Legends: Z-A deployed on GitHub Pages. Emulate Serebii's data precision with game8's radius UX in a fast, minimal interface.
 
-## Current Status: Deployed to GitHub Pages
+## Recent Session (Nov 16, 2024): Deployment System Cleanup
 
-### Completed
-- ✅ **TypeScript migration** - Converted to src/map.ts with proper types
-- ✅ **Bun build setup** - Dev server with hot reload + production build
-- ✅ **Project restructure** - Organized into src/ and public/ folders
-- ✅ **GitHub Pages deployment** - Live at tusharc.dev/plza via GitHub Actions
-- ✅ Leaflet.js map setup with typed interfaces
-- ✅ Downloaded & stitched Serebii tiles → public/images/lumiose_map.png (1024x1024)
-- ✅ Imported 50 benches from Serebii (public/data/benches.json)
-- ✅ Imported 10 fly points from Serebii (public/data/fly_points.json)
-- ✅ Spawner coordinate structure (1028 points, Pokemon data empty)
-- ✅ Click bench/fly point → toggle radius circle
-- ✅ Pokemon search filter (dims non-matching spawners)
-- ✅ Feature toggle filters (spawners/benches/fly points)
-- ✅ Popup system with Pokemon sprites from PokeAPI
-- ✅ Map overlay enabled (src/map.ts)
+**Problem:** Build system was misconfigured - CLAUDE.md documented a non-existent `dist/` output directory, and deployment setup was unclear.
 
-### Remaining Work
+**Actions taken:**
+1. **Investigated actual build behavior** - `bun run build` outputs to `public/main.js`, not `dist/`
+2. **Fixed documentation** - Updated CLAUDE.md to reflect reality (public/ contains both static files checked into git AND built main.js that's gitignored)
+3. **Verified GitHub Actions workflow** - Already correct, uploads `public/` folder after building
+4. **Confirmed GitHub Pages source** - Switched from "Deploy from a branch" (legacy) to "GitHub Actions" (workflow)
+5. **Cleaned up legacy files** - Removed server.js and js/map.js (replaced by TypeScript), moved 34MB of reference images to docs/images/
 
-#### Critical
-1. **Populate Pokemon data** (public/data/spawners.json)
-   - 1028 spawners have coords, all have empty `pokemon: []` arrays
-   - Need: `{id, name, chance}` for each Pokemon per spawner
-   - Source: Serebii map popups
-   - Consider: build scraper or manual extraction script
+**Key insight:** The `public/` folder serves dual purpose - contains static assets checked into git, plus receives built JavaScript from `bun run build`. This is why main.js is gitignored but the folder itself is committed.
 
-#### Nice-to-Have
-- Type filters (UI exists at public/index.html:40-43, no implementation)
+**Deployment verification:**
+```bash
+gh api repos/tuchandra/plza/pages | grep build_type
+# Should return: "build_type":"workflow"
+```
+
+Site now deploys automatically to tusharc.dev/plza on every push to main.
+
+## What's Next
+
+**Critical:** Populate Pokemon data in `public/data/spawners.json`
+- 1028 spawners exist with coordinates but empty `pokemon: []` arrays
+- Need `{id, name, chance}` for each Pokemon per spawner
+- Source: Serebii map popups
+- Consider building a scraper or manual extraction script
+
+**Nice-to-have:**
+- Implement type filters (UI exists, no logic)
 - Performance optimization for 1028 spawners
 - Add source maps for debugging
+
+## Things to Remember
+
+**Build system:**
+- `bun run build` outputs to `public/main.js` (not dist/)
+- The public/ folder contains BOTH static files (committed) AND built JS (gitignored)
+- Never assume - always verify by running commands and checking output
+
+**Deployment:**
+- GitHub Pages MUST be set to "GitHub Actions" source (not "Deploy from a branch")
+- Workflow at `.github/workflows/deploy.yml` runs on every push to main
+- Builds with Bun, uploads entire public/ folder
+
+**Reference images:**
+- Design screenshots live in `docs/images/` (game8, serebii, etc.)
+- These are NOT deployed, just for design reference
+- See docs/images/README.md for what each screenshot shows
 
 ## Key Files
 - src/main.ts - TypeScript entry point
