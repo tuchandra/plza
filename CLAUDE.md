@@ -74,6 +74,11 @@ Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumios
 /scripts
   download-and-stitch.py  - Python script to grab tiles and stitch
   download-map-tiles.js   - Browser console helper for tile detection
+  parse-spawn-tables.ts   - Parse raw Serebii spawn HTML into structured JSON
+
+/data (gitignored - raw extraction data)
+  spawn-tables-complete.json  - Raw HTML spawn tables from Serebii
+  parsed-spawn-data.json      - Structured Pokemon spawn data
 
 ```
 
@@ -113,3 +118,80 @@ gh run list --limit 5
 Serebii uses: `x: 0-500, y: -500 to 0`
 
 Map bounds configured to match this system.
+
+## Data Extraction from Serebii
+
+### Spawn Tables (COMPLETED)
+
+**Problem:** Serebii shows ~1,500 spawn points on their map. Clicking each one loads a spawn table via:
+```
+https://www.serebii.net/pokearth/lumiosecity/spawntable/{id}.txt
+```
+
+**Solution:** Two-phase extraction process to minimize load on Serebii and preserve raw data.
+
+**Phase 1: Fetch raw HTML (browser console)**
+```javascript
+// Run on serebii.net to fetch all spawn tables with rate limiting
+const extractSpawnTables = async (startId = 1, endId = 1500, delayMs = 300) => {
+  const results = {};
+  for (let id = startId; id <= endId; id++) {
+    const response = await fetch(`https://www.serebii.net/pokearth/lumiosecity/spawntable/${id}.txt`);
+    if (response.ok) {
+      results[id] = await response.text();
+    }
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+  return { results, metadata: { startId, endId, count: Object.keys(results).length } };
+};
+
+// Download as JSON
+const downloadResults = (data, filename) => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+};
+
+// Test first, then run full extraction
+let data = await extractSpawnTables(1, 10, 200);
+downloadResults(data, 'spawn-tables-test.json');
+// After verifying: await extractSpawnTables(1, 1500, 300);
+```
+
+**Phase 2: Parse HTML to structured data**
+```bash
+bun run scripts/parse-spawn-tables.ts spawn-tables-complete.json parsed-spawn-data.json
+```
+
+**Results:**
+- 1,085 spawn points with Pokemon data
+- 1,323 Pokemon entries across all spawns
+- 159 unique Pokemon species
+- Full data: levels, types, rarity %, alpha chances, time-of-day restrictions
+- Raw HTML preserved in `spawn-tables-complete.json` for future re-parsing
+
+**Data structure:**
+```json
+{
+  "id": 44,
+  "respawnTime": 300,
+  "spawnsInRadiusMin": 1,
+  "spawnsInRadiusMax": 2,
+  "pokemon": [
+    {
+      "name": "Dedenne",
+      "pokedexNumber": 702,
+      "types": ["electric", "fairy"],
+      "levelMin": 16,
+      "levelMax": 18,
+      "rarity": 10,
+      "alphaChance": 20,
+      "alphaLevelMin": 26,
+      "alphaLevelMax": 28
+    }
+  ]
+}
+```

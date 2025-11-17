@@ -5,3 +5,7 @@ public/main.js.map
 *.log
 .DS_Store
 serebii-data*.json
+
+# Raw spawn data extraction files (keep parser script, ignore data)
+spawn-tables-*.json
+parsed-spawn-data.json

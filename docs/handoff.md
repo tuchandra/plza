@@ -3,7 +3,52 @@
 ## Goal
 Interactive map for Pokemon Legends: Z-A deployed on GitHub Pages. Emulate Serebii's data precision with game8's radius UX in a fast, minimal interface.
 
-## Recent Session (Nov 16, 2024): Deployment System Cleanup
+## Recent Session (Nov 17, 2024): Complete Spawn Data Extraction
+
+**Problem:** Had 1,514 spawn coordinates but no Pokemon data (all empty arrays). Serebii requires clicking each spawner to load its spawn table.
+
+**Solution:** Two-phase extraction to preserve raw data and minimize Serebii load.
+
+**Phase 1 - Browser console script:**
+- Fetches all spawn tables from `https://www.serebii.net/pokearth/lumiosecity/spawntable/{id}.txt`
+- Rate-limited (200-300ms between requests) to be respectful
+- Tested on first 10 spawns before running full extraction
+- Downloads raw HTML as JSON for preservation
+
+**Phase 2 - TypeScript parser:**
+- Created `scripts/parse-spawn-tables.ts` to parse HTML tables
+- Handles complex patterns:
+  - Single Pokemon (100% width columns)
+  - Multiple Pokemon (25%, 50% width columns)
+  - Decimal rarity percentages (e.g., 35.71%)
+  - Optional fields (time-of-day, rarity)
+  - Alpha Pokemon with separate level ranges
+- Parses each column independently to avoid cross-contamination
+
+**Results achieved:**
+- ✅ **1,085 spawn points** with complete Pokemon data
+- ✅ **1,323 Pokemon entries** across all spawns
+- ✅ **159 unique Pokemon species**
+- ✅ **209 spawns** with rarity percentages
+- ✅ **171 spawns** with time-of-day restrictions
+- ✅ **423 spawns** with alpha Pokemon (>0% chance)
+
+**Files created:**
+- `spawn-tables-complete.json` - Raw HTML (55K+ lines, preserved for future re-parsing)
+- `parsed-spawn-data.json` - Clean structured JSON ready for map integration
+- `scripts/parse-spawn-tables.ts` - Reusable parser with full type definitions
+
+**Script cleanup:**
+- Removed 6 obsolete extraction scripts (old failed attempts)
+- Kept only working scripts: download-and-stitch.py, download-map-tiles.js, parse-spawn-tables.ts
+
+**Next steps:**
+1. Merge `parsed-spawn-data.json` with existing `spawners.json` coordinates
+2. Update map to display Pokemon data in popups
+3. Add filtering by Pokemon species/type
+4. Extract bench and fly point locations (currently demo data)
+
+## Previous Session (Nov 16, 2024): Deployment System Cleanup
 
 **Problem:** Build system was misconfigured - CLAUDE.md documented a non-existent `dist/` output directory, and deployment setup was unclear.
 
@@ -29,9 +74,10 @@ Site now deploys automatically to tusharc.dev/plza on every push to main.
 **Critical data extraction from Serebii (https://www.serebii.net/pokearth/lumiosecity/):**
 
 1. **Pokemon spawner data** - `public/data/spawners.json`
-   - ✅ Extracted 1514 spawner coordinates
-   - ❌ Pokemon data still empty (need to click each spawner on Serebii to get spawn tables)
-   - Each spawner needs: `{id, name, chance}[]` for Pokemon list
+   - ✅ Extracted 1,514 spawner coordinates
+   - ✅ Extracted complete Pokemon data (1,085 spawns with data)
+   - ⚠️ **TODO:** Merge `parsed-spawn-data.json` with existing coordinate data
+   - ⚠️ **TODO:** Update map UI to show Pokemon in popups
 
 2. **Static Alpha locations** - `public/data/static_alphas.json`
    - ✅ Extracted 54 alpha coordinates
@@ -49,14 +95,9 @@ Site now deploys automatically to tusharc.dev/plza on every push to main.
    - Should include: Bleu, Jaune, Magenta, Rouge, Vert districts
 
 **Extraction tools:**
-- ✅ `scripts/extract-serebii-data.js` - extracts coordinates from Leaflet layers
-- ✅ `scripts/process-serebii-data.js` - cleans and splits extracted data
+- ✅ `scripts/parse-spawn-tables.ts` - parses raw Serebii HTML into structured JSON
+- ✅ Browser console fetch script (documented in CLAUDE.md)
 - TypeScript interfaces in `src/types.ts`
-
-**Next steps:**
-- Build script to auto-click spawners and extract Pokemon data
-- Identify alpha Pokemon (manual or from Serebii page source)
-- Find zone/label data in page source (not in Leaflet layers)
 
 5. **Benches** - `public/data/benches.json`
    - ⚠️ Current data is demo/invented (50 entries)
