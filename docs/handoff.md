@@ -29,33 +29,48 @@ Site now deploys automatically to tusharc.dev/plza on every push to main.
 **Critical data extraction from Serebii (https://www.serebii.net/pokearth/lumiosecity/):**
 
 1. **Pokemon spawner data** - `public/data/spawners.json`
-   - Currently has 3 sample coordinates
-   - Need to extract ALL spawner locations from Serebii with Pokemon data
-   - Run `scripts/extract-serebii-data.js` in browser console
-   - Click each marker to populate Pokemon data
+   - ✅ Extracted 1514 spawner coordinates
+   - ❌ Pokemon data still empty (need to click each spawner on Serebii to get spawn tables)
+   - Each spawner needs: `{id, name, chance}[]` for Pokemon list
 
 2. **Static Alpha locations** - `public/data/static_alphas.json`
-   - Guaranteed Alpha Pokemon spawns (different from random spawners)
-   - Extract from "Guaranteed Alphas" markers on Serebii map
+   - ✅ Extracted 54 alpha coordinates
+   - ❌ Pokemon names/IDs unknown (all showing "Unknown")
+   - Need to identify which Pokemon each alpha is
 
 3. **Wild zone boundaries** - `public/data/wild_zones.json`
-   - 20 different zones with labels
-   - Need polygon coordinates for zone boundaries
+   - ❌ Not found in Leaflet layers (0 zones extracted)
+   - May need manual extraction or different approach
+   - Serebii page mentions 20 zones
 
 4. **Map labels** - `public/data/map_labels.json`
-   - District names: Bleu, Jaune, Magenta, Rouge, Vert
-   - Building and area labels
-   - Coordinates for text placement
+   - ❌ Not found in Leaflet layers (0 labels extracted)
+   - May need manual extraction from page source
+   - Should include: Bleu, Jaune, Magenta, Rouge, Vert districts
 
-**Implementation:**
-- TypeScript interfaces already added in `src/types.ts`
-- Extraction script ready at `scripts/extract-serebii-data.js`
-- Placeholder JSON files created in `public/data/`
-- Map logic will need updates to render zones, alphas, and labels
+**Extraction tools:**
+- ✅ `scripts/extract-serebii-data.js` - extracts coordinates from Leaflet layers
+- ✅ `scripts/process-serebii-data.js` - cleans and splits extracted data
+- TypeScript interfaces in `src/types.ts`
+
+**Next steps:**
+- Build script to auto-click spawners and extract Pokemon data
+- Identify alpha Pokemon (manual or from Serebii page source)
+- Find zone/label data in page source (not in Leaflet layers)
+
+5. **Benches** - `public/data/benches.json`
+   - ⚠️ Current data is demo/invented (50 entries)
+   - Need to extract real bench locations from Serebii
+   - May be in extracted data under different marker type
+
+6. **Fly points** - `public/data/fly_points.json`
+   - ⚠️ Current data is demo/invented (10 entries)
+   - Need to extract real fly point locations from Serebii
+   - May be in extracted data under different marker type
 
 **Nice-to-have:**
 - Implement type filters (UI exists, no logic)
-- Performance optimization for 1028 spawners
+- Performance optimization for spawner markers
 - Add source maps for debugging
 
 ## Things to Remember
