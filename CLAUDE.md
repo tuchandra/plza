@@ -60,9 +60,12 @@ Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumios
 
 /public
   /data
-    spawners.json    - Pokemon spawn points (1028 total, needs Pokemon data)
-    benches.json     - 50 rest points with 100px radius
-    fly_points.json  - 10 fast travel points with 150px radius
+    spawners.json       - Pokemon spawn points (1028 coords, needs Pokemon data)
+    static_alphas.json  - Guaranteed Alpha Pokemon locations (needs extraction)
+    wild_zones.json     - 20 zone boundaries with labels (needs extraction)
+    map_labels.json     - District/area labels (Bleu, Jaune, etc.) (needs extraction)
+    benches.json        - 50 rest points with 100px radius ✓
+    fly_points.json     - 10 fast travel points with 150px radius ✓
   /images
     lumiose_map.png - Stitched 1024x1024 map from Serebii tiles
     /tiles          - Individual 256x256 Serebii tiles

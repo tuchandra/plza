@@ -1,6 +1,25 @@
-# Map Tile Download Scripts
+# Serebii Data Extraction Scripts
 
-Scripts to download Serebii's map tiles and stitch them into a single image.
+Scripts to extract map tiles and game data from Serebii's Pokemon Legends Z-A map.
+
+## Data Extraction (extract-serebii-data.js)
+
+Extract Pokemon spawners, static alphas, wild zones, and map labels.
+
+**Usage:**
+1. Open https://www.serebii.net/pokearth/lumiosecity/
+2. Open DevTools Console (F12)
+3. Copy and paste `scripts/extract-serebii-data.js`
+4. Run `extractAllData()` to extract all data
+5. Download with `downloadJSON(data, 'serebii-data.json')`
+
+**What it extracts:**
+- Pokemon spawner coordinates with spawn tables
+- Static Alpha Pokemon locations
+- Wild zone boundaries (20 zones)
+- Map labels (districts: Bleu, Jaune, Magenta, Rouge, Vert)
+
+## Map Tile Download
 
 ## Quick Start (Python - Recommended)
 

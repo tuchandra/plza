@@ -26,11 +26,31 @@ Site now deploys automatically to tusharc.dev/plza on every push to main.
 
 ## What's Next
 
-**Critical:** Populate Pokemon data in `public/data/spawners.json`
-- 1028 spawners exist with coordinates but empty `pokemon: []` arrays
-- Need `{id, name, chance}` for each Pokemon per spawner
-- Source: Serebii map popups
-- Consider building a scraper or manual extraction script
+**Critical data extraction from Serebii (https://www.serebii.net/pokearth/lumiosecity/):**
+
+1. **Pokemon spawner data** - `public/data/spawners.json`
+   - 1028 spawners have coordinates, need Pokemon lists with spawn rates
+   - Run `scripts/extract-serebii-data.js` in browser console
+   - Click each marker to populate Pokemon data
+
+2. **Static Alpha locations** - `public/data/static_alphas.json`
+   - Guaranteed Alpha Pokemon spawns (different from random spawners)
+   - Extract from "Guaranteed Alphas" markers on Serebii map
+
+3. **Wild zone boundaries** - `public/data/wild_zones.json`
+   - 20 different zones with labels
+   - Need polygon coordinates for zone boundaries
+
+4. **Map labels** - `public/data/map_labels.json`
+   - District names: Bleu, Jaune, Magenta, Rouge, Vert
+   - Building and area labels
+   - Coordinates for text placement
+
+**Implementation:**
+- TypeScript interfaces already added in `src/types.ts`
+- Extraction script ready at `scripts/extract-serebii-data.js`
+- Placeholder JSON files created in `public/data/`
+- Map logic will need updates to render zones, alphas, and labels
 
 **Nice-to-have:**
 - Implement type filters (UI exists, no logic)

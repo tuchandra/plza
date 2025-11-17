@@ -11,6 +11,30 @@ export interface Spawner {
   pokemon: Pokemon[];
 }
 
+export interface StaticAlpha {
+  id?: number;
+  x: number;
+  y: number;
+  pokemon: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface WildZone {
+  id?: number;
+  name: string;
+  bounds: [number, number][];  // Polygon coordinates
+}
+
+export interface MapLabel {
+  id?: number;
+  x: number;
+  y: number;
+  name: string;
+  type: 'district' | 'building' | 'area';
+}
+
 export interface Bench {
   id?: number;
   x: number;
