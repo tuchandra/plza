@@ -29,7 +29,8 @@ Site now deploys automatically to tusharc.dev/plza on every push to main.
 **Critical data extraction from Serebii (https://www.serebii.net/pokearth/lumiosecity/):**
 
 1. **Pokemon spawner data** - `public/data/spawners.json`
-   - 1028 spawners have coordinates, need Pokemon lists with spawn rates
+   - Currently has 3 sample coordinates
+   - Need to extract ALL spawner locations from Serebii with Pokemon data
    - Run `scripts/extract-serebii-data.js` in browser console
    - Click each marker to populate Pokemon data
 

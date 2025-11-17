@@ -60,7 +60,7 @@ Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumios
 
 /public
   /data
-    spawners.json       - Pokemon spawn points (1028 coords, needs Pokemon data)
+    spawners.json       - Pokemon spawn points (3 samples, needs full extraction)
     static_alphas.json  - Guaranteed Alpha Pokemon locations (needs extraction)
     wild_zones.json     - 20 zone boundaries with labels (needs extraction)
     map_labels.json     - District/area labels (Bleu, Jaune, etc.) (needs extraction)

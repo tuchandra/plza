@@ -6,7 +6,7 @@ This directory contains the game data for Pokemon Legends: Z-A from Serebii.
 
 - **benches.json**: ✅ Complete (50 benches)
 - **fly_points.json**: ✅ Complete (10 fly points)
-- **spawners.json**: ⚠️ Has coordinates (1028), needs Pokemon data
+- **spawners.json**: ⚠️ Has 3 samples, needs full extraction from Serebii
 - **static_alphas.json**: ❌ Empty - needs data extraction
 - **wild_zones.json**: ❌ Empty - needs zone boundaries (20 zones)
 - **map_labels.json**: ❌ Empty - needs district/area labels
