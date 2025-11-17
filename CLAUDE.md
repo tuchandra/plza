@@ -72,12 +72,11 @@ Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumios
   download-and-stitch.py  - Python script to grab tiles and stitch
   download-map-tiles.js   - Browser console helper for tile detection
 
-/dist             - Bun build output (deployed to GitHub Pages)
 ```
 
 **Dev:** `bun run dev` (Bun's dev server with HMR)
-**Build:** `bun run build` (bundles TypeScript → dist/)
-**Deploy:** GitHub Actions → dist/ to gh-pages branch
+**Build:** `bun run build` (bundles TypeScript → public/main.js)
+**Deploy:** GitHub Actions → public/ to GitHub Pages
 
 ## Coordinate System
 
