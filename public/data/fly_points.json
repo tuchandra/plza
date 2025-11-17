@@ -1,0 +1,12 @@
+[
+  {"id": 1, "x": 266.5, "y": -30, "radius": 150, "name": "Central Lumiose"},
+  {"id": 2, "x": 351, "y": -141, "radius": 150, "name": "North District"},
+  {"id": 3, "x": 464, "y": -170, "radius": 150, "name": "Northeast"},
+  {"id": 4, "x": 264.25, "y": -207.5, "radius": 150, "name": "West District"},
+  {"id": 5, "x": 169.5, "y": -241.75, "radius": 150, "name": "Southwest"},
+  {"id": 6, "x": 47, "y": -170, "radius": 150, "name": "Far West"},
+  {"id": 7, "x": 131.5, "y": -442.5, "radius": 150, "name": "South Gate"},
+  {"id": 8, "x": 383, "y": -442.5, "radius": 150, "name": "Southeast Gate"},
+  {"id": 9, "x": 247.5, "y": -398, "radius": 150, "name": "Southern District"},
+  {"id": 10, "x": 74.5, "y": -131, "radius": 150, "name": "Northwest"}
+]
