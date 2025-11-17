@@ -45,7 +45,7 @@ export function initMap(): void {
 
   map.fitBounds(imageBounds);
   // Center view on Lumiose City (roughly the center of coordinates)
-  map.setView([-250, 250], -1);
+  map.setView([-250, 250], 0.5);
 
   // Load data and create markers
   loadData();
@@ -123,15 +123,6 @@ function createBenchMarkers(benches: Bench[]): void {
       fillOpacity: 0.9,
     });
 
-    // Create popup
-    const popupContent = `
-            <div class="location-popup">
-                <h4>Bench</h4>
-                <p>Click to toggle spawn radius</p>
-            </div>
-        `;
-    marker.bindPopup(popupContent);
-
     // Add click handler for radius visualization
     marker.on('click', () => {
       toggleRadius(bench, 'bench');
@@ -156,14 +147,6 @@ function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
       opacity: 1,
       fillOpacity: 0.9,
     });
-
-    const popupContent = `
-            <div class="location-popup">
-                <h4>${point.name || 'Fly Point'}</h4>
-                <p>Click to toggle spawn radius</p>
-            </div>
-        `;
-    marker.bindPopup(popupContent);
 
     marker.on('click', () => {
       toggleRadius(point, 'flypoint');
@@ -198,6 +181,17 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
       color: '#27ae60',
       weight: 2,
       opacity: 0.6,
+    });
+
+    // Make the circle clickable to remove itself
+    circle.on('click', () => {
+      const index = activeRadiusCircles.findIndex(
+        (r) => r.x === location.x && r.y === location.y
+      );
+      if (index >= 0) {
+        map.removeLayer(activeRadiusCircles[index].circle);
+        activeRadiusCircles.splice(index, 1);
+      }
     });
 
     circle.addTo(map);
