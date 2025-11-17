@@ -4,9 +4,9 @@
 
 Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumiose City featuring precise spawner data from Serebii.
 
-**Tech Stack:** Leaflet.js, vanilla JS/HTML/CSS, no server required
+**Tech Stack:** TypeScript, Leaflet.js, Bun (bundler + dev server)
 
-**Deploy Target:** GitHub Pages (static site)
+**Deploy Target:** GitHub Pages (static site, bundled with Bun)
 
 ## Key Principles
 
@@ -50,25 +50,34 @@ Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumios
 - Write clear commit messages
 - Test before committing
 
-## Current Architecture
+## Architecture
 
 ```
-/data
-  spawners.json    - Pokemon spawn points (1028 total, needs Pokemon data)
-  benches.json     - 50 rest points with 100px radius
-  fly_points.json  - 10 fast travel points with 150px radius
+/src
+  main.ts         - TypeScript entry point
+  map.ts          - Leaflet map logic (converted from js/map.js)
+  types.ts        - TypeScript interfaces for spawner/bench/fly point data
 
-/js
-  map.js          - Leaflet map initialization and logic
-
-/images
-  lumiose_map.png - Stitched 1024x1024 map from Serebii tiles
-  /tiles          - Individual 256x256 Serebii tiles
+/public
+  /data
+    spawners.json    - Pokemon spawn points (1028 total, needs Pokemon data)
+    benches.json     - 50 rest points with 100px radius
+    fly_points.json  - 10 fast travel points with 150px radius
+  /images
+    lumiose_map.png - Stitched 1024x1024 map from Serebii tiles
+    /tiles          - Individual 256x256 Serebii tiles
+  index.html        - Main HTML (served from public/)
 
 /scripts
   download-and-stitch.py  - Python script to grab tiles and stitch
   download-map-tiles.js   - Browser console helper for tile detection
+
+/dist             - Bun build output (deployed to GitHub Pages)
 ```
+
+**Dev:** `bun run dev` (Bun's dev server with HMR)
+**Build:** `bun run build` (bundles TypeScript → dist/)
+**Deploy:** GitHub Actions → dist/ to gh-pages branch
 
 ## Coordinate System
 

@@ -3,40 +3,56 @@
 ## Goal
 Interactive map for Pokemon Legends: Z-A deployed on GitHub Pages. Emulate Serebii's data precision with game8's radius UX in a fast, minimal interface.
 
-## Completed
-- ✅ Leaflet.js map setup (js/map.js:1-297)
-- ✅ Downloaded & stitched Serebii tiles → images/lumiose_map.png (1024x1024)
-- ✅ Imported 50 benches from Serebii (data/benches.json:1-51)
-- ✅ Imported 10 fly points from Serebii (data/fly_points.json:1-12)
-- ✅ Spawner coordinate structure (3 sample points, 1025 more needed)
+## Current Status: TypeScript + Bun Migration Complete
+
+### Completed
+- ✅ **TypeScript migration** - Converted to src/map.ts with proper types
+- ✅ **Bun build setup** - Dev server with hot reload + production build
+- ✅ **Project restructure** - Organized into src/ and public/ folders
+- ✅ Leaflet.js map setup with typed interfaces
+- ✅ Downloaded & stitched Serebii tiles → public/images/lumiose_map.png (1024x1024)
+- ✅ Imported 50 benches from Serebii (public/data/benches.json)
+- ✅ Imported 10 fly points from Serebii (public/data/fly_points.json)
+- ✅ Spawner coordinate structure (1028 points, Pokemon data empty)
 - ✅ Click bench/fly point → toggle radius circle
 - ✅ Pokemon search filter (dims non-matching spawners)
 - ✅ Feature toggle filters (spawners/benches/fly points)
 - ✅ Popup system with Pokemon sprites from PokeAPI
+- ✅ Map overlay enabled (src/map.ts:45)
 
-## Remaining Work
+### Remaining Work
 
-### Critical
-1. **Populate Pokemon data** (data/spawners.json:1-20)
+#### Critical
+1. **Populate Pokemon data** (public/data/spawners.json)
    - 1028 spawners have coords, all have empty `pokemon: []` arrays
    - Need: `{id, name, chance}` for each Pokemon per spawner
    - Source: Serebii map popups
    - Consider: build scraper or manual extraction script
 
-2. **Enable map overlay** (js/map.js:36)
-   - Line currently commented: `// L.imageOverlay(imageUrl, imageBounds).addTo(map);`
-   - Verify image bounds match coordinate system before uncommenting
+2. **GitHub Pages deployment**
+   - Set up GitHub Actions workflow to build and deploy
+   - Build outputs to public/main.js (ready to deploy)
+   - Configure gh-pages branch or docs folder
 
-### Nice-to-Have
-- Type filters (UI exists at index.html:40-43, no implementation)
-- Test deployment on GitHub Pages
+#### Nice-to-Have
+- Type filters (UI exists at public/index.html:40-43, no implementation)
 - Performance optimization for 1028 spawners
+- Add source maps for debugging
 
 ## Key Files
-- js/map.js:21-47 - Map initialization
-- js/map.js:73-94 - Spawner markers
-- js/map.js:162-192 - Radius toggle logic
-- data/README.md:1-44 - Data schema documentation
+- src/main.ts - TypeScript entry point
+- src/map.ts - Map initialization & marker logic (converted from js/map.js)
+- src/types.ts - TypeScript interfaces for data structures
+- server.ts - Dev server with hot reload
+- public/index.html - Main HTML entry point
+- public/data/ - JSON data files (spawners, benches, fly_points)
+- public/images/ - Map assets
+
+## Commands
+- `bun install` - Install dependencies
+- `bun run dev` - Start dev server with hot reload (http://localhost:3000)
+- `bun run build` - Build for production (outputs to public/main.js)
+- `bun run preview` - Preview production build locally
 
 ## Data Schema
 ```json

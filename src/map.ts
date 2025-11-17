@@ -1,26 +1,35 @@
+import L from 'leaflet';
+import type {
+  MapConfig,
+  Spawner,
+  Bench,
+  FlyPoint,
+  MarkerData,
+  RadiusCircle,
+} from './types';
+
 // Configuration
-const CONFIG = {
-  mapImage: "images/lumiose_map.png", // You'll need to provide this
-  // Serebii's coordinate system: x: ~19-491, y: ~-500 to -19
+const CONFIG: MapConfig = {
+  mapImage: 'images/lumiose_map.png',
   mapBounds: [
     [-500, 0],
     [0, 500],
-  ], // [southwest, northeast]
+  ],
   pokespriteBase:
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/",
+    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
 };
 
 // Global variables
-let map;
-let spawnerMarkers = [];
-let benchMarkers = [];
-let flyPointMarkers = [];
-let activeRadiusCircles = [];
+let map: L.Map;
+let spawnerMarkers: MarkerData<Spawner>[] = [];
+let benchMarkers: MarkerData<Bench>[] = [];
+let flyPointMarkers: MarkerData<FlyPoint>[] = [];
+let activeRadiusCircles: RadiusCircle[] = [];
 
 // Initialize the map
-function initMap() {
+export function initMap(): void {
   // Create map without default tiles (we'll use an image overlay)
-  map = L.map("map", {
+  map = L.map('map', {
     crs: L.CRS.Simple,
     minZoom: -2,
     maxZoom: 2,
@@ -46,45 +55,45 @@ function initMap() {
 }
 
 // Load all data
-async function loadData() {
+async function loadData(): Promise<void> {
   try {
     // Load spawner data
-    const spawnerResponse = await fetch("data/spawners.json");
+    const spawnerResponse = await fetch('data/spawners.json');
     if (!spawnerResponse.ok) {
       throw new Error(`Spawners fetch failed: ${spawnerResponse.status}`);
     }
-    const spawnerData = await spawnerResponse.json();
+    const spawnerData: Spawner[] = await spawnerResponse.json();
     createSpawnerMarkers(spawnerData);
 
     // Load bench data
-    const benchResponse = await fetch("data/benches.json");
+    const benchResponse = await fetch('data/benches.json');
     if (!benchResponse.ok) {
       throw new Error(`Benches fetch failed: ${benchResponse.status}`);
     }
-    const benchData = await benchResponse.json();
+    const benchData: Bench[] = await benchResponse.json();
     createBenchMarkers(benchData);
 
     // Load fly point data
-    const flyPointResponse = await fetch("data/fly_points.json");
+    const flyPointResponse = await fetch('data/fly_points.json');
     if (!flyPointResponse.ok) {
       throw new Error(`Fly points fetch failed: ${flyPointResponse.status}`);
     }
-    const flyPointData = await flyPointResponse.json();
+    const flyPointData: FlyPoint[] = await flyPointResponse.json();
     createFlyPointMarkers(flyPointData);
   } catch (error) {
-    console.error("Data loading error:", error);
-    console.log("Data files not found - creating sample data structure");
+    console.error('Data loading error:', error);
+    console.log('Data files not found - creating sample data structure');
     createSampleData();
   }
 }
 
 // Create spawner markers
-function createSpawnerMarkers(spawners) {
+function createSpawnerMarkers(spawners: Spawner[]): void {
   spawners.forEach((spawner) => {
     const marker = L.circleMarker([spawner.y, spawner.x], {
       radius: 6,
-      fillColor: "#ffd700",
-      color: "#fff",
+      fillColor: '#ffd700',
+      color: '#fff',
       weight: 2,
       opacity: 1,
       fillOpacity: 0.8,
@@ -103,12 +112,12 @@ function createSpawnerMarkers(spawners) {
 }
 
 // Create bench markers with radius functionality
-function createBenchMarkers(benches) {
+function createBenchMarkers(benches: Bench[]): void {
   benches.forEach((bench) => {
     const marker = L.circleMarker([bench.y, bench.x], {
       radius: 8,
-      fillColor: "#2c3e50",
-      color: "#fff",
+      fillColor: '#2c3e50',
+      color: '#fff',
       weight: 2,
       opacity: 1,
       fillOpacity: 0.9,
@@ -124,8 +133,8 @@ function createBenchMarkers(benches) {
     marker.bindPopup(popupContent);
 
     // Add click handler for radius visualization
-    marker.on("click", () => {
-      toggleRadius(bench, "bench");
+    marker.on('click', () => {
+      toggleRadius(bench, 'bench');
     });
 
     marker.addTo(map);
@@ -137,12 +146,12 @@ function createBenchMarkers(benches) {
 }
 
 // Create fly point markers
-function createFlyPointMarkers(flyPoints) {
+function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
   flyPoints.forEach((point) => {
     const marker = L.circleMarker([point.y, point.x], {
       radius: 9,
-      fillColor: "#3498db",
-      color: "#fff",
+      fillColor: '#3498db',
+      color: '#fff',
       weight: 2,
       opacity: 1,
       fillOpacity: 0.9,
@@ -150,14 +159,14 @@ function createFlyPointMarkers(flyPoints) {
 
     const popupContent = `
             <div class="location-popup">
-                <h4>${point.name || "Fly Point"}</h4>
+                <h4>${point.name || 'Fly Point'}</h4>
                 <p>Click to toggle spawn radius</p>
             </div>
         `;
     marker.bindPopup(popupContent);
 
-    marker.on("click", () => {
-      toggleRadius(point, "flypoint");
+    marker.on('click', () => {
+      toggleRadius(point, 'flypoint');
     });
 
     marker.addTo(map);
@@ -169,10 +178,10 @@ function createFlyPointMarkers(flyPoints) {
 }
 
 // Toggle radius circle visualization
-function toggleRadius(location, type) {
+function toggleRadius(location: Bench | FlyPoint, type: string): void {
   // Check if this location already has a radius shown
   const existingIndex = activeRadiusCircles.findIndex(
-    (r) => r.x === location.x && r.y === location.y,
+    (r) => r.x === location.x && r.y === location.y
   );
 
   if (existingIndex >= 0) {
@@ -184,9 +193,9 @@ function toggleRadius(location, type) {
     const radius = location.radius || 100;
     const circle = L.circle([location.y, location.x], {
       radius: radius,
-      fillColor: "#27ae60",
+      fillColor: '#27ae60',
       fillOpacity: 0.15,
-      color: "#27ae60",
+      color: '#27ae60',
       weight: 2,
       opacity: 0.6,
     });
@@ -201,9 +210,9 @@ function toggleRadius(location, type) {
 }
 
 // Create popup content for spawner
-function createSpawnerPopup(spawner) {
+function createSpawnerPopup(spawner: Spawner): string {
   let html = '<div class="spawner-popup">';
-  html += "<h4>Pokemon Spawner</h4>";
+  html += '<h4>Pokemon Spawner</h4>';
   html += '<ul class="pokemon-list">';
 
   spawner.pokemon.forEach((poke) => {
@@ -219,40 +228,62 @@ function createSpawnerPopup(spawner) {
         `;
   });
 
-  html += "</ul></div>";
+  html += '</ul></div>';
   return html;
 }
 
 // Get Pokemon sprite URL
-function getPokemonSprite(pokemonId) {
+function getPokemonSprite(pokemonId: number): string {
   return `${CONFIG.pokespriteBase}${pokemonId}.png`;
 }
 
 // Setup event listeners for filters
-function setupEventListeners() {
+function setupEventListeners(): void {
   // Feature filters
-  document.getElementById("filter-spawners").addEventListener("change", (e) => {
-    toggleMarkerVisibility(spawnerMarkers, e.target.checked);
-  });
+  const filterSpawners = document.getElementById('filter-spawners');
+  const filterBenches = document.getElementById('filter-benches');
+  const filterFlyPoints = document.getElementById('filter-fly-points');
+  const pokemonSearch = document.getElementById('pokemon-search');
 
-  document.getElementById("filter-benches").addEventListener("change", (e) => {
-    toggleMarkerVisibility(benchMarkers, e.target.checked);
-  });
-
-  document
-    .getElementById("filter-fly-points")
-    .addEventListener("change", (e) => {
-      toggleMarkerVisibility(flyPointMarkers, e.target.checked);
+  if (filterSpawners) {
+    filterSpawners.addEventListener('change', (e) => {
+      toggleMarkerVisibility(
+        spawnerMarkers,
+        (e.target as HTMLInputElement).checked
+      );
     });
+  }
 
-  // Pokemon search
-  document.getElementById("pokemon-search").addEventListener("input", (e) => {
-    filterByPokemonName(e.target.value);
-  });
+  if (filterBenches) {
+    filterBenches.addEventListener('change', (e) => {
+      toggleMarkerVisibility(
+        benchMarkers,
+        (e.target as HTMLInputElement).checked
+      );
+    });
+  }
+
+  if (filterFlyPoints) {
+    filterFlyPoints.addEventListener('change', (e) => {
+      toggleMarkerVisibility(
+        flyPointMarkers,
+        (e.target as HTMLInputElement).checked
+      );
+    });
+  }
+
+  if (pokemonSearch) {
+    pokemonSearch.addEventListener('input', (e) => {
+      filterByPokemonName((e.target as HTMLInputElement).value);
+    });
+  }
 }
 
 // Toggle marker visibility
-function toggleMarkerVisibility(markers, visible) {
+function toggleMarkerVisibility<T>(
+  markers: MarkerData<T>[],
+  visible: boolean
+): void {
   markers.forEach(({ marker }) => {
     if (visible) {
       marker.addTo(map);
@@ -263,7 +294,7 @@ function toggleMarkerVisibility(markers, visible) {
 }
 
 // Filter spawners by Pokemon name
-function filterByPokemonName(searchTerm) {
+function filterByPokemonName(searchTerm: string): void {
   const term = searchTerm.toLowerCase();
 
   spawnerMarkers.forEach(({ marker, data }) => {
@@ -273,7 +304,7 @@ function filterByPokemonName(searchTerm) {
     }
 
     const hasPokemon = data.pokemon.some((p) =>
-      p.name.toLowerCase().includes(term),
+      p.name.toLowerCase().includes(term)
     );
 
     marker.setStyle({
@@ -283,24 +314,21 @@ function filterByPokemonName(searchTerm) {
 }
 
 // Create sample data structure (for demonstration)
-function createSampleData() {
-  console.log("Sample data structure:");
+function createSampleData(): void {
+  console.log('Sample data structure:');
   console.log({
     spawners: [
       {
         x: 500,
         y: 500,
         pokemon: [
-          { id: 1, name: "Bulbasaur", chance: 30 },
-          { id: 4, name: "Charmander", chance: 25 },
-          { id: 7, name: "Squirtle", chance: 45 },
+          { id: 1, name: 'Bulbasaur', chance: 30 },
+          { id: 4, name: 'Charmander', chance: 25 },
+          { id: 7, name: 'Squirtle', chance: 45 },
         ],
       },
     ],
     benches: [{ x: 400, y: 400, radius: 80 }],
-    flyPoints: [{ x: 600, y: 600, name: "Central Plaza", radius: 120 }],
+    flyPoints: [{ x: 600, y: 600, name: 'Central Plaza', radius: 120 }],
   });
 }
-
-// Initialize when DOM is ready
-document.addEventListener("DOMContentLoaded", initMap);

@@ -2,69 +2,67 @@
 
 A clean, fast interactive map for Pokemon Legends: Z-A with precise spawner locations, benches, and fly points.
 
+**Tech Stack**: TypeScript, Leaflet.js, Bun
+
 ## Features
 
 - **Precise Spawner Data**: Individual spawn points showing which Pokemon appear where with spawn rates
 - **Actual Pokemon Sprites**: No generic icons - uses real Pokemon sprites from PokeAPI
 - **Spawn Radius Visualization**: Click benches/fly points to show their spawn radius (like game8)
 - **Clean Filtering**: Filter by Pokemon name, toggle spawners/benches/fly points
-- **Fast & Lightweight**: Built with Leaflet.js, works as a static site on GitHub Pages
+- **Fast & Lightweight**: TypeScript bundled with Bun, deploys to GitHub Pages
 - **No Clutter**: Focuses on useful, repeatable content (no story events, items, etc.)
 
-## Setup
+## Quick Start
 
-1. **Add your map image**: Place your Lumiose City map image at `images/lumiose_map.png`
-2. **Update map bounds**: In `js/map.js`, update `CONFIG.mapBounds` to match your image dimensions
-3. **Populate data**: Fill in the JSON files in the `data/` folder with real spawn data
+```bash
+# Install dependencies
+bun install
+
+# Start dev server with hot reload
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
+```
+
+Dev server runs at http://localhost:3000
+
+## Project Structure
+
+```
+/src
+  main.ts         - Entry point
+  map.ts          - Leaflet map logic
+  types.ts        - TypeScript interfaces
+
+/public
+  index.html      - Main HTML
+  /data           - JSON data files
+  /images         - Map assets
+  /css            - Styles
+
+server.ts         - Dev server with hot reload
+```
 
 ## Data Structure
 
-### Spawners (`data/spawners.json`)
+See TypeScript interfaces in `src/types.ts` for schema. Key files:
 
-```json
-[
-  {
-    "id": 1,
-    "x": 400,
-    "y": 300,
-    "pokemon": [
-      {
-        "id": 1,
-        "name": "Bulbasaur",
-        "chance": 30
-      }
-    ]
-  }
-]
-```
-
-- `x`, `y`: Coordinates on the map image
-- `pokemon`: Array of Pokemon that can spawn here
-- `chance`: Spawn rate percentage
-
-### Benches (`data/benches.json`)
-
-```json
-[
-  {
-    "id": 1,
-    "x": 500,
-    "y": 500,
-    "radius": 100,
-    "name": "Central Bench"
-  }
-]
-```
-
-- `radius`: Spawn radius in pixels (shown when clicked)
-
-### Fly Points (`data/fly_points.json`)
-
-Same structure as benches with optional `name` field.
+- `public/data/spawners.json` - 1028 spawn points (Pokemon data TODO)
+- `public/data/benches.json` - 50 rest benches
+- `public/data/fly_points.json` - 10 fast travel points
 
 ## Deployment
 
-This is a static site - just push to GitHub and enable GitHub Pages. No server needed!
+GitHub Actions automatically builds and deploys to GitHub Pages on push to main.
+
+**Manual deployment:**
+1. Run `bun run build`
+2. Deploy the `public/` folder to any static host
 
 ## Credits
 
