@@ -3,12 +3,13 @@
 ## Goal
 Interactive map for Pokemon Legends: Z-A deployed on GitHub Pages. Emulate Serebii's data precision with game8's radius UX in a fast, minimal interface.
 
-## Current Status: TypeScript + Bun Migration Complete
+## Current Status: Deployed to GitHub Pages
 
 ### Completed
 - ✅ **TypeScript migration** - Converted to src/map.ts with proper types
 - ✅ **Bun build setup** - Dev server with hot reload + production build
 - ✅ **Project restructure** - Organized into src/ and public/ folders
+- ✅ **GitHub Pages deployment** - Live at tusharc.dev/plza via GitHub Actions
 - ✅ Leaflet.js map setup with typed interfaces
 - ✅ Downloaded & stitched Serebii tiles → public/images/lumiose_map.png (1024x1024)
 - ✅ Imported 50 benches from Serebii (public/data/benches.json)
@@ -18,7 +19,7 @@ Interactive map for Pokemon Legends: Z-A deployed on GitHub Pages. Emulate Sereb
 - ✅ Pokemon search filter (dims non-matching spawners)
 - ✅ Feature toggle filters (spawners/benches/fly points)
 - ✅ Popup system with Pokemon sprites from PokeAPI
-- ✅ Map overlay enabled (src/map.ts:45)
+- ✅ Map overlay enabled (src/map.ts)
 
 ### Remaining Work
 
@@ -29,11 +30,6 @@ Interactive map for Pokemon Legends: Z-A deployed on GitHub Pages. Emulate Sereb
    - Source: Serebii map popups
    - Consider: build scraper or manual extraction script
 
-2. **GitHub Pages deployment**
-   - Set up GitHub Actions workflow to build and deploy
-   - Build outputs to public/main.js (ready to deploy)
-   - Configure gh-pages branch or docs folder
-
 #### Nice-to-Have
 - Type filters (UI exists at public/index.html:40-43, no implementation)
 - Performance optimization for 1028 spawners
@@ -41,12 +37,14 @@ Interactive map for Pokemon Legends: Z-A deployed on GitHub Pages. Emulate Sereb
 
 ## Key Files
 - src/main.ts - TypeScript entry point
-- src/map.ts - Map initialization & marker logic (converted from js/map.js)
+- src/map.ts - Map initialization & marker logic
 - src/types.ts - TypeScript interfaces for data structures
 - server.ts - Dev server with hot reload
+- .github/workflows/deploy.yml - GitHub Actions deployment
 - public/index.html - Main HTML entry point
 - public/data/ - JSON data files (spawners, benches, fly_points)
 - public/images/ - Map assets
+- docs/images/ - Reference screenshots from other maps (not deployed)
 
 ## Commands
 - `bun install` - Install dependencies
@@ -66,7 +64,7 @@ Interactive map for Pokemon Legends: Z-A deployed on GitHub Pages. Emulate Sereb
 ```
 
 ## Coordinate System
-Serebii: x: 0-500, y: -500 to 0 (matches CONFIG.mapBounds in js/map.js:5-8)
+Serebii: x: 0-500, y: -500 to 0 (matches CONFIG.mapBounds in src/map.ts)
 
 ## Design Principles
 - Small markers (6-9px radius) not large icons
