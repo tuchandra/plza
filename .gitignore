@@ -4,3 +4,4 @@ public/main.js
 public/main.js.map
 *.log
 .DS_Store
+serebii-data*.json
