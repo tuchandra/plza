@@ -46,43 +46,46 @@ async function fetchWildZoneTable(tableID: number): Promise<string | null> {
 }
 
 function parseWildZoneTable(html: string): Pokemon[] {
-  const pokemonMap = new Map<string, { pokemon: Pokemon; hasAlphaIcon: boolean }>();
+  const pokemonList: Pokemon[] = [];
+  const seenPokemon = new Set<string>();
 
-  // Extract all Pokemon sprites and their surrounding context
-  const spriteRegex = /<td[^>]*>.*?<img src="\/legendsz-a\/pokemon\/(\d+)(?:-[a-z])?\.png"[^>]*alt="([^"]+)".*?<\/td>/gs;
-  const matches = [...html.matchAll(spriteRegex)];
+  // Parse the HTML to find each Pokemon column with its alpha chance
+  // Split by <tr> </tr> pattern to separate rows
+  const sections = html.split(/<tr>\s*<\/tr>/);
 
-  for (const match of matches) {
-    const pokedexNumber = parseInt(match[1]);
-    const name = match[2];
-    const fullCellHtml = match[0];
+  for (const section of sections) {
+    // Find all Pokemon sprites in this section
+    const spriteMatches = [...section.matchAll(/<img src="\/legendsz-a\/pokemon\/(\d+)(?:-[a-z])?\.png"[^>]*alt="([^"]+)"/g)];
 
-    // Check if this cell has an alpha icon (which means it's a guaranteed alpha spawn)
-    const hasAlphaIcon = fullCellHtml.includes('alt="Alpha"');
+    // Find all alpha chance values in this section (in order)
+    const alphaMatches = [...section.matchAll(/<b>Alpha Chance<\/b><br\s*\/>(\d+)%/g)];
 
-    // If we've seen this Pokemon before, update if this one is an alpha
-    const existing = pokemonMap.get(name);
-    if (existing && !hasAlphaIcon) {
-      // Already have this Pokemon, and this one isn't an alpha, so skip
-      continue;
-    }
+    // Also check for alpha icons
+    const nameMatches = [...section.matchAll(/<td[^>]*class="name"[^>]*>(.*?)<\/td>/gs)];
 
-    pokemonMap.set(name, {
-      pokemon: {
+    // Match each sprite with its corresponding alpha chance
+    for (let i = 0; i < spriteMatches.length && i < alphaMatches.length; i++) {
+      const pokedexNumber = parseInt(spriteMatches[i][1]);
+      const name = spriteMatches[i][2];
+      const alphaChance = parseInt(alphaMatches[i][1]);
+
+      // Skip duplicates
+      const key = `${name}-${alphaChance}`;
+      if (seenPokemon.has(key)) continue;
+      seenPokemon.add(key);
+
+      pokemonList.push({
         name,
         pokedexNumber,
         types: [],
         levelMin: 50,
         levelMax: 65,
-        alphaChance: hasAlphaIcon ? 100 : 0,
-      },
-      hasAlphaIcon,
-    });
+        alphaChance,
+      });
+    }
   }
 
-  return Array.from(pokemonMap.values())
-    .map(entry => entry.pokemon)
-    .sort((a, b) => a.pokedexNumber - b.pokedexNumber);
+  return pokemonList.sort((a, b) => a.pokedexNumber - b.pokedexNumber);
 }
 
 async function main() {
