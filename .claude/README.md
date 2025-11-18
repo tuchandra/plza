@@ -1,0 +1,182 @@
+# Claude Handoff Notes for PLZA
+
+## Recent Major Changes (Nov 17, 2025)
+
+### Coordinate System Issue - RESOLVED ✅
+
+**Problem Discovered:**
+The coordinate system rendering was correct, but spawner data had misaligned IDs and coordinates:
+- Coordinates extracted from Serebii marker array positions
+- Pokemon data extracted from spawn table IDs
+- Serebii's table IDs ≠ marker array positions
+- Result: Spawner "ID 882" had Aron/Lairon but wrong coordinates
+
+**Root Cause:**
+The original extraction process:
+1. Extracted coordinates from marker positions → assigned sequential IDs
+2. Extracted Pokemon data from `/spawntable/{id}.txt` URLs
+3. Merged by ID, but the IDs didn't correlate
+
+**Solution Implemented:**
+Created proper extraction pipeline using **table IDs** to maintain alignment:
+
+1. `scripts/extract-all-serebii-data.js` - Browser console script
+   - Accesses Serebii's `pmarkers` array to get table IDs
+   - Extracts coordinates for all POI types
+   - Output: `serebii-lumiose-complete.json`
+
+2. `scripts/fetch-spawn-tables.ts` - Fetch Pokemon data
+   - Uses table IDs to download spawn tables
+   - Rate-limited (100ms delay)
+   - Output: `data/spawn-tables-raw.json`
+
+3. `scripts/parse-spawn-tables.ts` - Parse HTML tables
+   - Extracts Pokemon, levels, types, rarity, alphas
+   - Output: `data/parsed-pokemon.json` (keyed by tableID)
+
+4. `scripts/merge-complete-data.ts` - Final merge
+   - Matches coordinates with Pokemon using table IDs
+   - Output: All `public/data/*.json` files
+
+### Data Model Changes
+
+**Old format:**
+```json
+{
+  "id": 882,
+  "x": 98.97,
+  "y": -91.95,
+  "pokemon": [...]
+}
+```
+
+**New format:**
+```json
+{
+  "lat": -250.32725,
+  "lng": 313.325625,
+  "tableID": 225,
+  "pokemon": [...]
+}
+```
+
+**Why:**
+- `lat/lng` matches Leaflet conventions
+- `tableID` is Serebii's actual identifier (not array position)
+- Guarantees coordinate/Pokemon alignment
+
+### Current Dataset (Regenerated Nov 17)
+
+- **1,063 spawners** with correct coordinates
+- **1,028 with Pokemon data** (97% coverage)
+- **136 unique Pokemon species**
+- **1,317 total Pokemon entries**
+- **54 static alpha spawns**
+
+### Map Rendering
+
+**Coordinate System:**
+- Serebii uses ~500×500 coordinate space
+- Our map image is 1024×1024 pixels
+- **Scale factor: 2×** when rendering markers
+- Bounds: `[[-1000, 0], [0, 1000]]` (scaled from [-500, 0] to [0, 500])
+
+**Marker placement:**
+```typescript
+L.circleMarker([spawner.lat * 2, spawner.lng * 2], {...})
+```
+
+### Files to Know About
+
+**Data extraction (in order):**
+1. `scripts/extract-all-serebii-data.js` - Run in browser
+2. `scripts/fetch-spawn-tables.ts` - Fetch from Serebii
+3. `scripts/parse-spawn-tables.ts` - Parse HTML
+4. `scripts/merge-complete-data.ts` - Merge everything
+
+**Documentation:**
+- `docs/data-extraction-guide.md` - Complete methodology
+- `scripts/README.md` - Quick start guide
+- `CLAUDE.md` - Project principles and architecture
+
+**Core code:**
+- `src/types.ts` - TypeScript interfaces
+- `src/map.ts` - Leaflet map logic
+- `public/data/*.json` - All map data
+
+### Type Updates
+
+Added new POI types:
+```typescript
+interface Holovator {
+  lat: number;
+  lng: number;
+  name?: string;
+}
+
+interface Ladder {
+  lat: number;
+  lng: number;
+  name?: string;
+}
+```
+
+### Verification
+
+To verify data is correct:
+```bash
+# Check Aron/Lairon spawners (should be at tableID 878-880)
+cat public/data/spawners.json | jq '.[] | select(.pokemon[].name == "Aron")'
+
+# Check coordinates match Serebii
+# Serebii marker position 882 should be Bellsprout at (313.32, -250.32)
+cat public/data/spawners.json | jq '.[] | select(.lat > -251 and .lat < -250 and .lng > 313 and .lng < 314)'
+```
+
+## Next Steps / TODO
+
+**Data extraction:**
+- [ ] Extract fly points (currently demo data)
+- [ ] Extract benches (currently demo data)
+- [ ] Extract holovators (new POI type)
+- [ ] Extract ladders (new POI type)
+- [ ] Extract wild zones (polygons, not points)
+- [ ] Extract map labels (district names, etc.)
+
+**Map features:**
+- [ ] Add type filtering (bug, fire, water, etc.)
+- [ ] Add Pokemon search/autocomplete
+- [ ] Add radius circles for benches/fly points
+- [ ] Add Pokemon sprites to popups
+- [ ] Show alpha spawns differently
+- [ ] Time-of-day filters
+
+**Polish:**
+- [ ] Better mobile UI
+- [ ] Faster initial load (data splitting?)
+- [ ] Better marker clustering
+- [ ] Legend explaining icons
+
+## Tech Stack
+
+- **TypeScript** for type safety
+- **Leaflet.js** for map rendering
+- **Bun** for bundling and dev server
+- **PokeAPI** for Pokemon sprites
+- **GitHub Pages** for static hosting
+
+Deploy: Push to main → GitHub Actions → `public/` folder deployed
+
+## Important Notes
+
+1. **Never assume data structure** - always verify with Serebii first
+2. **Table IDs are sacred** - they're the key to correct alignment
+3. **Scale by 2** - coordinates are in ~500 space, map is 1024×1024
+4. **Serebii is source of truth** - when in doubt, check Serebii
+5. **Test thoroughly** - spot-check known Pokemon locations
+
+## Git Workflow
+
+- Commit directly to main (this is a vibe project)
+- Clear commit messages explaining what/why
+- Always test before committing

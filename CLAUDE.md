@@ -55,31 +55,39 @@ Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumios
 ```
 /src
   main.ts         - TypeScript entry point
-  map.ts          - Leaflet map logic (converted from js/map.js)
-  types.ts        - TypeScript interfaces for spawner/bench/fly point data
+  map.ts          - Leaflet map logic with all marker types
+  types.ts        - TypeScript interfaces for all POI types
 
 /public
   /data
-    spawners.json       - 1514 spawn coordinates (Pokemon data empty)
-    static_alphas.json  - 54 alpha coordinates (Pokemon names unknown)
+    spawners.json       - 1,063 spawners with Pokemon data (97% complete)
+    static_alphas.json  - 54 alpha spawns
     benches.json        - Demo data (needs real extraction)
     fly_points.json     - Demo data (needs real extraction)
-    wild_zones.json     - Empty (needs extraction)
-    map_labels.json     - Empty (needs extraction)
+    holovators.json     - Empty (needs extraction)
+    ladders.json        - Empty (needs extraction)
   /images
     lumiose_map.png - Stitched 1024x1024 map from Serebii tiles
     /tiles          - Individual 256x256 Serebii tiles
   index.html        - Main HTML (served from public/)
 
 /scripts
-  download-and-stitch.py  - Python script to grab tiles and stitch
-  download-map-tiles.js   - Browser console helper for tile detection
-  parse-spawn-tables.ts   - Parse raw Serebii spawn HTML into structured JSON
+  extract-all-serebii-data.js - Browser console: extract coords + table IDs
+  fetch-spawn-tables.ts       - Fetch spawn tables from Serebii
+  parse-spawn-tables.ts       - Parse HTML spawn tables to structured JSON
+  merge-complete-data.ts      - Merge coords + Pokemon using table IDs
+  download-and-stitch.py      - Stitch map tiles into single image
 
-/data (gitignored - raw extraction data)
-  spawn-tables-complete.json  - Raw HTML spawn tables from Serebii
-  parsed-spawn-data.json      - Structured Pokemon spawn data
+/docs
+  data-extraction-guide.md    - Complete extraction methodology
+  spawn-extraction.md         - Legacy spawn extraction notes
 
+/data (gitignored - intermediate extraction data)
+  spawn-tables-raw.json       - Raw HTML spawn tables from Serebii
+  parsed-pokemon.json         - Structured Pokemon data keyed by tableID
+
+/.claude
+  README.md                   - Handoff notes for future Claude sessions
 ```
 
 **Dev:** `bun run dev` (Bun's dev server with HMR)
@@ -115,17 +123,36 @@ gh run list --limit 5
 
 ## Coordinate System
 
-Serebii uses: `x: 0-500, y: -500 to 0`
+**Serebii's system:**
+- Coordinates: ~`lat: -500 to 0, lng: 0 to 500`
+- Uses `L.CRS.Simple` (Leaflet simple coordinate system)
+- Table IDs link markers to spawn data
 
-Map bounds configured to match this system.
+**Our system:**
+- Map image: 1024×1024 pixels
+- Map bounds: `[[-1000, 0], [0, 1000]]` (Serebii coords × 2)
+- Marker placement: `[lat * 2, lng * 2]` to match image scale
+- Data format: `{lat, lng, tableID}` (NOT `{id, x, y}`)
+
+**Critical:** Always use table IDs to match coordinates with Pokemon data!
 
 ## Data Extraction
 
-**Spawn data extraction completed** - see `docs/spawn-extraction.md` for detailed methodology.
-
-Quick summary:
-- ✅ Extracted 1,085 spawn points with complete Pokemon data
-- ✅ 1,323 Pokemon entries, 159 unique species
+**Current status (Nov 17, 2025):**
+- ✅ **1,063 spawners** with correct coordinate alignment
+- ✅ **1,028 with Pokemon data** (97% coverage)
+- ✅ **1,317 Pokemon entries**, 136 unique species
+- ✅ **54 static alpha spawns**
 - ✅ Includes levels, types, rarity %, alphas, time-of-day
-- Parser: `scripts/parse-spawn-tables.ts`
-- Browser console script documented in `docs/spawn-extraction.md`
+- ⏳ Benches, fly points, holovators, ladders (demo/empty data)
+
+**Extraction pipeline:**
+See `docs/data-extraction-guide.md` for complete methodology.
+
+Quick process:
+1. Run `extract-all-serebii-data.js` in browser console on Serebii
+2. Run `fetch-spawn-tables.ts` to download spawn tables
+3. Run `parse-spawn-tables.ts` to parse HTML
+4. Run `merge-complete-data.ts` to create final dataset
+
+**Key principle:** Use table IDs to maintain coordinate/Pokemon alignment!
