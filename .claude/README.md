@@ -2,6 +2,29 @@
 
 ## Recent Major Changes (Nov 17, 2025)
 
+### Popup UI Redesign ✅
+
+Redesigned all popup layouts from list-based to table-based for better readability:
+
+**Spawner popups:**
+- 3-column table: Pokemon (sprite + name + types) | Level | Rate
+- Header with respawn time badge
+- Hover effects on table rows
+
+**Alpha spawner popups:**
+- 2-column table: Pokemon | Level
+- Red gradient header
+- 100% alpha guarantee indicator
+
+**Simple popups (benches, holovators, ladders, wild zones):**
+- Gradient headers matching POI type
+- Consistent styling
+
+**Bench improvements:**
+- Brown color (#8b6f47) for markers
+- Fixed spawn radius: 50px (was 200px) to match 50m in-game distance
+- Click to show radius circle
+
 ### Coordinate System Issue - RESOLVED ✅
 
 **Problem Discovered:**
@@ -153,9 +176,9 @@ cat public/data/spawners.json | jq '.[] | select(.lat > -251 and .lat < -250 and
 **Map features:**
 - [ ] Add type filtering (bug, fire, water, etc.)
 - [ ] Add Pokemon search/autocomplete
-- [ ] Add radius circles for benches/fly points
-- [ ] Add Pokemon sprites to popups
-- [ ] Show alpha spawns differently
+- [x] Add radius circles for benches (click to toggle)
+- [x] Add Pokemon sprites to popups
+- [x] Show alpha spawns differently (red header, 100% indicator)
 - [ ] Time-of-day filters
 
 **Polish:**
@@ -185,5 +208,17 @@ Deploy: Push to main → GitHub Actions → `public/` folder deployed
 ## Git Workflow
 
 - Commit directly to main (this is a vibe project)
-- Clear commit messages explaining what/why
+- Atomic commits: one logical change per commit
+- Clear, concise commit messages (no LLM-isms)
 - Always test before committing
+- See `.claude/HANDOFF_ROUTINE.md` for session handoff checklist
+
+## Known Issues
+
+**Coordinate Offset (Active Investigation):**
+- POI markers appear slightly offset from their correct map positions
+- Example: Wild Zone 20 center alphas not centered in building
+- Serebii uses 4096→512 coordinate scaling (cvert function)
+- Our map is 1024×1024 stitched from tiles 0-3 at zoom level 1
+- Current bounds: `[[-1024, 0], [0, 1024]]`
+- May need to adjust tile extraction or coordinate transformation
