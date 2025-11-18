@@ -360,7 +360,7 @@ function createAlphaPopup(alpha: StaticAlpha): string {
 
     // Level column
     html += '<td class="level-col alpha-level">';
-    html += `<div>${poke.levelMin} – ${poke.levelMax}</div>`;
+    html += `<div>Lv. ${poke.levelMin} – ${poke.levelMax}</div>`;
     html += '</td>';
 
     html += '</tr>';
@@ -518,7 +518,7 @@ function createSpawnerPopup(spawner: Spawner): string {
     html += '</td>';
 
     // Level column
-    html += `<td class="level-col">${poke.levelMin} – ${poke.levelMax}</td>`;
+    html += `<td class="level-col">Lv. ${poke.levelMin} – ${poke.levelMax}</td>`;
 
     // Rate column
     html += '<td class="rate-col">';
