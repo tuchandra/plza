@@ -149,14 +149,6 @@
         "alphaChance": 5
       },
       {
-        "name": "Steelix",
-        "pokedexNumber": 208,
-        "types": [],
-        "levelMin": 50,
-        "levelMax": 65,
-        "alphaChance": 100
-      },
-      {
         "name": "Fletchling",
         "pokedexNumber": 661,
         "types": [],
@@ -683,14 +675,6 @@
         "levelMin": 50,
         "levelMax": 65,
         "alphaChance": 5
-      },
-      {
-        "name": "Pangoro",
-        "pokedexNumber": 675,
-        "types": [],
-        "levelMin": 50,
-        "levelMax": 65,
-        "alphaChance": 100
       },
       {
         "name": "Espurr",

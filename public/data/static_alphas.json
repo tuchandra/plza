@@ -503,24 +503,6 @@
     ]
   },
   {
-    "lat": -312.43775,
-    "lng": 192.54275,
-    "tableID": 859,
-    "pokemon": [
-      {
-        "name": "Gallade",
-        "pokedexNumber": 475,
-        "types": [
-          "psychic",
-          "fighting"
-        ],
-        "levelMin": 70,
-        "levelMax": 70,
-        "alphaChance": 100
-      }
-    ]
-  },
-  {
     "lat": -336.201,
     "lng": 197.6855,
     "tableID": 862,
@@ -604,24 +586,6 @@
         ],
         "levelMin": 40,
         "levelMax": 41,
-        "alphaChance": 100
-      }
-    ]
-  },
-  {
-    "lat": -311.111875,
-    "lng": 43.770325,
-    "tableID": 913,
-    "pokemon": [
-      {
-        "name": "Pangoro",
-        "pokedexNumber": 675,
-        "types": [
-          "fighting",
-          "dark"
-        ],
-        "levelMin": 70,
-        "levelMax": 70,
         "alphaChance": 100
       }
     ]
@@ -769,24 +733,6 @@
         ],
         "levelMin": 30,
         "levelMax": 31,
-        "alphaChance": 100
-      }
-    ]
-  },
-  {
-    "lat": -138.702,
-    "lng": 255.8,
-    "tableID": 990,
-    "pokemon": [
-      {
-        "name": "Steelix",
-        "pokedexNumber": 208,
-        "types": [
-          "steel",
-          "ground"
-        ],
-        "levelMin": 70,
-        "levelMax": 70,
         "alphaChance": 100
       }
     ]

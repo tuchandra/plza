@@ -403,7 +403,10 @@ function createAlphaPopup(alpha: StaticAlpha): string {
 
     // Level column
     html += '<td class="level-col alpha-level">';
-    html += `<div>Lv. ${poke.levelMin} – ${poke.levelMax}</div>`;
+    const alphaLevelText = poke.levelMin === poke.levelMax
+      ? `Lv. ${poke.levelMin}`
+      : `Lv. ${poke.levelMin} – ${poke.levelMax}`;
+    html += `<div>${alphaLevelText}</div>`;
     html += '</td>';
 
     html += '</tr>';
@@ -566,7 +569,10 @@ function createSpawnerPopup(spawner: Spawner): string {
 
     // Rate column with level on top, rate + alpha on one line
     html += '<td class="rate-col">';
-    html += `<div class="level-text">Lv. ${poke.levelMin} – ${poke.levelMax}</div>`;
+    const levelText = poke.levelMin === poke.levelMax
+      ? `Lv. ${poke.levelMin}`
+      : `Lv. ${poke.levelMin} – ${poke.levelMax}`;
+    html += `<div class="level-text">${levelText}</div>`;
     html += '<div class="rate-alpha-line">';
     if (poke.rarity !== undefined) {
       html += `<span class="rarity">${poke.rarity}%</span>`;
