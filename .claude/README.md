@@ -159,6 +159,7 @@ Created proper extraction pipeline using **table IDs** to maintain alignment:
   - Wild Zone 20: 82 Pokemon (15 regular + 67 alphas)
   - Other zones: 1-13 Pokemon each
   - Extracted from Serebii spawn tables (tableID 5001-5020)
+- **47 fly points** (fast travel locations)
 - **253 benches** (rest/save points)
 - **23 holovators** (elevators)
 - **147 ladders** (roof access)
@@ -231,7 +232,7 @@ cat public/data/spawners.json | jq '.[] | select(.lat > -251 and .lat < -250 and
 - [x] Extract holovators (23 holovators extracted)
 - [x] Extract ladders (147 ladders extracted)
 - [x] Extract wild zones (20 wild zones extracted)
-- [ ] Extract fly points (need to investigate - not in pmarkers array)
+- [x] Extract fly points (47 fly points extracted)
 - [ ] Extract map labels (district names, etc.)
 
 **Map features:**

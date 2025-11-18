@@ -146,12 +146,12 @@ gh run list --limit 5
 - ✅ **1,028 with Pokemon data** (97% coverage)
 - ✅ **1,317 Pokemon entries**, 136 unique species
 - ✅ **54 static alpha spawns** with full Pokemon data (57 unique alpha species)
+- ✅ **47 fly points** (fast travel locations)
 - ✅ **253 benches** (rest/save points)
 - ✅ **23 holovators** (elevators)
 - ✅ **147 ladders** (roof access)
 - ✅ **20 wild zones** (special spawn areas)
 - ✅ Includes levels, types, rarity %, alphas, time-of-day
-- ⏳ Fly points (need investigation - not in pmarkers array)
 
 **Extraction pipeline:**
 See `docs/data-extraction-guide.md` for complete methodology.

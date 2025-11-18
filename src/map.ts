@@ -90,13 +90,13 @@ async function loadData(): Promise<void> {
     const benchData: Bench[] = await benchResponse.json();
     createBenchMarkers(benchData);
 
-    // Load fly point data (skip for now - demo data has wrong format)
-    // const flyPointResponse = await fetch('data/fly_points.json');
-    // if (!flyPointResponse.ok) {
-    //   throw new Error(`Fly points fetch failed: ${flyPointResponse.status}`);
-    // }
-    // const flyPointData: FlyPoint[] = await flyPointResponse.json();
-    // createFlyPointMarkers(flyPointData);
+    // Load fly point data
+    const flyPointResponse = await fetch('data/fly_points.json');
+    if (!flyPointResponse.ok) {
+      throw new Error(`Fly points fetch failed: ${flyPointResponse.status}`);
+    }
+    const flyPointData: FlyPoint[] = await flyPointResponse.json();
+    createFlyPointMarkers(flyPointData);
 
     // Load holovator data
     try {
@@ -206,7 +206,7 @@ function createBenchMarkers(benches: Bench[]): void {
 // Create fly point markers
 function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
   flyPoints.forEach((point) => {
-    // Scale coordinates by 2 to match 1024×1024 map
+    // Scale coordinates by 8 to match 4096×4096 map
     const marker = L.circleMarker([point.lat * 8, point.lng * 8], {
       radius: 9,
       fillColor: '#3498db',
@@ -215,6 +215,9 @@ function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
       opacity: 1,
       fillOpacity: 0.9,
     });
+
+    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Fly Point</h4></div><div class="popup-body">Fast travel location<br>Click to show coverage area</div></div>';
+    marker.bindPopup(popup);
 
     marker.on('click', () => {
       toggleRadius(point, 'flypoint');
@@ -370,9 +373,9 @@ function createAlphaPopup(alpha: StaticAlpha): string {
 // Toggle radius circle visualization
 function toggleRadius(location: Bench | FlyPoint, type: string): void {
   // Check if this location already has a radius shown
-  // Note: coordinates need to be scaled by 2
+  // Note: coordinates need to be scaled by 8
   const existingIndex = activeRadiusCircles.findIndex(
-    (r) => r.x === location.lng * 2 && r.y === location.lat * 2
+    (r) => r.x === location.lng * 8 && r.y === location.lat * 8
   );
 
   if (existingIndex >= 0) {
