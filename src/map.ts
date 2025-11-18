@@ -326,7 +326,7 @@ function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
 function createAlphaPopup(alpha: StaticAlpha): string {
   let html = '<div class="alpha-popup">';
   html += '<div class="popup-header alpha-header">';
-  html += '<h4><img src="images/alpha-icon.svg" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"> Static Alpha Spawn</h4>';
+  html += '<h4><img src="images/alpha-icon.svg" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"> Static Alpha</h4>';
   html += '</div>';
 
   if (alpha.pokemon.length === 0) {
@@ -336,7 +336,6 @@ function createAlphaPopup(alpha: StaticAlpha): string {
   }
 
   html += '<table class="pokemon-table alpha-table">';
-  html += '<thead><tr><th>Pokemon</th><th>Level</th></tr></thead>';
   html += '<tbody>';
 
   alpha.pokemon.forEach((poke) => {
@@ -359,10 +358,9 @@ function createAlphaPopup(alpha: StaticAlpha): string {
     html += '</div>';
     html += '</td>';
 
-    // Level column (with 100% alpha indicator)
+    // Level column
     html += '<td class="level-col alpha-level">';
-    html += `<div>Lv.${poke.levelMin}-${poke.levelMax}</div>`;
-    html += '<div class="alpha-guaranteed"><img src="images/alpha-icon.svg" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 2px;"> 100%</div>';
+    html += `<div>${poke.levelMin} – ${poke.levelMax}</div>`;
     html += '</td>';
 
     html += '</tr>';
@@ -500,7 +498,6 @@ function createSpawnerPopup(spawner: Spawner): string {
   }
 
   html += '<table class="pokemon-table">';
-  html += '<thead><tr><th>Pokemon</th><th>Level</th><th>Rate</th></tr></thead>';
   html += '<tbody>';
 
   spawner.pokemon.forEach((poke) => {
@@ -521,7 +518,7 @@ function createSpawnerPopup(spawner: Spawner): string {
     html += '</td>';
 
     // Level column
-    html += `<td class="level-col">Lv.${poke.levelMin}-${poke.levelMax}</td>`;
+    html += `<td class="level-col">${poke.levelMin} – ${poke.levelMax}</td>`;
 
     // Rate column
     html += '<td class="rate-col">';
