@@ -150,16 +150,25 @@ async function loadData(): Promise<void> {
 
 // Create spawner markers
 function createSpawnerMarkers(spawners: Spawner[]): void {
+  // Create pokeball icon for spawners
+  const pokeballIcon = L.divIcon({
+    html: `<div style="width: 24px; height: 24px; background: #ffd700; border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+      <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: #fff;">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>
+        <path d="M3 12h6"/>
+        <path d="M15 12h6"/>
+      </svg>
+    </div>`,
+    className: '',
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+  });
+
   spawners.forEach((spawner, index) => {
-    // Leaflet uses [lat, lng]
-    // Serebii coordinates are in 512 space, our image is 1024, so scale by 2
-    const marker = L.circleMarker([spawner.lat * 8, spawner.lng * 8], {
-      radius: 6,
-      fillColor: '#ffd700',
-      color: '#fff',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.8,
+    const marker = L.marker([spawner.lat * 8, spawner.lng * 8], {
+      icon: pokeballIcon,
     });
 
     // Create popup content
@@ -168,7 +177,7 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
 
     marker.addTo(map);
     spawnerMarkers.push({
-      marker: marker,
+      marker: marker as any,
       data: spawner,
     });
   });
@@ -176,18 +185,24 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
 
 // Create bench markers with radius functionality
 function createBenchMarkers(benches: Bench[]): void {
+  // Create bench icon
+  const benchIcon = L.divIcon({
+    html: `<div style="width: 24px; height: 24px; background: #8b6f47; border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" style="width: 12px; height: 12px; color: #fff;">
+        <path d="M289.4 18c-1.2 1.9-1.9 3.91-2.3 5.99-1.4 8.93 4.9 18.7 17.5 26.87-40.4 19.75-61.8 52.14-52.5 79.74 7.7 22.9 35.3 38.4 71.8 40.3-3.1 28.7 14.9 50.2 41 48.8 9.2-.5 18.6-3.9 27.2-9.7 11.7 13.7 25.5 21 39.9 21 15.9 0 31.3-9.1 43.8-25.8 5.9 1.4 12 2.1 18.2 1.9V18H289.4zm132.7 230.2L409.5 493h45l-12.6-244.8c-3.2.5-6.5.8-9.9.8-3.4 0-6.7-.3-9.9-.8zM41 283v62h302v-62H41zm60 80v18h18v-18h-18zm164 0v18h18v-18h-18zM25 399v30h334v-30H25zm32 48v46h30v-46H57zm240 0v46h30v-46h-30z"/>
+      </svg>
+    </div>`,
+    className: '',
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+  });
+
   benches.forEach((bench) => {
-    // Scale coordinates by 2 to match 1024×1024 map
-    const marker = L.circleMarker([bench.lat * 8, bench.lng * 8], {
-      radius: 7,
-      fillColor: '#8b6f47',
-      color: '#fff',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.9,
+    const marker = L.marker([bench.lat * 8, bench.lng * 8], {
+      icon: benchIcon,
     });
 
-    const popup = '<div class="simple-popup"><div class="popup-header bench-header"><h4>🪑 Bench</h4></div><div class="popup-body">Rest and save point<br><em>Click to show spawn radius</em></div></div>';
+    const popup = '<div class="simple-popup"><div class="popup-header bench-header"><h4>Bench</h4></div></div>';
     marker.bindPopup(popup);
 
     // Add click handler for radius visualization
@@ -197,7 +212,7 @@ function createBenchMarkers(benches: Bench[]): void {
 
     marker.addTo(map);
     benchMarkers.push({
-      marker: marker,
+      marker: marker as any,
       data: bench,
     });
   });
@@ -205,18 +220,24 @@ function createBenchMarkers(benches: Bench[]): void {
 
 // Create fly point markers
 function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
+  // Create map pin icon for fly points
+  const flyIcon = L.divIcon({
+    html: `<div style="width: 28px; height: 28px; background: #3498db; border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" style="width: 14px; height: 14px; color: #fff;">
+        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+      </svg>
+    </div>`,
+    className: '',
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+  });
+
   flyPoints.forEach((point) => {
-    // Scale coordinates by 8 to match 4096×4096 map
-    const marker = L.circleMarker([point.lat * 8, point.lng * 8], {
-      radius: 9,
-      fillColor: '#3498db',
-      color: '#fff',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.9,
+    const marker = L.marker([point.lat * 8, point.lng * 8], {
+      icon: flyIcon,
     });
 
-    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Fly Point</h4></div><div class="popup-body">Fast travel location<br>Click to show coverage area</div></div>';
+    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Fly Point</h4></div></div>';
     marker.bindPopup(popup);
 
     marker.on('click', () => {
@@ -225,7 +246,7 @@ function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
 
     marker.addTo(map);
     flyPointMarkers.push({
-      marker: marker,
+      marker: marker as any,
       data: point,
     });
   });
@@ -233,21 +254,29 @@ function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
 
 // Create holovator markers (elevators)
 function createHolovatorMarkers(holovators: Holovator[]): void {
+  // Create holovator icon
+  const holovatorIcon = L.divIcon({
+    html: `<div style="width: 24px; height: 24px; background: #f4d23c; border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" style="width: 12px; height: 12px; color: #333;">
+        <path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z"/>
+        <path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+      </svg>
+    </div>`,
+    className: '',
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+  });
+
   holovators.forEach((holovator) => {
-    const marker = L.circleMarker([holovator.lat * 8, holovator.lng * 8], {
-      radius: 7,
-      fillColor: '#9b59b6',
-      color: '#fff',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.85,
+    const marker = L.marker([holovator.lat * 8, holovator.lng * 8], {
+      icon: holovatorIcon,
     });
 
-    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Holovator</h4></div><div class="popup-body">Elevator access</div></div>';
+    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Holovator</h4></div></div>';
     marker.bindPopup(popup);
     marker.addTo(map);
     holovatorMarkers.push({
-      marker: marker,
+      marker: marker as any,
       data: holovator,
     });
   });
@@ -255,21 +284,28 @@ function createHolovatorMarkers(holovators: Holovator[]): void {
 
 // Create ladder markers (roof access)
 function createLadderMarkers(ladders: Ladder[]): void {
+  // Create ladder icon
+  const ladderIcon = L.divIcon({
+    html: `<div style="width: 22px; height: 22px; background: rgba(255,255,255,0.5); border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256" style="width: 11px; height: 11px; color: #333;">
+        <path d="M192,20a12,12,0,0,0-12,12V60H76V32a12,12,0,0,0-24,0V224a12,12,0,0,0,24,0V196H180v28a12,12,0,0,0,24,0V32A12,12,0,0,0,192,20ZM180,84v32H76V84ZM76,172V140H180v32Z"/>
+      </svg>
+    </div>`,
+    className: '',
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+  });
+
   ladders.forEach((ladder) => {
-    const marker = L.circleMarker([ladder.lat * 8, ladder.lng * 8], {
-      radius: 6,
-      fillColor: '#e67e22',
-      color: '#fff',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.85,
+    const marker = L.marker([ladder.lat * 8, ladder.lng * 8], {
+      icon: ladderIcon,
     });
 
-    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Ladder</h4></div><div class="popup-body">Roof access</div></div>';
+    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Ladder</h4></div></div>';
     marker.bindPopup(popup);
     marker.addTo(map);
     ladderMarkers.push({
-      marker: marker,
+      marker: marker as any,
       data: ladder,
     });
   });
@@ -277,21 +313,28 @@ function createLadderMarkers(ladders: Ladder[]): void {
 
 // Create wild zone markers
 function createWildZoneMarkers(wildZones: WildZone[]): void {
+  // Create wild zone icon
+  const wildZoneIcon = L.divIcon({
+    html: `<div style="width: 30px; height: 30px; background: #16a085; border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" style="width: 16px; height: 16px; color: #fff;">
+        <path d="M461.563 38.938C313.435 165.053 232.49 371.144 210.313 492.5h77.218c31.597-122.495 51.135-263.494 174.033-453.563zM78.375 91.374c52.397 62.796 102.31 132.45 142.094 199.28 7.298 12.263 14.236 24.417 20.81 36.408 7.833-19.184 16.525-38.697 26.095-58.282-51.817-71.23-113.464-135.005-189-177.405zm391.188 133.72c-51.588 46.498-78.856 114.453-90.594 190.655 13.775 25.835 26.704 51.295 38.936 75.875h39.375c-25.25-71.46-11.537-162.36 12.283-266.53zM67 240.437c72.962 73.26 120.794 188.6 80.094 250.78h45c4.494-25.12 11.34-53.633 20.687-84.25C194.338 322.68 131.42 242.927 67 240.44zm-32.875 87.937C87.145 409.31 95.83 453.34 75.063 490.97h67.5c-13.1-72.02-31.444-116.305-108.438-162.595zm300.938 45.594c-10.65 41.36-19.188 80.437-28.813 118.25h91.72c-19.144-38.286-39.92-78.392-62.908-118.25z"/>
+      </svg>
+    </div>`,
+    className: '',
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+  });
+
   wildZones.forEach((zone) => {
-    const marker = L.circleMarker([zone.lat * 8, zone.lng * 8], {
-      radius: 10,
-      fillColor: '#16a085',
-      color: '#fff',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.7,
+    const marker = L.marker([zone.lat * 8, zone.lng * 8], {
+      icon: wildZoneIcon,
     });
 
     const popupContent = createWildZonePopup(zone);
     marker.bindPopup(popupContent, { maxWidth: 400, maxHeight: 400 });
     marker.addTo(map);
     wildZoneMarkers.push({
-      marker: marker,
+      marker: marker as any,
       data: zone,
     });
   });
@@ -484,12 +527,16 @@ function createWildZonePopup(zone: WildZone): string {
 // Create popup content for spawner
 function createSpawnerPopup(spawner: Spawner): string {
   let html = '<div class="spawner-popup">';
-  html += '<div class="popup-header">';
-  html += '<h4>Pokemon Spawner</h4>';
-  if (spawner.respawnTime) {
-    html += `<span class="respawn-badge">${spawner.respawnTime}s</span>`;
+
+  // Only show header if more than one Pokemon
+  if (spawner.pokemon.length > 1) {
+    html += '<div class="popup-header">';
+    html += '<h4>Pokemon Spawner</h4>';
+    if (spawner.respawnTime) {
+      html += `<span class="respawn-badge">${spawner.respawnTime}s</span>`;
+    }
+    html += '</div>';
   }
-  html += '</div>';
 
   if (spawner.pokemon.length === 0) {
     html += '<p class="no-data">No spawn data available</p>';
@@ -517,17 +564,17 @@ function createSpawnerPopup(spawner: Spawner): string {
     html += '</div>';
     html += '</td>';
 
-    // Level column
-    html += `<td class="level-col">Lv. ${poke.levelMin} – ${poke.levelMax}</td>`;
-
-    // Rate column
+    // Rate column with level on top, rate + alpha on one line
     html += '<td class="rate-col">';
+    html += `<div class="level-text">Lv. ${poke.levelMin} – ${poke.levelMax}</div>`;
+    html += '<div class="rate-alpha-line">';
     if (poke.rarity !== undefined) {
-      html += `<div class="rarity">${poke.rarity}%</div>`;
+      html += `<span class="rarity">${poke.rarity}%</span>`;
     }
     if (poke.alphaChance > 0) {
-      html += `<div class="alpha-chance"><img src="images/alpha-icon.svg" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${poke.alphaChance}%</div>`;
+      html += `<span class="alpha-chance"><img src="images/alpha-icon.svg" style="width: 12px; height: 12px; vertical-align: middle;">${poke.alphaChance}%</span>`;
     }
+    html += '</div>';
     html += '</td>';
 
     html += '</tr>';
