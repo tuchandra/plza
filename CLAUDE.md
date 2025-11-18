@@ -126,13 +126,14 @@ gh run list --limit 5
 ## Coordinate System
 
 **Serebii's system:**
-- Coordinates: ~`lat: -500 to 0, lng: 0 to 500`
+- Coordinates scaled via `cvert` function: 4096 → 512 space
+- Actual data ranges: `lat: -494 to -12, lng: 19 to 491`
 - Uses `L.CRS.Simple` (Leaflet simple coordinate system)
 - Table IDs link markers to spawn data
 
 **Our system:**
-- Map image: 1024×1024 pixels
-- Map bounds: `[[-1000, 0], [0, 1000]]` (Serebii coords × 2)
+- Map image: 1024×1024 pixels (stitched from tiles 0-3 at zoom level 1)
+- Image bounds: `[[-1024, 0], [0, 1024]]` (512 space × 2 for 1024px image)
 - Marker placement: `[lat * 2, lng * 2]` to match image scale
 - Data format: `{lat, lng, tableID}` (NOT `{id, x, y}`)
 

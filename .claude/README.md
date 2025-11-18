@@ -2,6 +2,19 @@
 
 ## Recent Major Changes (Nov 17, 2025)
 
+### Map Coordinate Alignment - RESOLVED ✅
+
+**Problem:**
+POI markers appeared slightly offset from their correct map positions. For example, Wild Zone 20 center alphas were not centered in the building on the map.
+
+**Investigation:**
+- Serebii uses 4096→512 coordinate scaling via `cvert` function
+- Our map is 1024×1024 stitched from tiles 0-3 at zoom level 1
+- Initial bounds `[[-1000, 0], [0, 1000]]` didn't align properly
+
+**Solution:**
+Adjusted image overlay bounds to `[[-1024, 0], [0, 1024]]` to properly align the coordinate system with the map tiles. Markers now render at correct positions.
+
 ### Popup UI Redesign ✅
 
 Redesigned all popup layouts from list-based to table-based for better readability:
@@ -106,10 +119,10 @@ Created proper extraction pipeline using **table IDs** to maintain alignment:
 ### Map Rendering
 
 **Coordinate System:**
-- Serebii uses ~500×500 coordinate space
+- Serebii uses 4096→512 coordinate scaling (cvert function)
 - Our map image is 1024×1024 pixels
-- **Scale factor: 2×** when rendering markers
-- Bounds: `[[-1000, 0], [0, 1000]]` (scaled from [-500, 0] to [0, 500])
+- Image bounds: `[[-1024, 0], [0, 1024]]`
+- **Scale factor: 2×** when rendering markers (512 space → 1024px image)
 
 **Marker placement:**
 ```typescript
@@ -212,13 +225,3 @@ Deploy: Push to main → GitHub Actions → `public/` folder deployed
 - Clear, concise commit messages (no LLM-isms)
 - Always test before committing
 - See `.claude/HANDOFF_ROUTINE.md` for session handoff checklist
-
-## Known Issues
-
-**Coordinate Offset (Active Investigation):**
-- POI markers appear slightly offset from their correct map positions
-- Example: Wild Zone 20 center alphas not centered in building
-- Serebii uses 4096→512 coordinate scaling (cvert function)
-- Our map is 1024×1024 stitched from tiles 0-3 at zoom level 1
-- Current bounds: `[[-1024, 0], [0, 1024]]`
-- May need to adjust tile extraction or coordinate transformation
