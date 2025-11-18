@@ -62,7 +62,17 @@ Redesigned all popup layouts from list-based to table-based for better readabili
 - Red gradient header
 - 100% alpha guarantee indicator
 
-**Simple popups (benches, holovators, ladders, wild zones):**
+**Wild zone popups:**
+- 4-column grid layout with Pokemon sprites and names
+- Scrollable content area (max-height: 320px)
+- **Wild Zone 20 special format:** Two sections separated by divider
+  - Top: Regular spawns (5% alpha chance) - 15 Pokemon
+  - Bottom: "Possible Alpha Encounters" (100% alpha chance) - 67 Pokemon
+- Other wild zones: Simple single grid (1-13 Pokemon each)
+- Thin scrollbar styling (6px width)
+- Prevents horizontal overflow with `overflow-x: hidden`
+
+**Simple popups (benches, holovators, ladders):**
 - Gradient headers matching POI type
 - Consistent styling
 
@@ -144,10 +154,14 @@ Created proper extraction pipeline using **table IDs** to maintain alignment:
   - 57 unique alpha Pokemon species
   - All with 100% alpha chance
   - Includes elemental monkeys (Pansage/Pansear/Panpour), starters, and more
+- **20 wild zones** with full Pokemon data
+  - 258 total Pokemon entries across all zones
+  - Wild Zone 20: 82 Pokemon (15 regular + 67 alphas)
+  - Other zones: 1-13 Pokemon each
+  - Extracted from Serebii spawn tables (tableID 5001-5020)
 - **253 benches** (rest/save points)
 - **23 holovators** (elevators)
 - **147 ladders** (roof access)
-- **20 wild zones** (special spawn areas)
 
 ### Map Rendering
 
@@ -169,6 +183,7 @@ L.circleMarker([spawner.lat * 8, spawner.lng * 8], {...})
 2. `scripts/fetch-spawn-tables.ts` - Fetch from Serebii
 3. `scripts/parse-spawn-tables.ts` - Parse HTML
 4. `scripts/merge-complete-data.ts` - Merge everything
+5. `scripts/fetch-wild-zone-data.ts` - Fetch and parse wild zone Pokemon data
 
 **Documentation:**
 - `docs/data-extraction-guide.md` - Complete methodology
