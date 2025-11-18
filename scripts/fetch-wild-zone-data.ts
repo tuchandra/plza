@@ -46,30 +46,43 @@ async function fetchWildZoneTable(tableID: number): Promise<string | null> {
 }
 
 function parseWildZoneTable(html: string): Pokemon[] {
-  const pokemonMap = new Map<string, Pokemon>();
+  const pokemonMap = new Map<string, { pokemon: Pokemon; hasAlphaIcon: boolean }>();
 
-  // Extract all Pokemon image tags to get names and pokedex numbers
-  const imageMatches = html.matchAll(/<img src="\/legendsz-a\/pokemon\/(\d+)(?:-[a-z])?\.png"[^>]*alt="([^"]+)"/g);
+  // Extract all Pokemon sprites and their surrounding context
+  const spriteRegex = /<td[^>]*>.*?<img src="\/legendsz-a\/pokemon\/(\d+)(?:-[a-z])?\.png"[^>]*alt="([^"]+)".*?<\/td>/gs;
+  const matches = [...html.matchAll(spriteRegex)];
 
-  for (const match of imageMatches) {
+  for (const match of matches) {
     const pokedexNumber = parseInt(match[1]);
     const name = match[2];
+    const fullCellHtml = match[0];
 
-    // Skip if we already have this Pokemon
-    if (pokemonMap.has(name)) continue;
+    // Check if this cell has an alpha icon (which means it's a guaranteed alpha spawn)
+    const hasAlphaIcon = fullCellHtml.includes('alt="Alpha"');
 
-    // For wild zones, store simplified data (we'll show just names in popup for now)
+    // If we've seen this Pokemon before, update if this one is an alpha
+    const existing = pokemonMap.get(name);
+    if (existing && !hasAlphaIcon) {
+      // Already have this Pokemon, and this one isn't an alpha, so skip
+      continue;
+    }
+
     pokemonMap.set(name, {
-      name,
-      pokedexNumber,
-      types: [], // Could parse but keeping simple for now
-      levelMin: 50,
-      levelMax: 65,
-      alphaChance: 0,
+      pokemon: {
+        name,
+        pokedexNumber,
+        types: [],
+        levelMin: 50,
+        levelMax: 65,
+        alphaChance: hasAlphaIcon ? 100 : 0,
+      },
+      hasAlphaIcon,
     });
   }
 
-  return Array.from(pokemonMap.values()).sort((a, b) => a.pokedexNumber - b.pokedexNumber);
+  return Array.from(pokemonMap.values())
+    .map(entry => entry.pokemon)
+    .sort((a, b) => a.pokedexNumber - b.pokedexNumber);
 }
 
 async function main() {

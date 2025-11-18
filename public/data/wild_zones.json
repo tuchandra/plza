@@ -82,7 +82,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Magikarp",
@@ -162,7 +162,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Skiddo",
@@ -242,7 +242,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       }
     ],
     "name": "Wild Zone 4"
@@ -306,7 +306,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Venipede",
@@ -354,7 +354,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       }
     ],
     "name": "Wild Zone 5"
@@ -418,7 +418,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Buneary",
@@ -578,7 +578,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       }
     ],
     "name": "Wild Zone 8"
@@ -650,7 +650,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Carbink",
@@ -794,7 +794,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Clawitzer",
@@ -882,7 +882,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Avalugg",
@@ -906,7 +906,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Scyther",
@@ -1066,7 +1066,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Whirlipede",
@@ -1098,7 +1098,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Gourgeist",
@@ -1170,7 +1170,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Barbaracle",
@@ -1210,7 +1210,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Lampent",
@@ -1322,7 +1322,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Noivern",
@@ -1386,7 +1386,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Furfrou",
@@ -1466,7 +1466,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Victreebel",
@@ -1514,7 +1514,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Vaporeon",
@@ -1578,7 +1578,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Delibird",
@@ -1626,7 +1626,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Medicham",
@@ -1674,7 +1674,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Lucario",
@@ -1722,7 +1722,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Tepig",
@@ -1778,7 +1778,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Garbodor",
@@ -1826,7 +1826,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Talonflame",
@@ -1874,7 +1874,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Aegislash",
@@ -1922,7 +1922,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Hawlucha",
@@ -1970,7 +1970,7 @@
         "types": [],
         "levelMin": 50,
         "levelMax": 65,
-        "alphaChance": 0
+        "alphaChance": 100
       },
       {
         "name": "Noivern",

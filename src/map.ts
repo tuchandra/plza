@@ -408,6 +408,10 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
 
 // Create popup content for wild zone
 function createWildZonePopup(zone: WildZone): string {
+  // Separate Pokemon into regular and alpha spawns
+  const regularPokemon = zone.pokemon.filter(p => p.alphaChance < 100);
+  const alphaPokemon = zone.pokemon.filter(p => p.alphaChance === 100);
+
   let html = '<div class="wild-zone-popup">';
   html += '<div class="popup-header wild-zone-header">';
   html += `<h4>${zone.name}</h4>`;
@@ -420,17 +424,36 @@ function createWildZonePopup(zone: WildZone): string {
     return html;
   }
 
-  html += '<div class="pokemon-grid">';
-
-  zone.pokemon.forEach((poke) => {
-    const spriteUrl = getPokemonSprite(poke.pokedexNumber);
-    html += '<div class="pokemon-grid-item">';
-    html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" title="${poke.name}" />`;
-    html += `<div class="pokemon-name-small">${poke.name}</div>`;
+  // Regular spawns section
+  if (regularPokemon.length > 0) {
+    html += '<div class="pokemon-grid">';
+    regularPokemon.forEach((poke) => {
+      const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+      html += '<div class="pokemon-grid-item">';
+      html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" title="${poke.name}" />`;
+      html += `<div class="pokemon-name-small">${poke.name}</div>`;
+      html += '</div>';
+    });
     html += '</div>';
-  });
+  }
 
-  html += '</div>';
+  // Alpha spawns section
+  if (alphaPokemon.length > 0) {
+    if (regularPokemon.length > 0) {
+      html += '<div class="pokemon-section-divider"></div>';
+    }
+    html += '<div class="pokemon-section-header">Possible Alpha Encounters</div>';
+    html += '<div class="pokemon-grid">';
+    alphaPokemon.forEach((poke) => {
+      const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+      html += '<div class="pokemon-grid-item">';
+      html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" title="${poke.name}" />`;
+      html += `<div class="pokemon-name-small">${poke.name}</div>`;
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
   html += '</div>';
   return html;
 }
