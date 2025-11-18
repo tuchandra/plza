@@ -299,21 +299,24 @@ function createWildZoneMarkers(wildZones: WildZone[]): void {
 
 // Create static alpha markers
 function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
+  // Create alpha icon
+  const alphaIcon = L.icon({
+    iconUrl: 'images/alpha-icon.svg',
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12],
+  });
+
   staticAlphas.forEach((alpha) => {
-    const marker = L.circleMarker([alpha.lat * 8, alpha.lng * 8], {
-      radius: 8,
-      fillColor: '#e74c3c',
-      color: '#fff',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.9,
+    const marker = L.marker([alpha.lat * 8, alpha.lng * 8], {
+      icon: alphaIcon,
     });
 
     const popupContent = createAlphaPopup(alpha);
     marker.bindPopup(popupContent);
     marker.addTo(map);
     staticAlphaMarkers.push({
-      marker: marker,
+      marker: marker as any,
       data: alpha,
     });
   });
@@ -323,7 +326,7 @@ function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
 function createAlphaPopup(alpha: StaticAlpha): string {
   let html = '<div class="alpha-popup">';
   html += '<div class="popup-header alpha-header">';
-  html += '<h4>⭐ Static Alpha Spawn</h4>';
+  html += '<h4><img src="images/alpha-icon.svg" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"> Static Alpha Spawn</h4>';
   html += '</div>';
 
   if (alpha.pokemon.length === 0) {
@@ -359,7 +362,7 @@ function createAlphaPopup(alpha: StaticAlpha): string {
     // Level column (with 100% alpha indicator)
     html += '<td class="level-col alpha-level">';
     html += `<div>Lv.${poke.levelMin}-${poke.levelMax}</div>`;
-    html += '<div class="alpha-guaranteed">⭐ 100%</div>';
+    html += '<div class="alpha-guaranteed"><img src="images/alpha-icon.svg" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 2px;"> 100%</div>';
     html += '</td>';
 
     html += '</tr>';
@@ -526,7 +529,7 @@ function createSpawnerPopup(spawner: Spawner): string {
       html += `<div class="rarity">${poke.rarity}%</div>`;
     }
     if (poke.alphaChance > 0) {
-      html += `<div class="alpha-chance">⭐${poke.alphaChance}%</div>`;
+      html += `<div class="alpha-chance"><img src="images/alpha-icon.svg" style="width: 12px; height: 12px; vertical-align: middle; margin-right: 2px;">${poke.alphaChance}%</div>`;
     }
     html += '</td>';
 
