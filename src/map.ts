@@ -17,8 +17,9 @@ const CONFIG: MapConfig = {
   mapImage: 'images/lumiose_map.png',
   // Bounds in Leaflet [lat, lng] format: [[minLat, minLng], [maxLat, maxLng]]
   // Map image is 1024×1024 pixels
-  // Coordinates extracted from Serebii are in ~500×500 space (original extraction used [-500, 0], [0, 500])
-  // Scale by 2 to match 1024 map: [[-1000, 0], [0, 1000]]
+  // Actual Serebii coordinate ranges: lat [-494, -12], lng [19, 491]
+  // Using symmetric bounds for proper centering: [[-512, 0], [0, 512]]
+  // Then scale markers by 2 to fit 1024px image
   mapBounds: [
     [-1000, 0],
     [0, 1000],
@@ -50,8 +51,14 @@ export function initMap(): void {
   });
 
   // Add the map image as an overlay
+  // Serebii's cvert scales 4096 -> 512, so coordinates are in 512 space
+  // Our image is 1024x1024, so we need bounds of [-512, 0] to [0, 512]
+  // but scaled by 2 for our larger image: [-1024, 0] to [0, 1024]
   const imageUrl = CONFIG.mapImage;
-  const imageBounds = CONFIG.mapBounds;
+  const imageBounds: [[number, number], [number, number]] = [
+    [-1024, 0],
+    [0, 1024],
+  ];
 
   L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
@@ -148,7 +155,7 @@ async function loadData(): Promise<void> {
 function createSpawnerMarkers(spawners: Spawner[]): void {
   spawners.forEach((spawner, index) => {
     // Leaflet uses [lat, lng]
-    // spawner coordinates are in ~500×500 space but map is 1024×1024, so scale by 2
+    // Serebii coordinates are in 512 space, our image is 1024, so scale by 2
     const marker = L.circleMarker([spawner.lat * 2, spawner.lng * 2], {
       radius: 6,
       fillColor: '#ffd700',
@@ -175,13 +182,16 @@ function createBenchMarkers(benches: Bench[]): void {
   benches.forEach((bench) => {
     // Scale coordinates by 2 to match 1024×1024 map
     const marker = L.circleMarker([bench.lat * 2, bench.lng * 2], {
-      radius: 8,
-      fillColor: '#2c3e50',
+      radius: 7,
+      fillColor: '#8b6f47',
       color: '#fff',
       weight: 2,
       opacity: 1,
       fillOpacity: 0.9,
     });
+
+    const popup = '<div class="simple-popup"><div class="popup-header bench-header"><h4>🪑 Bench</h4></div><div class="popup-body">Rest and save point<br><em>Click to show spawn radius</em></div></div>';
+    marker.bindPopup(popup);
 
     // Add click handler for radius visualization
     marker.on('click', () => {
@@ -233,7 +243,8 @@ function createHolovatorMarkers(holovators: Holovator[]): void {
       fillOpacity: 0.85,
     });
 
-    marker.bindPopup('<strong>Holovator</strong><br>Elevator access');
+    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Holovator</h4></div><div class="popup-body">Elevator access</div></div>';
+    marker.bindPopup(popup);
     marker.addTo(map);
     holovatorMarkers.push({
       marker: marker,
@@ -254,7 +265,8 @@ function createLadderMarkers(ladders: Ladder[]): void {
       fillOpacity: 0.85,
     });
 
-    marker.bindPopup('<strong>Ladder</strong><br>Roof access');
+    const popup = '<div class="simple-popup"><div class="popup-header"><h4>Ladder</h4></div><div class="popup-body">Roof access</div></div>';
+    marker.bindPopup(popup);
     marker.addTo(map);
     ladderMarkers.push({
       marker: marker,
@@ -310,7 +322,9 @@ function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
 // Create popup content for static alpha
 function createAlphaPopup(alpha: StaticAlpha): string {
   let html = '<div class="alpha-popup">';
+  html += '<div class="popup-header alpha-header">';
   html += '<h4>⭐ Static Alpha Spawn</h4>';
+  html += '</div>';
 
   if (alpha.pokemon.length === 0) {
     html += '<p class="no-data">No spawn data available</p>';
@@ -318,46 +332,40 @@ function createAlphaPopup(alpha: StaticAlpha): string {
     return html;
   }
 
-  html += '<ul class="pokemon-list">';
+  html += '<table class="pokemon-table alpha-table">';
+  html += '<thead><tr><th>Pokemon</th><th>Level</th></tr></thead>';
+  html += '<tbody>';
 
   alpha.pokemon.forEach((poke) => {
     const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+    const types = poke.types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(' ');
 
-    html += `<li class="pokemon-item">`;
+    html += '<tr>';
+
+    // Pokemon column (sprite + name + types)
+    html += '<td class="pokemon-col">';
     html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />`;
-    html += `<div class="pokemon-info">`;
-    html += `<div class="pokemon-name"><strong>${poke.name}</strong></div>`;
-
-    // Level range
-    html += `<div class="pokemon-level">Lv. ${poke.levelMin}-${poke.levelMax}</div>`;
-
-    // Types
+    html += '<div class="pokemon-details">';
+    html += `<div class="pokemon-name">${poke.name}</div>`;
     if (poke.types.length > 0) {
-      html += `<div class="pokemon-types">`;
-      poke.types.forEach((type) => {
-        html += `<span class="type-badge type-${type}">${type}</span>`;
-      });
-      html += `</div>`;
+      html += `<div class="pokemon-types">${types}</div>`;
     }
-
-    // Rarity
     if (poke.rarity !== undefined) {
-      html += `<div class="pokemon-rarity">${poke.rarity}% spawn rate</div>`;
+      html += `<div class="spawn-rate">${poke.rarity}%</div>`;
     }
+    html += '</div>';
+    html += '</td>';
 
-    // Alpha is guaranteed
-    html += `<div class="pokemon-alpha alpha-guaranteed">⭐ 100% Alpha</div>`;
+    // Level column (with 100% alpha indicator)
+    html += '<td class="level-col alpha-level">';
+    html += `<div>Lv.${poke.levelMin}-${poke.levelMax}</div>`;
+    html += '<div class="alpha-guaranteed">⭐ 100%</div>';
+    html += '</td>';
 
-    // Time of day
-    if (poke.timeOfDay) {
-      html += `<div class="pokemon-time">${poke.timeOfDay}</div>`;
-    }
-
-    html += `</div>`;
-    html += `</li>`;
+    html += '</tr>';
   });
 
-  html += '</ul>';
+  html += '</tbody></table>';
   html += '</div>';
   return html;
 }
@@ -376,8 +384,9 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
     activeRadiusCircles.splice(existingIndex, 1);
   } else {
     // Add new radius
-    // Scale coordinates by 2 to match 1024×1024 map
-    const radius = (location.radius || 100) * 2; // Scale radius too
+    // Benches have a radius of ~50m in-game, which is much smaller
+    // Using 50 pixels (25 units * 2 scale factor) for visual representation
+    const radius = 50; // Fixed 50 pixel radius for benches
     const circle = L.circle([location.lat * 2, location.lng * 2], {
       radius: radius,
       fillColor: '#27ae60',
@@ -403,12 +412,12 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
 // Create popup content for spawner
 function createSpawnerPopup(spawner: Spawner): string {
   let html = '<div class="spawner-popup">';
+  html += '<div class="popup-header">';
   html += '<h4>Pokemon Spawner</h4>';
-
-  // Show respawn time if available
   if (spawner.respawnTime) {
-    html += `<div class="respawn-time">Respawn: ${spawner.respawnTime}s</div>`;
+    html += `<span class="respawn-badge">${spawner.respawnTime}s</span>`;
   }
+  html += '</div>';
 
   if (spawner.pokemon.length === 0) {
     html += '<p class="no-data">No spawn data available</p>';
@@ -416,52 +425,45 @@ function createSpawnerPopup(spawner: Spawner): string {
     return html;
   }
 
-  html += '<ul class="pokemon-list">';
+  html += '<table class="pokemon-table">';
+  html += '<thead><tr><th>Pokemon</th><th>Level</th><th>Rate</th></tr></thead>';
+  html += '<tbody>';
 
   spawner.pokemon.forEach((poke) => {
     const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+    const types = poke.types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(' ');
 
-    html += `<li class="pokemon-item">`;
+    html += '<tr>';
+
+    // Pokemon column (sprite + name + types)
+    html += '<td class="pokemon-col">';
     html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />`;
-    html += `<div class="pokemon-info">`;
+    html += '<div class="pokemon-details">';
     html += `<div class="pokemon-name">${poke.name}</div>`;
-
-    // Level range
-    html += `<div class="pokemon-level">Lv. ${poke.levelMin}-${poke.levelMax}</div>`;
-
-    // Types
     if (poke.types.length > 0) {
-      html += `<div class="pokemon-types">`;
-      poke.types.forEach((type) => {
-        html += `<span class="type-badge type-${type}">${type}</span>`;
-      });
-      html += `</div>`;
+      html += `<div class="pokemon-types">${types}</div>`;
     }
+    html += '</div>';
+    html += '</td>';
 
-    // Rarity
+    // Level column
+    html += `<td class="level-col">Lv.${poke.levelMin}-${poke.levelMax}</td>`;
+
+    // Rate column
+    html += '<td class="rate-col">';
     if (poke.rarity !== undefined) {
-      html += `<div class="pokemon-rarity">${poke.rarity}% spawn rate</div>`;
+      html += `<div class="rarity">${poke.rarity}%</div>`;
     }
-
-    // Alpha chance
     if (poke.alphaChance > 0) {
-      html += `<div class="pokemon-alpha">⭐ ${poke.alphaChance}% Alpha`;
-      if (poke.alphaLevelMin && poke.alphaLevelMax) {
-        html += ` (Lv. ${poke.alphaLevelMin}-${poke.alphaLevelMax})`;
-      }
-      html += `</div>`;
+      html += `<div class="alpha-chance">⭐${poke.alphaChance}%</div>`;
     }
+    html += '</td>';
 
-    // Time of day
-    if (poke.timeOfDay) {
-      html += `<div class="pokemon-time">🕐 ${poke.timeOfDay}</div>`;
-    }
-
-    html += `</div>`;
-    html += `</li>`;
+    html += '</tr>';
   });
 
-  html += '</ul></div>';
+  html += '</tbody></table>';
+  html += '</div>';
   return html;
 }
 
