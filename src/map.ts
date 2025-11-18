@@ -65,8 +65,8 @@ export function initMap(): void {
   // Center view on Lumiose City based on actual spawner coordinates
   // Spawner ranges: lat [-494, -12.5], lng [19.5, 491]
   // Center: lat -253.3, lng 255.4 → scaled by 8 = [-2026, 2043]
-  // Zoom 0 shows more of the city at once
-  map.setView([-2026, 2043], 0);
+  // Zoom -0.5 shows wider city overview
+  map.setView([-2026, 2043], -0.5);
 
   // Load data and create markers
   loadData();
