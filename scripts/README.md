@@ -1,90 +1,32 @@
-# Serebii Data Extraction Scripts
+# Data Extraction Scripts
 
-Scripts to extract map tiles and game data from Serebii's Pokemon Legends Z-A map.
+Scripts to extract map data from Serebii while maintaining correct coordinate/ID alignment.
 
-## Data Extraction (extract-serebii-data.js)
+## Quick Start
 
-Extract Pokemon spawners, static alphas, wild zones, and map labels.
-
-**Usage:**
-1. Open https://www.serebii.net/pokearth/lumiosecity/
-2. Open DevTools Console (F12)
-3. Copy and paste `scripts/extract-serebii-data.js`
-4. Run `extractAllData()` to extract all data
-5. Download with `downloadJSON(data, 'serebii-data.json')`
-
-**What it extracts:**
-- Pokemon spawner coordinates with spawn tables
-- Static Alpha Pokemon locations
-- Wild zone boundaries (20 zones)
-- Map labels (districts: Bleu, Jaune, Magenta, Rouge, Vert)
-
-## Map Tile Download
-
-## Quick Start (Python - Recommended)
-
-1. **Find the tile range** on Serebii's map:
-   - Open https://www.serebii.net/pokearth/lumiosecity/
-   - Open DevTools → Network tab
-   - Pan around the entire map to load all tiles
-   - Look for requests like `tile_1-3-0.png`, `tile_1-4-5.png`, etc.
-   - Note the minimum and maximum x and y values
-
-2. **Update the script**:
-   - Edit `download-and-stitch.py`
-   - Update `TILE_RANGE` with the values you found:
-     ```python
-     TILE_RANGE = {
-         'x_min': 0,    # Replace with actual min x
-         'x_max': 10,   # Replace with actual max x
-         'y_min': 0,    # Replace with actual min y
-         'y_max': 10,   # Replace with actual max y
-     }
-     ```
-
-3. **Run the script** (dependencies are automatically managed by uv):
+1. **Extract coordinates from Serebii map:**
    ```bash
-   ./scripts/download-and-stitch.py
-   # or
-   uv run scripts/download-and-stitch.py
+   # 1. Open https://www.serebii.net/pokearth/lumiosecity/
+   # 2. Open browser console (F12)
+   # 3. Paste contents of extract-all-serebii-data.js
+   # 4. Downloads serebii-lumiose-complete.json
    ```
 
-   Note: No manual dependency installation needed! The script uses uv's inline script metadata.
+2. **Fetch Pokemon spawn tables:**
+   ```bash
+   bun run scripts/fetch-spawn-tables.ts serebii-lumiose-complete.json
+   ```
 
-5. **Enable the map** in `js/map.js`:
-   - Uncomment line 31:
-     ```javascript
-     L.imageOverlay(imageUrl, imageBounds).addTo(map);
-     ```
+3. **Parse spawn table HTML:**
+   ```bash
+   bun run scripts/parse-spawn-tables.ts data/spawn-tables-raw.json data/parsed-pokemon.json
+   ```
 
-## Alternative: Browser Console Method
+4. **Merge into final dataset:**
+   ```bash
+   bun run scripts/merge-complete-data.ts
+   ```
 
-1. **Run the detection script**:
-   - Open Serebii's map
-   - Open Console (F12 → Console)
-   - Copy and paste the contents of `download-map-tiles.js`
-   - Press Enter
-   - This will show you the tile ranges
+## Scripts Overview
 
-2. **Download tiles** using the generated commands
-
-3. **Stitch tiles** using Node.js (requires `npm install canvas`)
-
-## Example
-
-If you see tiles like:
-- `tile_1-0-0.png`
-- `tile_1-5-3.png`
-- `tile_1-8-7.png`
-
-Then your range might be:
-```python
-TILE_RANGE = {
-    'x_min': 0,
-    'x_max': 8,
-    'y_min': 0,
-    'y_max': 7,
-}
-```
-
-This would download 9 × 8 = 72 tiles and stitch them into one image.
+See `docs/data-extraction-guide.md` for detailed documentation.

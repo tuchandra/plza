@@ -12,9 +12,9 @@ export interface Pokemon {
 }
 
 export interface Spawner {
-  id: number;
-  x: number;
-  y: number;
+  lat: number;
+  lng: number;
+  tableID: number | null;
   respawnTime?: number;
   spawnsInRadiusMin?: number;
   spawnsInRadiusMax?: number;
@@ -22,11 +22,10 @@ export interface Spawner {
 }
 
 export interface StaticAlpha {
-  id?: number;
-  x: number;
-  y: number;
-  pokemon: {
-    id: number;
+  lat: number;
+  lng: number;
+  pokemon?: {
+    pokedexNumber: number;
     name: string;
   };
 }
@@ -46,18 +45,28 @@ export interface MapLabel {
 }
 
 export interface Bench {
-  id?: number;
-  x: number;
-  y: number;
-  radius: number;
+  lat: number;
+  lng: number;
+  radius?: number;
   name?: string;
 }
 
 export interface FlyPoint {
-  id?: number;
-  x: number;
-  y: number;
-  radius: number;
+  lat: number;
+  lng: number;
+  radius?: number;
+  name?: string;
+}
+
+export interface Holovator {
+  lat: number;
+  lng: number;
+  name?: string;
+}
+
+export interface Ladder {
+  lat: number;
+  lng: number;
   name?: string;
 }
 

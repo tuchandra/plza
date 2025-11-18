@@ -11,9 +11,13 @@ import type {
 // Configuration
 const CONFIG: MapConfig = {
   mapImage: 'images/lumiose_map.png',
+  // Bounds in Leaflet [lat, lng] format: [[minLat, minLng], [maxLat, maxLng]]
+  // Map image is 1024×1024 pixels
+  // Coordinates extracted from Serebii are in ~500×500 space (original extraction used [-500, 0], [0, 500])
+  // Scale by 2 to match 1024 map: [[-1000, 0], [0, 1000]]
   mapBounds: [
-    [-500, 0],
-    [0, 500],
+    [-1000, 0],
+    [0, 1000],
   ],
   pokespriteBase:
     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
@@ -45,7 +49,8 @@ export function initMap(): void {
 
   map.fitBounds(imageBounds);
   // Center view on Lumiose City (roughly the center of coordinates)
-  map.setView([-250, 250], 0.5);
+  // Map bounds are 1000×1000, so center is at [-500, 500]
+  map.setView([-500, 500], 0.5);
 
   // Load data and create markers
   loadData();
@@ -89,8 +94,10 @@ async function loadData(): Promise<void> {
 
 // Create spawner markers
 function createSpawnerMarkers(spawners: Spawner[]): void {
-  spawners.forEach((spawner) => {
-    const marker = L.circleMarker([spawner.y, spawner.x], {
+  spawners.forEach((spawner, index) => {
+    // Leaflet uses [lat, lng]
+    // spawner coordinates are in ~500×500 space but map is 1024×1024, so scale by 2
+    const marker = L.circleMarker([spawner.lat * 2, spawner.lng * 2], {
       radius: 6,
       fillColor: '#ffd700',
       color: '#fff',
@@ -114,7 +121,8 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
 // Create bench markers with radius functionality
 function createBenchMarkers(benches: Bench[]): void {
   benches.forEach((bench) => {
-    const marker = L.circleMarker([bench.y, bench.x], {
+    // Scale coordinates by 2 to match 1024×1024 map
+    const marker = L.circleMarker([bench.lat * 2, bench.lng * 2], {
       radius: 8,
       fillColor: '#2c3e50',
       color: '#fff',
@@ -139,7 +147,8 @@ function createBenchMarkers(benches: Bench[]): void {
 // Create fly point markers
 function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
   flyPoints.forEach((point) => {
-    const marker = L.circleMarker([point.y, point.x], {
+    // Scale coordinates by 2 to match 1024×1024 map
+    const marker = L.circleMarker([point.lat * 2, point.lng * 2], {
       radius: 9,
       fillColor: '#3498db',
       color: '#fff',
@@ -163,8 +172,9 @@ function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
 // Toggle radius circle visualization
 function toggleRadius(location: Bench | FlyPoint, type: string): void {
   // Check if this location already has a radius shown
+  // Note: coordinates need to be scaled by 2
   const existingIndex = activeRadiusCircles.findIndex(
-    (r) => r.x === location.x && r.y === location.y
+    (r) => r.x === location.lng * 2 && r.y === location.lat * 2
   );
 
   if (existingIndex >= 0) {
@@ -173,8 +183,9 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
     activeRadiusCircles.splice(existingIndex, 1);
   } else {
     // Add new radius
-    const radius = location.radius || 100;
-    const circle = L.circle([location.y, location.x], {
+    // Scale coordinates by 2 to match 1024×1024 map
+    const radius = (location.radius || 100) * 2; // Scale radius too
+    const circle = L.circle([location.lat * 2, location.lng * 2], {
       radius: radius,
       fillColor: '#27ae60',
       fillOpacity: 0.15,
@@ -189,8 +200,8 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
     circle.bringToBack();
 
     activeRadiusCircles.push({
-      x: location.x,
-      y: location.y,
+      x: location.lng * 2,
+      y: location.lat * 2,
       circle: circle,
     });
   }
@@ -201,8 +212,15 @@ function createSpawnerPopup(spawner: Spawner): string {
   let html = '<div class="spawner-popup">';
   html += '<h4>Pokemon Spawner</h4>';
 
-  // Debug info
-  html += `<div class="debug-info">ID: ${spawner.id} | X: ${spawner.x.toFixed(1)}, Y: ${spawner.y.toFixed(1)}</div>`;
+  // Debug info - show coordinates and table ID
+  html += `<div class="debug-info"><strong>Table ID: ${spawner.tableID || 'N/A'}</strong></div>`;
+  html += `<div class="debug-info">Coords: lat=${spawner.lat.toFixed(1)}, lng=${spawner.lng.toFixed(1)}</div>`;
+  html += `<div class="debug-info">Scaled (×2): [${(spawner.lat * 2).toFixed(1)}, ${(spawner.lng * 2).toFixed(1)}]</div>`;
+
+  // Calculate visual position on map (bounds: lat [-1000, 0], lng [0, 1000])
+  const visualY = ((spawner.lat * 2 + 1000) / 1000) * 100; // % from bottom
+  const visualX = ((spawner.lng * 2) / 1000) * 100; // % from left
+  html += `<div class="debug-info">Position: ${visualY.toFixed(0)}% from bottom, ${visualX.toFixed(0)}% from left</div>`;
 
   // Show respawn time if available
   if (spawner.respawnTime) {
