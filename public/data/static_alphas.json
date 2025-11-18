@@ -1,488 +1,326 @@
 [
   {
-    "id": 1,
-    "x": 128.896625,
-    "y": -364.678,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1028,
+    "lat": -364.678,
+    "lng": 128.896625,
+    "tableID": 117
   },
   {
-    "id": 2,
-    "x": 391.492375,
-    "y": -192.396625,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1029,
+    "lat": -192.396625,
+    "lng": 391.492375,
+    "tableID": 164
   },
   {
-    "id": 3,
-    "x": 327.571,
-    "y": -217.444875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1030,
+    "lat": -217.444875,
+    "lng": 327.571,
+    "tableID": 183
   },
   {
-    "id": 4,
-    "x": 328.804125,
-    "y": -178.81875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1031,
+    "lat": -178.81875,
+    "lng": 328.804125,
+    "tableID": 186
   },
   {
-    "id": 5,
-    "x": 340.481875,
-    "y": -235.902875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1032,
+    "lat": -235.902875,
+    "lng": 340.481875,
+    "tableID": 270
   },
   {
-    "id": 6,
-    "x": 127.24625,
-    "y": -245.0795,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1033,
+    "lat": -245.0795,
+    "lng": 127.24625,
+    "tableID": 359
   },
   {
-    "id": 7,
-    "x": 89.477975,
-    "y": -117.7368375,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1034,
+    "lat": -117.7368375,
+    "lng": 89.477975,
+    "tableID": 393
   },
   {
-    "id": 8,
-    "x": 245.953375,
-    "y": -66.9649625,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1035,
+    "lat": -66.9649625,
+    "lng": 245.953375,
+    "tableID": 474
   },
   {
-    "id": 9,
-    "x": 193.774125,
-    "y": -44.714775,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1036,
+    "lat": -44.714775,
+    "lng": 193.774125,
+    "tableID": 478
   },
   {
-    "id": 10,
-    "x": 367.077,
-    "y": -346.921125,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1037,
+    "lat": -346.921125,
+    "lng": 367.077,
+    "tableID": 588
   },
   {
-    "id": 11,
-    "x": 321.822625,
-    "y": -392.956875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1038,
+    "lat": -392.956875,
+    "lng": 321.822625,
+    "tableID": 665
   },
   {
-    "id": 12,
-    "x": 400.967625,
-    "y": -390.111625,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1039,
+    "lat": -390.111625,
+    "lng": 400.967625,
+    "tableID": 744
   },
   {
-    "id": 13,
-    "x": 400.967625,
-    "y": -390.111625,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1040,
+    "lat": -390.111625,
+    "lng": 400.967625,
+    "tableID": 745
   },
   {
-    "id": 14,
-    "x": 393.352875,
-    "y": -398.19875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1041,
+    "lat": -398.19875,
+    "lng": 393.352875,
+    "tableID": 748
   },
   {
-    "id": 15,
-    "x": 264.742375,
-    "y": -478.21375,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1042,
+    "lat": -478.21375,
+    "lng": 264.742375,
+    "tableID": 770
   },
   {
-    "id": 16,
-    "x": 338.25225,
-    "y": -357.05325,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1043,
+    "lat": -357.05325,
+    "lng": 338.25225,
+    "tableID": 795
   },
   {
-    "id": 17,
-    "x": 338.25225,
-    "y": -357.05325,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1044,
+    "lat": -357.05325,
+    "lng": 338.25225,
+    "tableID": 796
   },
   {
-    "id": 18,
-    "x": 209.95375,
-    "y": -419.13,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1045,
+    "lat": -419.13,
+    "lng": 209.95375,
+    "tableID": 798
   },
   {
-    "id": 19,
-    "x": 198.60025,
-    "y": -436.48425,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1046,
+    "lat": -436.48425,
+    "lng": 198.60025,
+    "tableID": 809
   },
   {
-    "id": 20,
-    "x": 87.8468125,
-    "y": -339.280875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1047,
+    "lat": -339.280875,
+    "lng": 87.8468125,
+    "tableID": 825
   },
   {
-    "id": 21,
-    "x": 101.7662875,
-    "y": -336.187875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1048,
+    "lat": -336.187875,
+    "lng": 101.7662875,
+    "tableID": 832
   },
   {
-    "id": 22,
-    "x": 74.13195,
-    "y": -338.954875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1049,
+    "lat": -338.954875,
+    "lng": 74.13195,
+    "tableID": 836
   },
   {
-    "id": 23,
-    "x": 218.583,
-    "y": -301.14625,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1050,
+    "lat": -301.14625,
+    "lng": 218.583,
+    "tableID": 849
   },
   {
-    "id": 24,
-    "x": 231.493,
-    "y": -320.024125,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1051,
+    "lat": -320.024125,
+    "lng": 231.493,
+    "tableID": 856
   },
   {
-    "id": 25,
-    "x": 192.54275,
-    "y": -312.43775,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1052,
+    "lat": -312.43775,
+    "lng": 192.54275,
+    "tableID": 859
   },
   {
-    "id": 26,
-    "x": 197.6855,
-    "y": -336.201,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1053,
+    "lat": -336.201,
+    "lng": 197.6855,
+    "tableID": 862
   },
   {
-    "id": 27,
-    "x": 41.297225,
-    "y": -227.641,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1054,
+    "lat": -227.641,
+    "lng": 41.297225,
+    "tableID": 875
   },
   {
-    "id": 28,
-    "x": 57.192325,
-    "y": -287.925,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1055,
+    "lat": -287.925,
+    "lng": 57.192325,
+    "tableID": 907
   },
   {
-    "id": 29,
-    "x": 57.192325,
-    "y": -287.925,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1056,
+    "lat": -287.925,
+    "lng": 57.192325,
+    "tableID": 908
   },
   {
-    "id": 30,
-    "x": 33.9802375,
-    "y": -277.58325,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1057,
+    "lat": -277.58325,
+    "lng": 33.9802375,
+    "tableID": 912
   },
   {
-    "id": 31,
-    "x": 43.770325,
-    "y": -311.111875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1058,
+    "lat": -311.111875,
+    "lng": 43.770325,
+    "tableID": 913
   },
   {
-    "id": 32,
-    "x": 95.6380125,
-    "y": -88.577225,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1059,
+    "lat": -88.577225,
+    "lng": 95.6380125,
+    "tableID": 917
   },
   {
-    "id": 33,
-    "x": 112.048375,
-    "y": -100.4764875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1060,
+    "lat": -100.4764875,
+    "lng": 112.048375,
+    "tableID": 918
   },
   {
-    "id": 34,
-    "x": 146.403625,
-    "y": -220.237375,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1061,
+    "lat": -220.237375,
+    "lng": 146.403625,
+    "tableID": 922
   },
   {
-    "id": 35,
-    "x": 199.697375,
-    "y": -37.04535,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1062,
+    "lat": -37.04535,
+    "lng": 199.697375,
+    "tableID": 941
   },
   {
-    "id": 36,
-    "x": 206.25575,
-    "y": -24.387975,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1063,
+    "lat": -24.387975,
+    "lng": 206.25575,
+    "tableID": 943
   },
   {
-    "id": 37,
-    "x": 289.214,
-    "y": -81.244825,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1064,
+    "lat": -81.244825,
+    "lng": 289.214,
+    "tableID": 950
   },
   {
-    "id": 38,
-    "x": 242.441625,
-    "y": -138.72925,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1065,
+    "lat": -138.72925,
+    "lng": 242.441625,
+    "tableID": 978
   },
   {
-    "id": 39,
-    "x": 241.26475,
-    "y": -138.7115,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1066,
+    "lat": -138.7115,
+    "lng": 241.26475,
+    "tableID": 985
   },
   {
-    "id": 40,
-    "x": 255.8,
-    "y": -138.702,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1067,
+    "lat": -138.702,
+    "lng": 255.8,
+    "tableID": 990
   },
   {
-    "id": 41,
-    "x": 411.255125,
-    "y": -92.9594125,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1068,
+    "lat": -92.9594125,
+    "lng": 411.255125,
+    "tableID": 997
   },
   {
-    "id": 42,
-    "x": 412.049625,
-    "y": -94.67925,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1069,
+    "lat": -94.67925,
+    "lng": 412.049625,
+    "tableID": 1000
   },
   {
-    "id": 43,
-    "x": 417.703375,
-    "y": -87.8995625,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1070,
+    "lat": -87.8995625,
+    "lng": 417.703375,
+    "tableID": 1010
   },
   {
-    "id": 44,
-    "x": 422.054625,
-    "y": -162.902875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1071,
+    "lat": -162.902875,
+    "lng": 422.054625,
+    "tableID": 1023
   },
   {
-    "id": 45,
-    "x": 421.712875,
-    "y": -162.0335,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1072,
+    "lat": -162.0335,
+    "lng": 421.712875,
+    "tableID": 1025
   },
   {
-    "id": 46,
-    "x": 491.86675,
-    "y": -262.591875,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1073,
+    "lat": -262.591875,
+    "lng": 491.86675,
+    "tableID": 1033
   },
   {
-    "id": 47,
-    "x": 472.183,
-    "y": -282.2075,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1074,
+    "lat": -282.2075,
+    "lng": 472.183,
+    "tableID": 1043
   },
   {
-    "id": 48,
-    "x": 479.27975,
-    "y": -242.344375,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1075,
+    "lat": -242.344375,
+    "lng": 479.27975,
+    "tableID": 1044
   },
   {
-    "id": 49,
-    "x": 428.596625,
-    "y": -292.903625,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1076,
+    "lat": -292.903625,
+    "lng": 428.596625,
+    "tableID": 1047
   },
   {
-    "id": 50,
-    "x": 423.0865,
-    "y": -311.8435,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1077,
+    "lat": -311.8435,
+    "lng": 423.0865,
+    "tableID": 1059
   },
   {
-    "id": 51,
-    "x": 360.3575,
-    "y": -217.803375,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1078,
+    "lat": -217.803375,
+    "lng": 360.3575,
+    "tableID": 1069
   },
   {
-    "id": 52,
-    "x": 369.235,
-    "y": -215.863,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1079,
+    "lat": -215.863,
+    "lng": 369.235,
+    "tableID": 1071
   },
   {
-    "id": 53,
-    "x": 252.07475,
-    "y": -255.749125,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1080,
+    "lat": -255.749125,
+    "lng": 252.07475,
+    "tableID": 1084
   },
   {
-    "id": 54,
-    "x": 258.371375,
-    "y": -255.749125,
-    "pokemon": {
-      "id": null,
-      "name": "Unknown"
-    }
+    "index": 1081,
+    "lat": -255.749125,
+    "lng": 258.371375,
+    "tableID": 1085
   }
 ]

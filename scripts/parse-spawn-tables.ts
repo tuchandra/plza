@@ -165,16 +165,23 @@ const outputFile = process.argv[3] || 'parsed-spawn-data.json';
 console.log(`Reading ${inputFile}...`);
 const rawData = await Bun.file(inputFile).json();
 
-const parsed: ParsedSpawn[] = [];
+// Check if we have the expected structure
+if (!rawData.tables) {
+  console.error('Error: Expected rawData.tables to exist');
+  console.log('Available keys:', Object.keys(rawData));
+  process.exit(1);
+}
+
+const parsed: Record<string, ParsedSpawn> = {};
 let successCount = 0;
 let failCount = 0;
 
-for (const [idStr, html] of Object.entries(rawData.results as Record<string, string>)) {
+for (const [idStr, html] of Object.entries(rawData.tables as Record<string, string>)) {
   const id = parseInt(idStr);
   const result = parseSpawnTable(id, html);
 
   if (result) {
-    parsed.push(result);
+    parsed[idStr] = result;
     successCount++;
     if (successCount % 100 === 0) {
       console.log(`Parsed ${successCount} spawn tables...`);
@@ -187,16 +194,17 @@ for (const [idStr, html] of Object.entries(rawData.results as Record<string, str
 console.log(`\n✓ Successfully parsed: ${successCount}`);
 console.log(`✗ Failed/Empty: ${failCount}`);
 
-// Write output
+// Write output as object keyed by tableID (for easier lookup in merge script)
 await Bun.write(outputFile, JSON.stringify(parsed, null, 2));
 console.log(`\nWrote parsed data to ${outputFile}`);
 
 // Print some statistics
-const totalPokemon = parsed.reduce((sum, spawn) => sum + spawn.pokemon.length, 0);
-const uniquePokemon = new Set(parsed.flatMap(s => s.pokemon.map(p => p.name)));
+const parsedArray = Object.values(parsed);
+const totalPokemon = parsedArray.reduce((sum, spawn) => sum + spawn.pokemon.length, 0);
+const uniquePokemon = new Set(parsedArray.flatMap(s => s.pokemon.map(p => p.name)));
 
 console.log(`\nStatistics:`);
-console.log(`- Total spawn points: ${parsed.length}`);
+console.log(`- Total spawn points: ${parsedArray.length}`);
 console.log(`- Total Pokemon entries: ${totalPokemon}`);
 console.log(`- Unique Pokemon species: ${uniquePokemon.size}`);
-console.log(`- Avg Pokemon per spawn: ${(totalPokemon / parsed.length).toFixed(2)}`);
+console.log(`- Avg Pokemon per spawn: ${(totalPokemon / parsedArray.length).toFixed(2)}`);
