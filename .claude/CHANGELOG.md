@@ -4,6 +4,17 @@ Detailed changelog of major changes. See git log for commit-level details.
 
 ## November 17, 2025
 
+### Data Cleanup and Level Display Fix
+- Removed story-only alpha encounters (one-time events):
+  - Steelix from Wild Zone 3 and static alpha spawners
+  - Gallade static alpha spawner
+  - Pangoro from Wild Zone 9 and static alpha spawners
+- Fixed level display: "Lv. 70" instead of "Lv. 70 - 70" for fixed-level Pokemon
+- Data changes: Wild Zone 3 (8 Pokemon), Wild Zone 9 (8 Pokemon), Static alphas (51 spawners)
+- Wild Zone 20 popup correctly displays all 67 alphas with scrolling (4-column grid, 320px max-height)
+
+## November 17, 2025 (Earlier)
+
 ### SVG Icon Integration
 - Extracted SVG icons from PokeOS.com with attribution
 - All markers use divIcon with embedded SVGs

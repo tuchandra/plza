@@ -35,6 +35,13 @@ See `docs/data-extraction-guide.md` for full details.
 
 ## Next Priorities
 
+**High Priority:**
+- [ ] Implement marker clustering/combining based on zoom level (overlapping spawners unclickable)
+- [ ] Add visual boundaries around wild zones
+- [ ] Add location names to fly point popups
+- [ ] Add wild zone entrance fly points (separate from regular fly points)
+
+**Medium Priority:**
 - [ ] Implement PokeOS-style filtering (multi-toggle buttons)
 - [ ] Add type/Pokemon filtering
 - [ ] Better mobile UI
