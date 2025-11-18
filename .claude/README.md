@@ -35,6 +35,9 @@ See `docs/data-extraction-guide.md` for full details.
 
 ## Next Priorities
 
+**Critical:**
+- [ ] **Fix Wild Zone 20 static alpha spawners** - Only showing 6 Pokemon with 1.49% each (~9% total), missing majority of Pokemon. TableIDs 1084/1085 at lat:-255.75, lng:252-258. Need to re-extract or link to WZ20 alpha pool (67 alphas).
+
 **High Priority:**
 - [ ] Implement marker clustering/combining based on zoom level (overlapping spawners unclickable)
 - [ ] Add visual boundaries around wild zones
