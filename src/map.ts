@@ -422,10 +422,14 @@ function createWildZonePopup(zone: WildZone): string {
   html += '</div>';
 
   if (zone.pokemon.length === 0) {
+    html += '<div class="popup-content">';
     html += '<p class="no-data">No spawn data available</p>';
+    html += '</div>';
     html += '</div>';
     return html;
   }
+
+  html += '<div class="popup-content">';
 
   if (useTwoSections) {
     // Wild Zone 20: Show regular spawns, then alphas
@@ -468,7 +472,8 @@ function createWildZonePopup(zone: WildZone): string {
     html += '</div>';
   }
 
-  html += '</div>';
+  html += '</div>'; // Close popup-content
+  html += '</div>'; // Close wild-zone-popup
   return html;
 }
 

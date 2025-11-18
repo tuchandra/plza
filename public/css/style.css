@@ -359,33 +359,37 @@ body {
   max-width: 380px;
 }
 
-.pokemon-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  padding: 12px;
+.popup-content {
   max-height: 320px;
   overflow-y: auto;
-  /* Hide scrollbar for cleaner look */
+  overflow-x: hidden;
+  /* Thin scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: #dee2e6 transparent;
 }
 
-.pokemon-grid::-webkit-scrollbar {
+.popup-content::-webkit-scrollbar {
   width: 6px;
 }
 
-.pokemon-grid::-webkit-scrollbar-track {
+.popup-content::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.pokemon-grid::-webkit-scrollbar-thumb {
+.popup-content::-webkit-scrollbar-thumb {
   background: #dee2e6;
   border-radius: 3px;
 }
 
-.pokemon-grid::-webkit-scrollbar-thumb:hover {
+.popup-content::-webkit-scrollbar-thumb:hover {
   background: #adb5bd;
+}
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 12px;
 }
 
 .pokemon-grid-item {
