@@ -2,6 +2,23 @@
 
 ## Recent Major Changes (Nov 17, 2025)
 
+### Game8 Map Investigation - REJECTED ❌
+
+**Goal:** Replace Serebii map with game8's map for better labels/colors.
+
+**Findings:**
+- Game8 map: 4901×4901px, 2.3MB JPEG
+- Has green spawn radius circles baked into image (conflicts with our dynamic radius feature)
+- **No text labels for districts/streets** (same as Serebii)
+- 2.6× larger file size = slower page load
+
+**Decision:** Keep Serebii map (1024×1024, 897KB PNG)
+- Clean base without overlays
+- Fast load times
+- Already integrated correctly
+
+**Documentation:** See `docs/game8-map-investigation.md` for full analysis and alternative approaches for adding labels in the future.
+
 ### Map Coordinate Alignment - RESOLVED ✅
 
 **Problem:**
