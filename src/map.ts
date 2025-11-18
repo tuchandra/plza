@@ -14,15 +14,15 @@ import type {
 
 // Configuration
 const CONFIG: MapConfig = {
-  mapImage: 'images/lumiose_map.png',
+  mapImage: 'images/lumiose_map_4k.png',
   // Bounds in Leaflet [lat, lng] format: [[minLat, minLng], [maxLat, maxLng]]
-  // Map image is 1024×1024 pixels
+  // Map image is 4096×4096 pixels (zoom level 3 from Serebii)
   // Actual Serebii coordinate ranges: lat [-494, -12], lng [19, 491]
-  // Using symmetric bounds for proper centering: [[-512, 0], [0, 512]]
-  // Then scale markers by 2 to fit 1024px image
+  // Serebii's cvert scales to ~512 coordinate space
+  // Scale markers by 8 to fit 4096px image (512 * 8 = 4096)
   mapBounds: [
-    [-1000, 0],
-    [0, 1000],
+    [-4096, 0],
+    [0, 4096],
   ],
   pokespriteBase:
     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
@@ -52,20 +52,19 @@ export function initMap(): void {
 
   // Add the map image as an overlay
   // Serebii's cvert scales 4096 -> 512, so coordinates are in 512 space
-  // Our image is 1024x1024, so we need bounds of [-512, 0] to [0, 512]
-  // but scaled by 2 for our larger image: [-1024, 0] to [0, 1024]
+  // Our image is 4096x4096, so we scale by 8 for proper alignment
   const imageUrl = CONFIG.mapImage;
   const imageBounds: [[number, number], [number, number]] = [
-    [-1024, 0],
-    [0, 1024],
+    [-4096, 0],
+    [0, 4096],
   ];
 
   L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
   map.fitBounds(imageBounds);
   // Center view on Lumiose City (roughly the center of coordinates)
-  // Map bounds are 1000×1000, so center is at [-500, 500]
-  map.setView([-500, 500], 0.5);
+  // Map bounds are 4096×4096, so center is at [-2048, 2048]
+  map.setView([-2048, 2048], 0.5);
 
   // Load data and create markers
   loadData();
@@ -156,7 +155,7 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
   spawners.forEach((spawner, index) => {
     // Leaflet uses [lat, lng]
     // Serebii coordinates are in 512 space, our image is 1024, so scale by 2
-    const marker = L.circleMarker([spawner.lat * 2, spawner.lng * 2], {
+    const marker = L.circleMarker([spawner.lat * 8, spawner.lng * 8], {
       radius: 6,
       fillColor: '#ffd700',
       color: '#fff',
@@ -181,7 +180,7 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
 function createBenchMarkers(benches: Bench[]): void {
   benches.forEach((bench) => {
     // Scale coordinates by 2 to match 1024×1024 map
-    const marker = L.circleMarker([bench.lat * 2, bench.lng * 2], {
+    const marker = L.circleMarker([bench.lat * 8, bench.lng * 8], {
       radius: 7,
       fillColor: '#8b6f47',
       color: '#fff',
@@ -210,7 +209,7 @@ function createBenchMarkers(benches: Bench[]): void {
 function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
   flyPoints.forEach((point) => {
     // Scale coordinates by 2 to match 1024×1024 map
-    const marker = L.circleMarker([point.lat * 2, point.lng * 2], {
+    const marker = L.circleMarker([point.lat * 8, point.lng * 8], {
       radius: 9,
       fillColor: '#3498db',
       color: '#fff',
@@ -234,7 +233,7 @@ function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
 // Create holovator markers (elevators)
 function createHolovatorMarkers(holovators: Holovator[]): void {
   holovators.forEach((holovator) => {
-    const marker = L.circleMarker([holovator.lat * 2, holovator.lng * 2], {
+    const marker = L.circleMarker([holovator.lat * 8, holovator.lng * 8], {
       radius: 7,
       fillColor: '#9b59b6',
       color: '#fff',
@@ -256,7 +255,7 @@ function createHolovatorMarkers(holovators: Holovator[]): void {
 // Create ladder markers (roof access)
 function createLadderMarkers(ladders: Ladder[]): void {
   ladders.forEach((ladder) => {
-    const marker = L.circleMarker([ladder.lat * 2, ladder.lng * 2], {
+    const marker = L.circleMarker([ladder.lat * 8, ladder.lng * 8], {
       radius: 6,
       fillColor: '#e67e22',
       color: '#fff',
@@ -278,7 +277,7 @@ function createLadderMarkers(ladders: Ladder[]): void {
 // Create wild zone markers
 function createWildZoneMarkers(wildZones: WildZone[]): void {
   wildZones.forEach((zone) => {
-    const marker = L.circleMarker([zone.lat * 2, zone.lng * 2], {
+    const marker = L.circleMarker([zone.lat * 8, zone.lng * 8], {
       radius: 10,
       fillColor: '#16a085',
       color: '#fff',
@@ -300,7 +299,7 @@ function createWildZoneMarkers(wildZones: WildZone[]): void {
 // Create static alpha markers
 function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
   staticAlphas.forEach((alpha) => {
-    const marker = L.circleMarker([alpha.lat * 2, alpha.lng * 2], {
+    const marker = L.circleMarker([alpha.lat * 8, alpha.lng * 8], {
       radius: 8,
       fillColor: '#e74c3c',
       color: '#fff',
@@ -385,9 +384,9 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
   } else {
     // Add new radius
     // Benches have a radius of ~50m in-game, which is much smaller
-    // Using 50 pixels (25 units * 2 scale factor) for visual representation
-    const radius = 50; // Fixed 50 pixel radius for benches
-    const circle = L.circle([location.lat * 2, location.lng * 2], {
+    // Using 200 pixels (25 units * 8 scale factor) for visual representation
+    const radius = 200; // Fixed 200 pixel radius for benches (scaled for 4K map)
+    const circle = L.circle([location.lat * 8, location.lng * 8], {
       radius: radius,
       fillColor: '#27ae60',
       fillOpacity: 0.15,
@@ -402,8 +401,8 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
     circle.bringToBack();
 
     activeRadiusCircles.push({
-      x: location.lng * 2,
-      y: location.lat * 2,
+      x: location.lng * 8,
+      y: location.lat * 8,
       circle: circle,
     });
   }

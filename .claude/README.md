@@ -2,6 +2,23 @@
 
 ## Recent Major Changes (Nov 17, 2025)
 
+### 4K Map Upgrade ✅
+
+**Upgraded to Serebii zoom level 3 tiles:**
+- Old: 1024×1024px (zoom 1, 4×4 grid of tiles)
+- New: 4096×4096px (zoom 3, 16×16 grid of 256 tiles)
+- File size: 897KB → 4.2MB
+- 4× better resolution for detailed zooming
+
+**Changes:**
+- Downloaded 256 tiles from Serebii zoom level 3
+- Stitched into single 4096×4096 PNG
+- Updated all marker scaling from ×2 to ×8
+- Updated map bounds from 1024 to 4096
+- Updated bench radius circles from 50px to 200px
+
+**Script:** `scripts/download-serebii-zoom3.py` (uvx)
+
 ### Game8 Map Investigation - REJECTED ❌
 
 **Goal:** Replace Serebii map with game8's map for better labels/colors.
@@ -10,14 +27,13 @@
 - Game8 map: 4901×4901px, 2.3MB JPEG
 - Has green spawn radius circles baked into image (conflicts with our dynamic radius feature)
 - **No text labels for districts/streets** (same as Serebii)
-- 2.6× larger file size = slower page load
 
-**Decision:** Keep Serebii map (1024×1024, 897KB PNG)
+**Decision:** Use Serebii zoom level 3 instead (4096×4096, 4.2MB PNG)
+- Higher resolution than game8
 - Clean base without overlays
-- Fast load times
-- Already integrated correctly
+- Same coordinate system (easy upgrade)
 
-**Documentation:** See `docs/game8-map-investigation.md` for full analysis and alternative approaches for adding labels in the future.
+**Documentation:** See `docs/game8-map-investigation.md` for full analysis.
 
 ### Map Coordinate Alignment - RESOLVED ✅
 
@@ -137,13 +153,13 @@ Created proper extraction pipeline using **table IDs** to maintain alignment:
 
 **Coordinate System:**
 - Serebii uses 4096→512 coordinate scaling (cvert function)
-- Our map image is 1024×1024 pixels
-- Image bounds: `[[-1024, 0], [0, 1024]]`
-- **Scale factor: 2×** when rendering markers (512 space → 1024px image)
+- Our map image is 4096×4096 pixels (zoom level 3)
+- Image bounds: `[[-4096, 0], [0, 4096]]`
+- **Scale factor: 8×** when rendering markers (512 space → 4096px image)
 
 **Marker placement:**
 ```typescript
-L.circleMarker([spawner.lat * 2, spawner.lng * 2], {...})
+L.circleMarker([spawner.lat * 8, spawner.lng * 8], {...})
 ```
 
 ### Files to Know About
