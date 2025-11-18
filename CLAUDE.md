@@ -46,55 +46,53 @@ Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumios
 
 ## Git Workflow
 
+**Commit Policy:**
 - Commit directly to main (this is a vibe project)
-- Atomic commits: one logical change per commit
-- Clear, concise commit messages (no LLM-isms like "The fix:" or "You're absolutely right!")
-- Test before committing
-- See `.claude/HANDOFF_ROUTINE.md` for handoff checklist
+- **Atomic commits:** One logical change per commit
+- **Test before committing:** Always run `bun run build` and verify changes
+- **No force push** unless explicitly discussed
+
+**Commit Messages:**
+- Clear, concise, factual descriptions
+- NO LLM-isms: "The fix:", "You're absolutely right!", "great catch", etc.
+- Format: `type: brief description` (e.g., `feat: add fly points`, `fix: marker alignment`)
+- Include details in commit body if needed
+- Always end with Claude Code attribution block
+
+**Example:**
+```
+feat: add SVG icons to markers
+
+Integrate PokeOS-style icons for better visual distinction.
+- Spawners: pokeball icon
+- Wild zones: tree icon
+- Benches: bench icon
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+**Session Handoff:**
+- Update `.claude/README.md` if architecture changes
+- Document major decisions in `.claude/CHANGELOG.md`
+- Keep handoff notes concise - detailed history goes in CHANGELOG
 
 ## Architecture
 
-```
-/src
-  main.ts         - TypeScript entry point
-  map.ts          - Leaflet map logic with all marker types
-  types.ts        - TypeScript interfaces for all POI types
+See `.claude/README.md` for quick reference. Key structure:
 
-/public
-  /data
-    spawners.json       - 1,063 spawners with Pokemon data (97% complete)
-    static_alphas.json  - 54 alpha spawns
-    benches.json        - Demo data (needs real extraction)
-    fly_points.json     - Demo data (needs real extraction)
-    holovators.json     - Empty (needs extraction)
-    ladders.json        - Empty (needs extraction)
-  /images
-    lumiose_map.png - Stitched 1024x1024 map from Serebii tiles
-    /tiles          - Individual 256x256 Serebii tiles
-  index.html        - Main HTML (served from public/)
+- `src/` - TypeScript source (main.ts, map.ts, types.ts)
+- `public/data/` - All JSON data files (spawners, alphas, benches, etc.)
+- `public/images/` - Map image (4096×4096px) and icons
+- `scripts/` - Data extraction pipeline (run in order, see docs)
+- `docs/` - Detailed guides (data-extraction-guide.md, etc.)
+- `.claude/` - Handoff notes (README.md, CHANGELOG.md)
 
-/scripts
-  extract-all-serebii-data.js - Browser console: extract coords + table IDs
-  fetch-spawn-tables.ts       - Fetch spawn tables from Serebii
-  parse-spawn-tables.ts       - Parse HTML spawn tables to structured JSON
-  merge-complete-data.ts      - Merge coords + Pokemon using table IDs
-  download-and-stitch.py      - Stitch map tiles into single image
-
-/docs
-  data-extraction-guide.md    - Complete extraction methodology
-  spawn-extraction.md         - Legacy spawn extraction notes
-
-/data (gitignored - intermediate extraction data)
-  spawn-tables-raw.json       - Raw HTML spawn tables from Serebii
-  parsed-pokemon.json         - Structured Pokemon data keyed by tableID
-
-/.claude
-  README.md                   - Handoff notes for future Claude sessions
-```
-
-**Dev:** `bun run dev` (Bun's dev server with HMR)
-**Build:** `bun run build` (bundles TypeScript → public/main.js)
-**Deploy:** GitHub Actions → public/ to GitHub Pages
+**Commands:**
+- `bun run dev` - Dev server with HMR
+- `bun run build` - Bundle TypeScript → public/main.js
+- Deploy: Push to main → GitHub Actions → GitHub Pages
 
 ## Deployment
 
