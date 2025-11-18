@@ -25,11 +25,8 @@ interface Spawner {
 
 interface ExtractedData {
   spawners: Spawner[];
-  staticAlphas?: Array<{ lat: number; lng: number }>;
-  flyPoints?: Array<{ lat: number; lng: number }>;
-  benches?: Array<{ lat: number; lng: number }>;
-  holovators?: Array<{ lat: number; lng: number }>;
-  ladders?: Array<{ lat: number; lng: number }>;
+  staticAlphas: Array<{ lat: number; lng: number; index?: number; tableID?: number }>;
+  other: Array<{ lat: number; lng: number; index?: number; tableID?: number; iconUrl: string }>;
 }
 
 interface PokemonData {
@@ -81,6 +78,8 @@ const parsedData: ParsedData = await Bun.file(pokemonFile).json();
 
 console.log(`\nFound:`);
 console.log(`  • ${extractedData.spawners.length} spawner coordinates`);
+console.log(`  • ${extractedData.staticAlphas?.length || 0} static alpha coordinates`);
+console.log(`  • ${extractedData.other?.length || 0} other POI coordinates`);
 console.log(`  • ${Object.keys(parsedData).length} parsed spawn tables`);
 
 // Merge spawners
@@ -138,45 +137,99 @@ console.log(`✓ Spawners: ${mergedSpawners.length} total`);
 console.log(`  • With Pokemon data: ${withPokemon}`);
 console.log(`  • Without Pokemon data: ${withoutPokemon}`);
 
-// Save other POI types
+// Categorize other POI types from the "other" array
+console.log('\n🗂️  Categorizing other POI types...');
+const benches: Array<{ lat: number; lng: number }> = [];
+const holovators: Array<{ lat: number; lng: number }> = [];
+const ladders: Array<{ lat: number; lng: number }> = [];
+const wildZones: Array<{ lat: number; lng: number; tableID?: number }> = [];
+
+if (extractedData.other) {
+  for (const poi of extractedData.other) {
+    if (poi.iconUrl.includes('/pokearth/hisui/icons/bench.png')) {
+      benches.push({ lat: poi.lat, lng: poi.lng });
+    } else if (poi.iconUrl.includes('/pokearth/hisui/icons/holovator.png')) {
+      holovators.push({ lat: poi.lat, lng: poi.lng });
+    } else if (poi.iconUrl.includes('/pokearth/hisui/icons/ladder.png')) {
+      ladders.push({ lat: poi.lat, lng: poi.lng });
+    } else if (poi.iconUrl.includes('/pokearth/hisui/icons/zawildzone.png')) {
+      wildZones.push({ lat: poi.lat, lng: poi.lng, tableID: poi.tableID });
+    }
+  }
+}
+
+// Merge static alphas with their Pokemon data
+console.log('\n🔗 Merging static alpha data...');
+const mergedAlphas: Array<{
+  lat: number;
+  lng: number;
+  tableID?: number;
+  pokemon: PokemonData[];
+}> = [];
+
 if (extractedData.staticAlphas && extractedData.staticAlphas.length > 0) {
+  for (const alpha of extractedData.staticAlphas) {
+    if (alpha.tableID && parsedData[alpha.tableID.toString()]) {
+      // Has Pokemon data
+      const pokemonData = parsedData[alpha.tableID.toString()];
+      mergedAlphas.push({
+        lat: alpha.lat,
+        lng: alpha.lng,
+        tableID: alpha.tableID,
+        pokemon: pokemonData.pokemon,
+      });
+    } else {
+      // No Pokemon data available
+      mergedAlphas.push({
+        lat: alpha.lat,
+        lng: alpha.lng,
+        tableID: alpha.tableID,
+        pokemon: [],
+      });
+    }
+  }
+
   await Bun.write(
     'public/data/static_alphas.json',
-    JSON.stringify(extractedData.staticAlphas, null, 2)
+    JSON.stringify(mergedAlphas, null, 2)
   );
-  console.log(`✓ Static Alphas: ${extractedData.staticAlphas.length}`);
+  console.log(`✓ Static Alphas: ${mergedAlphas.length} (${mergedAlphas.filter(a => a.pokemon.length > 0).length} with Pokemon data)`);
 }
 
-if (extractedData.flyPoints && extractedData.flyPoints.length > 0) {
-  await Bun.write(
-    'public/data/fly_points.json',
-    JSON.stringify(extractedData.flyPoints, null, 2)
-  );
-  console.log(`✓ Fly Points: ${extractedData.flyPoints.length}`);
-}
-
-if (extractedData.benches && extractedData.benches.length > 0) {
+// Save benches
+if (benches.length > 0) {
   await Bun.write(
     'public/data/benches.json',
-    JSON.stringify(extractedData.benches, null, 2)
+    JSON.stringify(benches, null, 2)
   );
-  console.log(`✓ Benches: ${extractedData.benches.length}`);
+  console.log(`✓ Benches: ${benches.length}`);
 }
 
-if (extractedData.holovators && extractedData.holovators.length > 0) {
+// Save holovators
+if (holovators.length > 0) {
   await Bun.write(
     'public/data/holovators.json',
-    JSON.stringify(extractedData.holovators, null, 2)
+    JSON.stringify(holovators, null, 2)
   );
-  console.log(`✓ Holovators: ${extractedData.holovators.length}`);
+  console.log(`✓ Holovators: ${holovators.length}`);
 }
 
-if (extractedData.ladders && extractedData.ladders.length > 0) {
+// Save ladders
+if (ladders.length > 0) {
   await Bun.write(
     'public/data/ladders.json',
-    JSON.stringify(extractedData.ladders, null, 2)
+    JSON.stringify(ladders, null, 2)
   );
-  console.log(`✓ Ladders: ${extractedData.ladders.length}`);
+  console.log(`✓ Ladders: ${ladders.length}`);
+}
+
+// Save wild zones (these might be fly points or special zones)
+if (wildZones.length > 0) {
+  await Bun.write(
+    'public/data/wild_zones.json',
+    JSON.stringify(wildZones, null, 2)
+  );
+  console.log(`✓ Wild Zones: ${wildZones.length}`);
 }
 
 console.log('\n✅ Merge complete! Updated files in public/data/');

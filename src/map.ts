@@ -4,6 +4,10 @@ import type {
   Spawner,
   Bench,
   FlyPoint,
+  Holovator,
+  Ladder,
+  WildZone,
+  StaticAlpha,
   MarkerData,
   RadiusCircle,
 } from './types';
@@ -28,6 +32,10 @@ let map: L.Map;
 let spawnerMarkers: MarkerData<Spawner>[] = [];
 let benchMarkers: MarkerData<Bench>[] = [];
 let flyPointMarkers: MarkerData<FlyPoint>[] = [];
+let holovatorMarkers: MarkerData<Holovator>[] = [];
+let ladderMarkers: MarkerData<Ladder>[] = [];
+let wildZoneMarkers: MarkerData<WildZone>[] = [];
+let staticAlphaMarkers: MarkerData<StaticAlpha>[] = [];
 let activeRadiusCircles: RadiusCircle[] = [];
 
 // Initialize the map
@@ -78,13 +86,57 @@ async function loadData(): Promise<void> {
     const benchData: Bench[] = await benchResponse.json();
     createBenchMarkers(benchData);
 
-    // Load fly point data
-    const flyPointResponse = await fetch('data/fly_points.json');
-    if (!flyPointResponse.ok) {
-      throw new Error(`Fly points fetch failed: ${flyPointResponse.status}`);
+    // Load fly point data (skip for now - demo data has wrong format)
+    // const flyPointResponse = await fetch('data/fly_points.json');
+    // if (!flyPointResponse.ok) {
+    //   throw new Error(`Fly points fetch failed: ${flyPointResponse.status}`);
+    // }
+    // const flyPointData: FlyPoint[] = await flyPointResponse.json();
+    // createFlyPointMarkers(flyPointData);
+
+    // Load holovator data
+    try {
+      const holovatorResponse = await fetch('data/holovators.json');
+      if (holovatorResponse.ok) {
+        const holovatorData: Holovator[] = await holovatorResponse.json();
+        createHolovatorMarkers(holovatorData);
+      }
+    } catch (e) {
+      console.log('No holovator data available');
     }
-    const flyPointData: FlyPoint[] = await flyPointResponse.json();
-    createFlyPointMarkers(flyPointData);
+
+    // Load ladder data
+    try {
+      const ladderResponse = await fetch('data/ladders.json');
+      if (ladderResponse.ok) {
+        const ladderData: Ladder[] = await ladderResponse.json();
+        createLadderMarkers(ladderData);
+      }
+    } catch (e) {
+      console.log('No ladder data available');
+    }
+
+    // Load wild zone data
+    try {
+      const wildZoneResponse = await fetch('data/wild_zones.json');
+      if (wildZoneResponse.ok) {
+        const wildZoneData: WildZone[] = await wildZoneResponse.json();
+        createWildZoneMarkers(wildZoneData);
+      }
+    } catch (e) {
+      console.log('No wild zone data available');
+    }
+
+    // Load static alpha data
+    try {
+      const staticAlphaResponse = await fetch('data/static_alphas.json');
+      if (staticAlphaResponse.ok) {
+        const staticAlphaData: StaticAlpha[] = await staticAlphaResponse.json();
+        createStaticAlphaMarkers(staticAlphaData);
+      }
+    } catch (e) {
+      console.log('No static alpha data available');
+    }
   } catch (error) {
     console.error('Data loading error:', error);
     console.log('Data files not found - creating sample data structure');
@@ -169,6 +221,147 @@ function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
   });
 }
 
+// Create holovator markers (elevators)
+function createHolovatorMarkers(holovators: Holovator[]): void {
+  holovators.forEach((holovator) => {
+    const marker = L.circleMarker([holovator.lat * 2, holovator.lng * 2], {
+      radius: 7,
+      fillColor: '#9b59b6',
+      color: '#fff',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.85,
+    });
+
+    marker.bindPopup('<strong>Holovator</strong><br>Elevator access');
+    marker.addTo(map);
+    holovatorMarkers.push({
+      marker: marker,
+      data: holovator,
+    });
+  });
+}
+
+// Create ladder markers (roof access)
+function createLadderMarkers(ladders: Ladder[]): void {
+  ladders.forEach((ladder) => {
+    const marker = L.circleMarker([ladder.lat * 2, ladder.lng * 2], {
+      radius: 6,
+      fillColor: '#e67e22',
+      color: '#fff',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.85,
+    });
+
+    marker.bindPopup('<strong>Ladder</strong><br>Roof access');
+    marker.addTo(map);
+    ladderMarkers.push({
+      marker: marker,
+      data: ladder,
+    });
+  });
+}
+
+// Create wild zone markers
+function createWildZoneMarkers(wildZones: WildZone[]): void {
+  wildZones.forEach((zone) => {
+    const marker = L.circleMarker([zone.lat * 2, zone.lng * 2], {
+      radius: 10,
+      fillColor: '#16a085',
+      color: '#fff',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.7,
+    });
+
+    const popupContent = `<strong>Wild Zone</strong>${zone.name ? `<br>${zone.name}` : ''}`;
+    marker.bindPopup(popupContent);
+    marker.addTo(map);
+    wildZoneMarkers.push({
+      marker: marker,
+      data: zone,
+    });
+  });
+}
+
+// Create static alpha markers
+function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
+  staticAlphas.forEach((alpha) => {
+    const marker = L.circleMarker([alpha.lat * 2, alpha.lng * 2], {
+      radius: 8,
+      fillColor: '#e74c3c',
+      color: '#fff',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.9,
+    });
+
+    const popupContent = createAlphaPopup(alpha);
+    marker.bindPopup(popupContent);
+    marker.addTo(map);
+    staticAlphaMarkers.push({
+      marker: marker,
+      data: alpha,
+    });
+  });
+}
+
+// Create popup content for static alpha
+function createAlphaPopup(alpha: StaticAlpha): string {
+  let html = '<div class="alpha-popup">';
+  html += '<h4>⭐ Static Alpha Spawn</h4>';
+
+  if (alpha.pokemon.length === 0) {
+    html += '<p class="no-data">No spawn data available</p>';
+    html += '</div>';
+    return html;
+  }
+
+  html += '<ul class="pokemon-list">';
+
+  alpha.pokemon.forEach((poke) => {
+    const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+
+    html += `<li class="pokemon-item">`;
+    html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />`;
+    html += `<div class="pokemon-info">`;
+    html += `<div class="pokemon-name"><strong>${poke.name}</strong></div>`;
+
+    // Level range
+    html += `<div class="pokemon-level">Lv. ${poke.levelMin}-${poke.levelMax}</div>`;
+
+    // Types
+    if (poke.types.length > 0) {
+      html += `<div class="pokemon-types">`;
+      poke.types.forEach((type) => {
+        html += `<span class="type-badge type-${type}">${type}</span>`;
+      });
+      html += `</div>`;
+    }
+
+    // Rarity
+    if (poke.rarity !== undefined) {
+      html += `<div class="pokemon-rarity">${poke.rarity}% spawn rate</div>`;
+    }
+
+    // Alpha is guaranteed
+    html += `<div class="pokemon-alpha alpha-guaranteed">⭐ 100% Alpha</div>`;
+
+    // Time of day
+    if (poke.timeOfDay) {
+      html += `<div class="pokemon-time">${poke.timeOfDay}</div>`;
+    }
+
+    html += `</div>`;
+    html += `</li>`;
+  });
+
+  html += '</ul>';
+  html += '</div>';
+  return html;
+}
+
 // Toggle radius circle visualization
 function toggleRadius(location: Bench | FlyPoint, type: string): void {
   // Check if this location already has a radius shown
@@ -212,16 +405,6 @@ function createSpawnerPopup(spawner: Spawner): string {
   let html = '<div class="spawner-popup">';
   html += '<h4>Pokemon Spawner</h4>';
 
-  // Debug info - show coordinates and table ID
-  html += `<div class="debug-info"><strong>Table ID: ${spawner.tableID || 'N/A'}</strong></div>`;
-  html += `<div class="debug-info">Coords: lat=${spawner.lat.toFixed(1)}, lng=${spawner.lng.toFixed(1)}</div>`;
-  html += `<div class="debug-info">Scaled (×2): [${(spawner.lat * 2).toFixed(1)}, ${(spawner.lng * 2).toFixed(1)}]</div>`;
-
-  // Calculate visual position on map (bounds: lat [-1000, 0], lng [0, 1000])
-  const visualY = ((spawner.lat * 2 + 1000) / 1000) * 100; // % from bottom
-  const visualX = ((spawner.lng * 2) / 1000) * 100; // % from left
-  html += `<div class="debug-info">Position: ${visualY.toFixed(0)}% from bottom, ${visualX.toFixed(0)}% from left</div>`;
-
   // Show respawn time if available
   if (spawner.respawnTime) {
     html += `<div class="respawn-time">Respawn: ${spawner.respawnTime}s</div>`;
@@ -229,7 +412,6 @@ function createSpawnerPopup(spawner: Spawner): string {
 
   if (spawner.pokemon.length === 0) {
     html += '<p class="no-data">No spawn data available</p>';
-    html += '<p class="debug-hint">Possible reasons: variant Pokemon forms, parsing failed, or no data from Serebii</p>';
     html += '</div>';
     return html;
   }

@@ -1,326 +1,1207 @@
 [
   {
-    "index": 1028,
     "lat": -364.678,
     "lng": 128.896625,
-    "tableID": 117
+    "tableID": 117,
+    "pokemon": [
+      {
+        "name": "Pansage",
+        "pokedexNumber": 511,
+        "types": [
+          "grass"
+        ],
+        "levelMin": 24,
+        "levelMax": 27,
+        "rarity": 33.33,
+        "alphaChance": 100
+      },
+      {
+        "name": "Pansear",
+        "pokedexNumber": 513,
+        "types": [
+          "fire"
+        ],
+        "levelMin": 24,
+        "levelMax": 27,
+        "rarity": 33.33,
+        "alphaChance": 100
+      },
+      {
+        "name": "Panpour",
+        "pokedexNumber": 515,
+        "types": [
+          "water"
+        ],
+        "levelMin": 24,
+        "levelMax": 27,
+        "rarity": 33.33,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1029,
     "lat": -192.396625,
     "lng": 391.492375,
-    "tableID": 164
+    "tableID": 164,
+    "pokemon": [
+      {
+        "name": "Garbodor",
+        "pokedexNumber": 569,
+        "types": [
+          "poison"
+        ],
+        "levelMin": 38,
+        "levelMax": 40,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1030,
     "lat": -217.444875,
     "lng": 327.571,
-    "tableID": 183
+    "tableID": 183,
+    "pokemon": [
+      {
+        "name": "Flab&eacute;b&eacute;",
+        "pokedexNumber": 669,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 21,
+        "levelMax": 23,
+        "rarity": 33.33,
+        "alphaChance": 100
+      },
+      {
+        "name": "Flab&eacute;b&eacute;",
+        "pokedexNumber": 669,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 21,
+        "levelMax": 23,
+        "rarity": 33.33,
+        "alphaChance": 100
+      },
+      {
+        "name": "Flab&eacute;b&eacute;",
+        "pokedexNumber": 669,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 21,
+        "levelMax": 23,
+        "rarity": 33.33,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1031,
     "lat": -178.81875,
     "lng": 328.804125,
-    "tableID": 186
+    "tableID": 186,
+    "pokemon": [
+      {
+        "name": "Pidgeot",
+        "pokedexNumber": 18,
+        "types": [
+          "normal",
+          "flying"
+        ],
+        "levelMin": 40,
+        "levelMax": 42,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1032,
     "lat": -235.902875,
     "lng": 340.481875,
-    "tableID": 270
+    "tableID": 270,
+    "pokemon": [
+      {
+        "name": "Flab&eacute;b&eacute;",
+        "pokedexNumber": 669,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 20,
+        "levelMax": 23,
+        "rarity": 50,
+        "alphaChance": 100
+      },
+      {
+        "name": "Flab&eacute;b&eacute;",
+        "pokedexNumber": 669,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 20,
+        "levelMax": 23,
+        "rarity": 50,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1033,
     "lat": -245.0795,
     "lng": 127.24625,
-    "tableID": 359
+    "tableID": 359,
+    "pokemon": [
+      {
+        "name": "Swirlix",
+        "pokedexNumber": 684,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 28,
+        "levelMax": 31,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1034,
     "lat": -117.7368375,
     "lng": 89.477975,
-    "tableID": 393
+    "tableID": 393,
+    "pokemon": [
+      {
+        "name": "Kakuna",
+        "pokedexNumber": 14,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "levelMin": 19,
+        "levelMax": 21,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1035,
     "lat": -66.9649625,
     "lng": 245.953375,
-    "tableID": 474
+    "tableID": 474,
+    "pokemon": [
+      {
+        "name": "Pansage",
+        "pokedexNumber": 511,
+        "types": [
+          "grass"
+        ],
+        "levelMin": 23,
+        "levelMax": 26,
+        "rarity": 33.33,
+        "alphaChance": 100
+      },
+      {
+        "name": "Pansear",
+        "pokedexNumber": 513,
+        "types": [
+          "fire"
+        ],
+        "levelMin": 23,
+        "levelMax": 26,
+        "rarity": 33.33,
+        "alphaChance": 100
+      },
+      {
+        "name": "Panpour",
+        "pokedexNumber": 515,
+        "types": [
+          "water"
+        ],
+        "levelMin": 23,
+        "levelMax": 26,
+        "rarity": 33.33,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1036,
     "lat": -44.714775,
     "lng": 193.774125,
-    "tableID": 478
+    "tableID": 478,
+    "pokemon": [
+      {
+        "name": "Spritzee",
+        "pokedexNumber": 682,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 26,
+        "levelMax": 29,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1037,
     "lat": -346.921125,
     "lng": 367.077,
-    "tableID": 588
+    "tableID": 588,
+    "pokemon": [
+      {
+        "name": "Patrat",
+        "pokedexNumber": 504,
+        "types": [
+          "normal"
+        ],
+        "levelMin": 21,
+        "levelMax": 24,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1038,
     "lat": -392.956875,
     "lng": 321.822625,
-    "tableID": 665
+    "tableID": 665,
+    "pokemon": [
+      {
+        "name": "Trubbish",
+        "pokedexNumber": 568,
+        "types": [
+          "poison"
+        ],
+        "levelMin": 21,
+        "levelMax": 23,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1039,
     "lat": -390.111625,
     "lng": 400.967625,
-    "tableID": 744
+    "tableID": 744,
+    "pokemon": [
+      {
+        "name": "Pyroar",
+        "pokedexNumber": 668,
+        "types": [
+          "fire",
+          "normal"
+        ],
+        "levelMin": 56,
+        "levelMax": 57,
+        "timeOfDay": "Daytime",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1040,
     "lat": -390.111625,
     "lng": 400.967625,
-    "tableID": 745
+    "tableID": 745,
+    "pokemon": [
+      {
+        "name": "Pyroar",
+        "pokedexNumber": 668,
+        "types": [
+          "fire",
+          "normal"
+        ],
+        "levelMin": 56,
+        "levelMax": 57,
+        "timeOfDay": "Daytime",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1041,
     "lat": -398.19875,
     "lng": 393.352875,
-    "tableID": 748
+    "tableID": 748,
+    "pokemon": [
+      {
+        "name": "Mawile",
+        "pokedexNumber": 303,
+        "types": [
+          "steel",
+          "fairy"
+        ],
+        "levelMin": 56,
+        "levelMax": 57,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1042,
     "lat": -478.21375,
     "lng": 264.742375,
-    "tableID": 770
+    "tableID": 770,
+    "pokemon": [
+      {
+        "name": "Pidgey",
+        "pokedexNumber": 16,
+        "types": [
+          "normal",
+          "flying"
+        ],
+        "levelMin": 24,
+        "levelMax": 26,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1043,
     "lat": -357.05325,
     "lng": 338.25225,
-    "tableID": 795
+    "tableID": 795,
+    "pokemon": [
+      {
+        "name": "Magikarp",
+        "pokedexNumber": 129,
+        "types": [
+          "water"
+        ],
+        "levelMin": 30,
+        "levelMax": 32,
+        "timeOfDay": "Daytime",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1044,
     "lat": -357.05325,
     "lng": 338.25225,
-    "tableID": 796
+    "tableID": 796,
+    "pokemon": [
+      {
+        "name": "Magikarp",
+        "pokedexNumber": 129,
+        "types": [
+          "water"
+        ],
+        "levelMin": 30,
+        "levelMax": 32,
+        "timeOfDay": "Daytime",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1045,
     "lat": -419.13,
     "lng": 209.95375,
-    "tableID": 798
+    "tableID": 798,
+    "pokemon": [
+      {
+        "name": "Abomasnow",
+        "pokedexNumber": 460,
+        "types": [
+          "grass",
+          "ice"
+        ],
+        "levelMin": 43,
+        "levelMax": 45,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1046,
     "lat": -436.48425,
     "lng": 198.60025,
-    "tableID": 809
+    "tableID": 809,
+    "pokemon": [
+      {
+        "name": "Avalugg",
+        "pokedexNumber": 713,
+        "types": [
+          "ice"
+        ],
+        "levelMin": 54,
+        "levelMax": 56,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1047,
     "lat": -339.280875,
     "lng": 87.8468125,
-    "tableID": 825
+    "tableID": 825,
+    "pokemon": [
+      {
+        "name": "Sharpedo",
+        "pokedexNumber": 319,
+        "types": [
+          "water",
+          "dark"
+        ],
+        "levelMin": 41,
+        "levelMax": 43,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1048,
     "lat": -336.187875,
     "lng": 101.7662875,
-    "tableID": 832
+    "tableID": 832,
+    "pokemon": [
+      {
+        "name": "Watchog",
+        "pokedexNumber": 505,
+        "types": [
+          "normal"
+        ],
+        "levelMin": 41,
+        "levelMax": 43,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1049,
     "lat": -338.954875,
     "lng": 74.13195,
-    "tableID": 836
+    "tableID": 836,
+    "pokemon": [
+      {
+        "name": "Arbok",
+        "pokedexNumber": 24,
+        "types": [
+          "poison"
+        ],
+        "levelMin": 50,
+        "levelMax": 52,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1050,
     "lat": -301.14625,
     "lng": 218.583,
-    "tableID": 849
+    "tableID": 849,
+    "pokemon": [
+      {
+        "name": "Bellsprout",
+        "pokedexNumber": 69,
+        "types": [
+          "grass",
+          "poison"
+        ],
+        "levelMin": 24,
+        "levelMax": 25,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1051,
     "lat": -320.024125,
     "lng": 231.493,
-    "tableID": 856
+    "tableID": 856,
+    "pokemon": [
+      {
+        "name": "Whirlipede",
+        "pokedexNumber": 544,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "levelMin": 27,
+        "levelMax": 28,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1052,
     "lat": -312.43775,
     "lng": 192.54275,
-    "tableID": 859
+    "tableID": 859,
+    "pokemon": [
+      {
+        "name": "Gallade",
+        "pokedexNumber": 475,
+        "types": [
+          "psychic",
+          "fighting"
+        ],
+        "levelMin": 70,
+        "levelMax": 70,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1053,
     "lat": -336.201,
     "lng": 197.6855,
-    "tableID": 862
+    "tableID": 862,
+    "pokemon": [
+      {
+        "name": "Ampharos",
+        "pokedexNumber": 181,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 52,
+        "levelMax": 53,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1054,
     "lat": -227.641,
     "lng": 41.297225,
-    "tableID": 875
+    "tableID": 875,
+    "pokemon": [
+      {
+        "name": "Excadrill",
+        "pokedexNumber": 530,
+        "types": [
+          "ground",
+          "steel"
+        ],
+        "levelMin": 48,
+        "levelMax": 49,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1055,
     "lat": -287.925,
     "lng": 57.192325,
-    "tableID": 907
+    "tableID": 907,
+    "pokemon": [
+      {
+        "name": "Meowstic",
+        "pokedexNumber": 678,
+        "types": [
+          "psychic"
+        ],
+        "levelMin": 41,
+        "levelMax": 42,
+        "timeOfDay": "Night",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1056,
     "lat": -287.925,
     "lng": 57.192325,
-    "tableID": 908
+    "tableID": 908,
+    "pokemon": [
+      {
+        "name": "Meowstic",
+        "pokedexNumber": 678,
+        "types": [
+          "psychic"
+        ],
+        "levelMin": 41,
+        "levelMax": 42,
+        "timeOfDay": "Night",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1057,
     "lat": -277.58325,
     "lng": 33.9802375,
-    "tableID": 912
+    "tableID": 912,
+    "pokemon": [
+      {
+        "name": "Manectric",
+        "pokedexNumber": 310,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 40,
+        "levelMax": 41,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1058,
     "lat": -311.111875,
     "lng": 43.770325,
-    "tableID": 913
+    "tableID": 913,
+    "pokemon": [
+      {
+        "name": "Pangoro",
+        "pokedexNumber": 675,
+        "types": [
+          "fighting",
+          "dark"
+        ],
+        "levelMin": 70,
+        "levelMax": 70,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1059,
     "lat": -88.577225,
     "lng": 95.6380125,
-    "tableID": 917
+    "tableID": 917,
+    "pokemon": [
+      {
+        "name": "Salamence",
+        "pokedexNumber": 373,
+        "types": [
+          "dragon",
+          "flying"
+        ],
+        "levelMin": 61,
+        "levelMax": 62,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1060,
     "lat": -100.4764875,
     "lng": 112.048375,
-    "tableID": 918
+    "tableID": 918,
+    "pokemon": [
+      {
+        "name": "Lopunny",
+        "pokedexNumber": 428,
+        "types": [
+          "normal"
+        ],
+        "levelMin": 55,
+        "levelMax": 56,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1061,
     "lat": -220.237375,
     "lng": 146.403625,
-    "tableID": 922
+    "tableID": 922,
+    "pokemon": [
+      {
+        "name": "Fletchinder",
+        "pokedexNumber": 662,
+        "types": [
+          "fire",
+          "flying"
+        ],
+        "levelMin": 32,
+        "levelMax": 33,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1062,
     "lat": -37.04535,
     "lng": 199.697375,
-    "tableID": 941
+    "tableID": 941,
+    "pokemon": [
+      {
+        "name": "Weepinbell",
+        "pokedexNumber": 70,
+        "types": [
+          "grass",
+          "poison"
+        ],
+        "levelMin": 36,
+        "levelMax": 37,
+        "timeOfDay": "Daytime",
+        "alphaChance": 5,
+        "alphaLevelMin": 46,
+        "alphaLevelMax": 47
+      }
+    ]
   },
   {
-    "index": 1063,
     "lat": -24.387975,
     "lng": 206.25575,
-    "tableID": 943
+    "tableID": 943,
+    "pokemon": [
+      {
+        "name": "Trevenant",
+        "pokedexNumber": 709,
+        "types": [
+          "ghost",
+          "grass"
+        ],
+        "levelMin": 47,
+        "levelMax": 48,
+        "timeOfDay": "Night",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1064,
     "lat": -81.244825,
     "lng": 289.214,
-    "tableID": 950
+    "tableID": 950,
+    "pokemon": [
+      {
+        "name": "Spinarak",
+        "pokedexNumber": 167,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "levelMin": 20,
+        "levelMax": 21,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1065,
     "lat": -138.72925,
     "lng": 242.441625,
-    "tableID": 978
+    "tableID": 978,
+    "pokemon": [
+      {
+        "name": "Litleo",
+        "pokedexNumber": 667,
+        "types": [
+          "fire",
+          "normal"
+        ],
+        "levelMin": 23,
+        "levelMax": 24,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1066,
     "lat": -138.7115,
     "lng": 241.26475,
-    "tableID": 985
+    "tableID": 985,
+    "pokemon": [
+      {
+        "name": "Fletchling",
+        "pokedexNumber": 661,
+        "types": [
+          "normal",
+          "flying"
+        ],
+        "levelMin": 30,
+        "levelMax": 31,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1067,
     "lat": -138.702,
     "lng": 255.8,
-    "tableID": 990
+    "tableID": 990,
+    "pokemon": [
+      {
+        "name": "Steelix",
+        "pokedexNumber": 208,
+        "types": [
+          "steel",
+          "ground"
+        ],
+        "levelMin": 70,
+        "levelMax": 70,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1068,
     "lat": -92.9594125,
     "lng": 411.255125,
-    "tableID": 997
+    "tableID": 997,
+    "pokemon": [
+      {
+        "name": "Beedrill",
+        "pokedexNumber": 15,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "levelMin": 51,
+        "levelMax": 52,
+        "timeOfDay": "Daytime",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1069,
     "lat": -94.67925,
     "lng": 412.049625,
-    "tableID": 1000
+    "tableID": 1000,
+    "pokemon": [
+      {
+        "name": "Banette",
+        "pokedexNumber": 354,
+        "types": [
+          "ghost"
+        ],
+        "levelMin": 52,
+        "levelMax": 53,
+        "timeOfDay": "Night",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1070,
     "lat": -87.8995625,
     "lng": 417.703375,
-    "tableID": 1010
+    "tableID": 1010,
+    "pokemon": [
+      {
+        "name": "Gourgeist",
+        "pokedexNumber": 711,
+        "types": [
+          "ghost",
+          "grass"
+        ],
+        "levelMin": 52,
+        "levelMax": 53,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1071,
     "lat": -162.902875,
     "lng": 422.054625,
-    "tableID": 1023
+    "tableID": 1023,
+    "pokemon": [
+      {
+        "name": "Drampa",
+        "pokedexNumber": 780,
+        "types": [
+          "normal",
+          "dragon"
+        ],
+        "levelMin": 49,
+        "levelMax": 51,
+        "timeOfDay": "Daytime",
+        "alphaChance": 5,
+        "alphaLevelMin": 59,
+        "alphaLevelMax": 61
+      }
+    ]
   },
   {
-    "index": 1072,
     "lat": -162.0335,
     "lng": 421.712875,
-    "tableID": 1025
+    "tableID": 1025,
+    "pokemon": [
+      {
+        "name": "Clefairy",
+        "pokedexNumber": 35,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 48,
+        "levelMax": 50,
+        "rarity": 33.33,
+        "timeOfDay": "Night",
+        "alphaChance": 5,
+        "alphaLevelMin": 58,
+        "alphaLevelMax": 60
+      },
+      {
+        "name": "Cleffa",
+        "pokedexNumber": 173,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 49,
+        "levelMax": 50,
+        "rarity": 33.33,
+        "timeOfDay": "Night",
+        "alphaChance": 5,
+        "alphaLevelMin": 59,
+        "alphaLevelMax": 60
+      },
+      {
+        "name": "Clefairy",
+        "pokedexNumber": 35,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 58,
+        "levelMax": 60,
+        "rarity": 33.33,
+        "timeOfDay": "Night",
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1073,
     "lat": -262.591875,
     "lng": 491.86675,
-    "tableID": 1033
+    "tableID": 1033,
+    "pokemon": [
+      {
+        "name": "Houndoom",
+        "pokedexNumber": 229,
+        "types": [
+          "dark",
+          "fire"
+        ],
+        "levelMin": 32,
+        "levelMax": 33,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1074,
     "lat": -282.2075,
     "lng": 472.183,
-    "tableID": 1043
+    "tableID": 1043,
+    "pokemon": [
+      {
+        "name": "Binacle",
+        "pokedexNumber": 688,
+        "types": [
+          "rock",
+          "water"
+        ],
+        "levelMin": 32,
+        "levelMax": 34,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1075,
     "lat": -242.344375,
     "lng": 479.27975,
-    "tableID": 1044
+    "tableID": 1044,
+    "pokemon": [
+      {
+        "name": "Pikachu",
+        "pokedexNumber": 25,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 40,
+        "levelMax": 42,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1076,
     "lat": -292.903625,
     "lng": 428.596625,
-    "tableID": 1047
+    "tableID": 1047,
+    "pokemon": [
+      {
+        "name": "Slowbro",
+        "pokedexNumber": 80,
+        "types": [
+          "water",
+          "psychic"
+        ],
+        "levelMin": 42,
+        "levelMax": 44,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1077,
     "lat": -311.8435,
     "lng": 423.0865,
-    "tableID": 1059
+    "tableID": 1059,
+    "pokemon": [
+      {
+        "name": "Clawitzer",
+        "pokedexNumber": 693,
+        "types": [
+          "water"
+        ],
+        "levelMin": 42,
+        "levelMax": 44,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1078,
     "lat": -217.803375,
     "lng": 360.3575,
-    "tableID": 1069
+    "tableID": 1069,
+    "pokemon": [
+      {
+        "name": "Camerupt",
+        "pokedexNumber": 323,
+        "types": [
+          "fire",
+          "ground"
+        ],
+        "levelMin": 39,
+        "levelMax": 40,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1079,
     "lat": -215.863,
     "lng": 369.235,
-    "tableID": 1071
+    "tableID": 1071,
+    "pokemon": [
+      {
+        "name": "Gible",
+        "pokedexNumber": 443,
+        "types": [
+          "dragon",
+          "ground"
+        ],
+        "levelMin": 24,
+        "levelMax": 25,
+        "rarity": 8,
+        "alphaChance": 5,
+        "alphaLevelMin": 35,
+        "alphaLevelMax": 36
+      },
+      {
+        "name": "Drilbur",
+        "pokedexNumber": 529,
+        "types": [
+          "ground"
+        ],
+        "levelMin": 23,
+        "levelMax": 25,
+        "rarity": 92,
+        "alphaChance": 5,
+        "alphaLevelMin": 34,
+        "alphaLevelMax": 36
+      }
+    ]
   },
   {
-    "index": 1080,
     "lat": -255.749125,
     "lng": 252.07475,
-    "tableID": 1084
+    "tableID": 1084,
+    "pokemon": [
+      {
+        "name": "Raichu",
+        "pokedexNumber": 26,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Clefable",
+        "pokedexNumber": 36,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Alakazam",
+        "pokedexNumber": 65,
+        "types": [
+          "psychic"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Machamp",
+        "pokedexNumber": 68,
+        "types": [
+          "fighting"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Victreebel",
+        "pokedexNumber": 71,
+        "types": [
+          "grass",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gengar",
+        "pokedexNumber": 94,
+        "types": [
+          "ghost",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      }
+    ]
   },
   {
-    "index": 1081,
     "lat": -255.749125,
     "lng": 258.371375,
-    "tableID": 1085
+    "tableID": 1085,
+    "pokemon": [
+      {
+        "name": "Raichu",
+        "pokedexNumber": 26,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Clefable",
+        "pokedexNumber": 36,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Alakazam",
+        "pokedexNumber": 65,
+        "types": [
+          "psychic"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Machamp",
+        "pokedexNumber": 68,
+        "types": [
+          "fighting"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Victreebel",
+        "pokedexNumber": 71,
+        "types": [
+          "grass",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gengar",
+        "pokedexNumber": 94,
+        "types": [
+          "ghost",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      }
+    ]
   }
 ]

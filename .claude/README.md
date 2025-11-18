@@ -65,13 +65,20 @@ Created proper extraction pipeline using **table IDs** to maintain alignment:
 - `tableID` is Serebii's actual identifier (not array position)
 - Guarantees coordinate/Pokemon alignment
 
-### Current Dataset (Regenerated Nov 17)
+### Current Dataset (Updated Nov 17)
 
 - **1,063 spawners** with correct coordinates
 - **1,028 with Pokemon data** (97% coverage)
 - **136 unique Pokemon species**
 - **1,317 total Pokemon entries**
-- **54 static alpha spawns**
+- **54 static alpha spawns** with full Pokemon data
+  - 57 unique alpha Pokemon species
+  - All with 100% alpha chance
+  - Includes elemental monkeys (Pansage/Pansear/Panpour), starters, and more
+- **253 benches** (rest/save points)
+- **23 holovators** (elevators)
+- **147 ladders** (roof access)
+- **20 wild zones** (special spawn areas)
 
 ### Map Rendering
 
@@ -136,11 +143,11 @@ cat public/data/spawners.json | jq '.[] | select(.lat > -251 and .lat < -250 and
 ## Next Steps / TODO
 
 **Data extraction:**
-- [ ] Extract fly points (currently demo data)
-- [ ] Extract benches (currently demo data)
-- [ ] Extract holovators (new POI type)
-- [ ] Extract ladders (new POI type)
-- [ ] Extract wild zones (polygons, not points)
+- [x] Extract benches (253 benches extracted)
+- [x] Extract holovators (23 holovators extracted)
+- [x] Extract ladders (147 ladders extracted)
+- [x] Extract wild zones (20 wild zones extracted)
+- [ ] Extract fly points (need to investigate - not in pmarkers array)
 - [ ] Extract map labels (district names, etc.)
 
 **Map features:**

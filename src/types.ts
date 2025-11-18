@@ -24,16 +24,15 @@ export interface Spawner {
 export interface StaticAlpha {
   lat: number;
   lng: number;
-  pokemon?: {
-    pokedexNumber: number;
-    name: string;
-  };
+  tableID?: number;
+  pokemon: Pokemon[];
 }
 
 export interface WildZone {
-  id?: number;
-  name: string;
-  bounds: [number, number][];  // Polygon coordinates
+  lat: number;
+  lng: number;
+  tableID?: number;
+  name?: string;
 }
 
 export interface MapLabel {
