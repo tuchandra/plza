@@ -62,9 +62,11 @@ export function initMap(): void {
   L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
   map.fitBounds(imageBounds);
-  // Center view on Lumiose City (roughly the center of coordinates)
-  // Map bounds are 4096×4096, so center is at [-2048, 2048]
-  map.setView([-2048, 2048], 0.5);
+  // Center view on Lumiose City based on actual spawner coordinates
+  // Spawner ranges: lat [-494, -12.5], lng [19.5, 491]
+  // Center: lat -253.3, lng 255.4 → scaled by 8 = [-2026, 2043]
+  // Zoom 0 shows more of the city at once
+  map.setView([-2026, 2043], 0);
 
   // Load data and create markers
   loadData();
