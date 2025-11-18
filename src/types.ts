@@ -31,8 +31,9 @@ export interface StaticAlpha {
 export interface WildZone {
   lat: number;
   lng: number;
-  tableID?: number;
-  name?: string;
+  tableID: number;
+  name: string;
+  pokemon: Pokemon[];
 }
 
 export interface MapLabel {

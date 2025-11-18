@@ -284,8 +284,8 @@ function createWildZoneMarkers(wildZones: WildZone[]): void {
       fillOpacity: 0.7,
     });
 
-    const popupContent = `<strong>Wild Zone</strong>${zone.name ? `<br>${zone.name}` : ''}`;
-    marker.bindPopup(popupContent);
+    const popupContent = createWildZonePopup(zone);
+    marker.bindPopup(popupContent, { maxWidth: 400, maxHeight: 400 });
     marker.addTo(map);
     wildZoneMarkers.push({
       marker: marker,
@@ -404,6 +404,35 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
       circle: circle,
     });
   }
+}
+
+// Create popup content for wild zone
+function createWildZonePopup(zone: WildZone): string {
+  let html = '<div class="wild-zone-popup">';
+  html += '<div class="popup-header wild-zone-header">';
+  html += `<h4>${zone.name}</h4>`;
+  html += `<span class="pokemon-count-badge">${zone.pokemon.length} Pokemon</span>`;
+  html += '</div>';
+
+  if (zone.pokemon.length === 0) {
+    html += '<p class="no-data">No spawn data available</p>';
+    html += '</div>';
+    return html;
+  }
+
+  html += '<div class="pokemon-grid">';
+
+  zone.pokemon.forEach((poke) => {
+    const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+    html += '<div class="pokemon-grid-item">';
+    html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" title="${poke.name}" />`;
+    html += `<div class="pokemon-name-small">${poke.name}</div>`;
+    html += '</div>';
+  });
+
+  html += '</div>';
+  html += '</div>';
+  return html;
 }
 
 // Create popup content for spawner

@@ -2,101 +2,2001 @@
   {
     "lat": -478,
     "lng": 296.5,
-    "tableID": 5001
+    "tableID": 5001,
+    "pokemon": [
+      {
+        "name": "Weedle",
+        "pokedexNumber": 13,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pidgey",
+        "pokedexNumber": 16,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pichu",
+        "pokedexNumber": 172,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Mareep",
+        "pokedexNumber": 179,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Bunnelby",
+        "pokedexNumber": 659,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Fletchling",
+        "pokedexNumber": 661,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Scatterbug",
+        "pokedexNumber": 664,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 1"
   },
   {
     "lat": -343.5,
     "lng": 321.5,
-    "tableID": 5002
+    "tableID": 5002,
+    "pokemon": [
+      {
+        "name": "Kakuna",
+        "pokedexNumber": 14,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Staryu",
+        "pokedexNumber": 120,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Magikarp",
+        "pokedexNumber": 129,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Budew",
+        "pokedexNumber": 406,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Patrat",
+        "pokedexNumber": 504,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Binacle",
+        "pokedexNumber": 688,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 2"
   },
   {
     "lat": -137.5,
     "lng": 256,
-    "tableID": 5003
+    "tableID": 5003,
+    "pokemon": [
+      {
+        "name": "Pikachu",
+        "pokedexNumber": 25,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Steelix",
+        "pokedexNumber": 208,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Fletchling",
+        "pokedexNumber": 661,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Litleo",
+        "pokedexNumber": 667,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Flab&eacute;b&eacute;",
+        "pokedexNumber": 669,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Skiddo",
+        "pokedexNumber": 672,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pancham",
+        "pokedexNumber": 674,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Espurr",
+        "pokedexNumber": 677,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 3"
   },
   {
     "lat": -70.5,
     "lng": 292.5,
-    "tableID": 5004
+    "tableID": 5004,
+    "pokemon": [
+      {
+        "name": "Ekans",
+        "pokedexNumber": 23,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gastly",
+        "pokedexNumber": 92,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Spinarak",
+        "pokedexNumber": 167,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Patrat",
+        "pokedexNumber": 504,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Spewpa",
+        "pokedexNumber": 665,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Honedge",
+        "pokedexNumber": 679,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 4"
   },
   {
     "lat": -309,
     "lng": 214.5,
-    "tableID": 5005
+    "tableID": 5005,
+    "pokemon": [
+      {
+        "name": "Pidgey",
+        "pokedexNumber": 16,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pidgeotto",
+        "pokedexNumber": 17,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Abra",
+        "pokedexNumber": 63,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Bellsprout",
+        "pokedexNumber": 69,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Electrike",
+        "pokedexNumber": 309,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gallade",
+        "pokedexNumber": 475,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Patrat",
+        "pokedexNumber": 504,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Venipede",
+        "pokedexNumber": 543,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Whirlipede",
+        "pokedexNumber": 544,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Bunnelby",
+        "pokedexNumber": 659,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Fletchling",
+        "pokedexNumber": 661,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Fletchinder",
+        "pokedexNumber": 662,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Binacle",
+        "pokedexNumber": 688,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 5"
   },
   {
     "lat": -270,
     "lng": 474.5,
-    "tableID": 5006
+    "tableID": 5006,
+    "pokemon": [
+      {
+        "name": "Pikachu",
+        "pokedexNumber": 25,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Magikarp",
+        "pokedexNumber": 129,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Flaaffy",
+        "pokedexNumber": 180,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Houndour",
+        "pokedexNumber": 228,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Houndoom",
+        "pokedexNumber": 229,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Meditite",
+        "pokedexNumber": 307,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Swablu",
+        "pokedexNumber": 333,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Buneary",
+        "pokedexNumber": 427,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Binacle",
+        "pokedexNumber": 688,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 6"
   },
   {
     "lat": -221,
     "lng": 147,
-    "tableID": 5007
+    "tableID": 5007,
+    "pokemon": [
+      {
+        "name": "Kakuna",
+        "pokedexNumber": 14,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gastly",
+        "pokedexNumber": 92,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Roselia",
+        "pokedexNumber": 315,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Shuppet",
+        "pokedexNumber": 353,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Hippopotas",
+        "pokedexNumber": 449,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Audino",
+        "pokedexNumber": 531,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Vanillite",
+        "pokedexNumber": 582,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Fletchinder",
+        "pokedexNumber": 662,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Floette",
+        "pokedexNumber": 670,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 7"
   },
   {
     "lat": -216.5,
     "lng": 369.5,
-    "tableID": 5008
+    "tableID": 5008,
+    "pokemon": [
+      {
+        "name": "Machop",
+        "pokedexNumber": 66,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Numel",
+        "pokedexNumber": 322,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Camerupt",
+        "pokedexNumber": 323,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gible",
+        "pokedexNumber": 443,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Drilbur",
+        "pokedexNumber": 529,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Sandile",
+        "pokedexNumber": 551,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Krokorok",
+        "pokedexNumber": 552,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 8"
   },
   {
     "lat": -294,
     "lng": 60.5,
-    "tableID": 5009
+    "tableID": 5009,
+    "pokemon": [
+      {
+        "name": "Kadabra",
+        "pokedexNumber": 64,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Sableye",
+        "pokedexNumber": 302,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Mawile",
+        "pokedexNumber": 303,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Manectric",
+        "pokedexNumber": 310,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Fletchinder",
+        "pokedexNumber": 662,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pangoro",
+        "pokedexNumber": 675,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Espurr",
+        "pokedexNumber": 677,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Meowstic",
+        "pokedexNumber": 678,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Carbink",
+        "pokedexNumber": 703,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 9"
   },
   {
     "lat": -341,
     "lng": 73.5,
-    "tableID": 5010
+    "tableID": 5010,
+    "pokemon": [
+      {
+        "name": "Arbok",
+        "pokedexNumber": 24,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Bellsprout",
+        "pokedexNumber": 69,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Slowpoke",
+        "pokedexNumber": 79,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Staryu",
+        "pokedexNumber": 120,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Carvanha",
+        "pokedexNumber": 318,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Sharpedo",
+        "pokedexNumber": 319,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Watchog",
+        "pokedexNumber": 505,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Tynamo",
+        "pokedexNumber": 602,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 10"
   },
   {
     "lat": -308.5,
     "lng": 426.5,
-    "tableID": 5011
+    "tableID": 5011,
+    "pokemon": [
+      {
+        "name": "Slowpoke",
+        "pokedexNumber": 79,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Slowbro",
+        "pokedexNumber": 80,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gyarados",
+        "pokedexNumber": 130,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Stunfisk",
+        "pokedexNumber": 618,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Furfrou",
+        "pokedexNumber": 676,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Inkay",
+        "pokedexNumber": 686,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Clauncher",
+        "pokedexNumber": 692,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Clawitzer",
+        "pokedexNumber": 693,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 11"
   },
   {
     "lat": -424.5,
     "lng": 217,
-    "tableID": 5012
+    "tableID": 5012,
+    "pokemon": [
+      {
+        "name": "Machop",
+        "pokedexNumber": 66,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Machoke",
+        "pokedexNumber": 67,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Delibird",
+        "pokedexNumber": 225,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Snorunt",
+        "pokedexNumber": 361,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Snover",
+        "pokedexNumber": 459,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Abomasnow",
+        "pokedexNumber": 460,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Vanillite",
+        "pokedexNumber": 582,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gogoat",
+        "pokedexNumber": 673,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Bergmite",
+        "pokedexNumber": 712,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Avalugg",
+        "pokedexNumber": 713,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 12"
   },
   {
     "lat": -31.5,
     "lng": 203.5,
-    "tableID": 5013
+    "tableID": 5013,
+    "pokemon": [
+      {
+        "name": "Weepinbell",
+        "pokedexNumber": 70,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Scyther",
+        "pokedexNumber": 123,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pinsir",
+        "pokedexNumber": 127,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Heracross",
+        "pokedexNumber": 214,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Vivillon",
+        "pokedexNumber": 666,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Phantump",
+        "pokedexNumber": 708,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Trevenant",
+        "pokedexNumber": 709,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 13"
   },
   {
     "lat": -221,
     "lng": 47,
-    "tableID": 5014
+    "tableID": 5014,
+    "pokemon": [
+      {
+        "name": "Onix",
+        "pokedexNumber": 95,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Aron",
+        "pokedexNumber": 304,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Lairon",
+        "pokedexNumber": 305,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Drilbur",
+        "pokedexNumber": 529,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Excadrill",
+        "pokedexNumber": 530,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Emolga",
+        "pokedexNumber": 587,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Helioptile",
+        "pokedexNumber": 694,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 14"
   },
   {
     "lat": -88.5,
     "lng": 419,
-    "tableID": 5015
+    "tableID": 5015,
+    "pokemon": [
+      {
+        "name": "Beedrill",
+        "pokedexNumber": 15,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Haunter",
+        "pokedexNumber": 93,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Larvitar",
+        "pokedexNumber": 246,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Shuppet",
+        "pokedexNumber": 353,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Banette",
+        "pokedexNumber": 354,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Whirlipede",
+        "pokedexNumber": 544,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Scolipede",
+        "pokedexNumber": 545,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Trevenant",
+        "pokedexNumber": 709,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pumpkaboo",
+        "pokedexNumber": 710,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gourgeist",
+        "pokedexNumber": 711,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Noibat",
+        "pokedexNumber": 714,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 15"
   },
   {
     "lat": -352.5,
     "lng": 185.5,
-    "tableID": 5016
+    "tableID": 5016,
+    "pokemon": [
+      {
+        "name": "Starmie",
+        "pokedexNumber": 121,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Flaaffy",
+        "pokedexNumber": 180,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Ampharos",
+        "pokedexNumber": 181,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Medicham",
+        "pokedexNumber": 308,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Froakie",
+        "pokedexNumber": 656,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Florges",
+        "pokedexNumber": 671,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Barbaracle",
+        "pokedexNumber": 689,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Falinks",
+        "pokedexNumber": 870,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 16"
   },
   {
     "lat": -401,
     "lng": 397,
-    "tableID": 5017
+    "tableID": 5017,
+    "pokemon": [
+      {
+        "name": "Skarmory",
+        "pokedexNumber": 227,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Mawile",
+        "pokedexNumber": 303,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Lampent",
+        "pokedexNumber": 608,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Chespin",
+        "pokedexNumber": 650,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Diggersby",
+        "pokedexNumber": 660,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Talonflame",
+        "pokedexNumber": 663,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pyroar",
+        "pokedexNumber": 668,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Klefki",
+        "pokedexNumber": 707,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 17"
   },
   {
     "lat": -82.5,
     "lng": 99,
-    "tableID": 5018
+    "tableID": 5018,
+    "pokemon": [
+      {
+        "name": "Swablu",
+        "pokedexNumber": 333,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Altaria",
+        "pokedexNumber": 334,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Bagon",
+        "pokedexNumber": 371,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Salamence",
+        "pokedexNumber": 373,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Lopunny",
+        "pokedexNumber": 428,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Fennekin",
+        "pokedexNumber": 653,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Noibat",
+        "pokedexNumber": 714,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Noivern",
+        "pokedexNumber": 715,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 18"
   },
   {
     "lat": -157,
     "lng": 420,
-    "tableID": 5019
+    "tableID": 5019,
+    "pokemon": [
+      {
+        "name": "Clefairy",
+        "pokedexNumber": 35,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Kangaskhan",
+        "pokedexNumber": 115,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Eevee",
+        "pokedexNumber": 133,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Cleffa",
+        "pokedexNumber": 173,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Houndoom",
+        "pokedexNumber": 229,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Audino",
+        "pokedexNumber": 531,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Furfrou",
+        "pokedexNumber": 676,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Drampa",
+        "pokedexNumber": 780,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 19"
   },
   {
     "lat": -256,
     "lng": 256,
-    "tableID": 5020
+    "tableID": 5020,
+    "pokemon": [
+      {
+        "name": "Bulbasaur",
+        "pokedexNumber": 1,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Charmander",
+        "pokedexNumber": 4,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Squirtle",
+        "pokedexNumber": 7,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Raichu",
+        "pokedexNumber": 26,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Clefable",
+        "pokedexNumber": 36,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Alakazam",
+        "pokedexNumber": 65,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Machamp",
+        "pokedexNumber": 68,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Victreebel",
+        "pokedexNumber": 71,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gengar",
+        "pokedexNumber": 94,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Kangaskhan",
+        "pokedexNumber": 115,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Starmie",
+        "pokedexNumber": 121,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pinsir",
+        "pokedexNumber": 127,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gyarados",
+        "pokedexNumber": 130,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Vaporeon",
+        "pokedexNumber": 134,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Jolteon",
+        "pokedexNumber": 135,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Flareon",
+        "pokedexNumber": 136,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Dragonite",
+        "pokedexNumber": 149,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Chikorita",
+        "pokedexNumber": 152,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Totodile",
+        "pokedexNumber": 158,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Ariados",
+        "pokedexNumber": 168,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Heracross",
+        "pokedexNumber": 214,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Delibird",
+        "pokedexNumber": 225,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Skarmory",
+        "pokedexNumber": 227,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Tyranitar",
+        "pokedexNumber": 248,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gardevoir",
+        "pokedexNumber": 282,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Sableye",
+        "pokedexNumber": 302,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Aggron",
+        "pokedexNumber": 306,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Medicham",
+        "pokedexNumber": 308,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Altaria",
+        "pokedexNumber": 334,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Absol",
+        "pokedexNumber": 359,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Metagross",
+        "pokedexNumber": 376,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Roserade",
+        "pokedexNumber": 407,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Garchomp",
+        "pokedexNumber": 445,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Lucario",
+        "pokedexNumber": 448,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Hippowdon",
+        "pokedexNumber": 450,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Leafeon",
+        "pokedexNumber": 470,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Glaceon",
+        "pokedexNumber": 471,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gallade",
+        "pokedexNumber": 475,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Froslass",
+        "pokedexNumber": 478,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Tepig",
+        "pokedexNumber": 498,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Simisage",
+        "pokedexNumber": 512,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Simisear",
+        "pokedexNumber": 514,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Simipour",
+        "pokedexNumber": 516,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Scolipede",
+        "pokedexNumber": 545,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Krookodile",
+        "pokedexNumber": 553,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Scrafty",
+        "pokedexNumber": 560,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Garbodor",
+        "pokedexNumber": 569,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Vanilluxe",
+        "pokedexNumber": 584,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Eelektross",
+        "pokedexNumber": 604,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Chandelure",
+        "pokedexNumber": 609,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Stunfisk",
+        "pokedexNumber": 618,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Diggersby",
+        "pokedexNumber": 660,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Talonflame",
+        "pokedexNumber": 663,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Vivillon",
+        "pokedexNumber": 666,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Florges",
+        "pokedexNumber": 671,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gogoat",
+        "pokedexNumber": 673,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Pangoro",
+        "pokedexNumber": 675,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Furfrou",
+        "pokedexNumber": 676,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Aegislash",
+        "pokedexNumber": 681,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Malamar",
+        "pokedexNumber": 687,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Barbaracle",
+        "pokedexNumber": 689,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Dragalge",
+        "pokedexNumber": 691,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Heliolisk",
+        "pokedexNumber": 695,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Sylveon",
+        "pokedexNumber": 700,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Hawlucha",
+        "pokedexNumber": 701,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Dedenne",
+        "pokedexNumber": 702,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Carbink",
+        "pokedexNumber": 703,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Goodra",
+        "pokedexNumber": 706,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Klefki",
+        "pokedexNumber": 707,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Gourgeist",
+        "pokedexNumber": 711,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Noivern",
+        "pokedexNumber": 715,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Drampa",
+        "pokedexNumber": 780,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      },
+      {
+        "name": "Falinks",
+        "pokedexNumber": 870,
+        "types": [],
+        "levelMin": 50,
+        "levelMax": 65,
+        "alphaChance": 0
+      }
+    ],
+    "name": "Wild Zone 20"
   }
 ]

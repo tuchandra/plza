@@ -339,9 +339,67 @@ body {
   border-bottom-color: #27ae60;
 }
 
+.pokemon-count-badge {
+  background: #27ae60;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
 .popup-header.bench-header {
   background: linear-gradient(135deg, #fdf6e3 0%, #f5e6d3 100%);
   border-bottom-color: #8b6f47;
+}
+
+/* Wild Zone Pokemon Grid */
+.wild-zone-popup {
+  padding: 0;
+  max-width: 380px;
+}
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  padding: 12px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.pokemon-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.pokemon-grid-item:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-sprite-small {
+  width: 40px;
+  height: 40px;
+  image-rendering: pixelated;
+}
+
+.pokemon-name-small {
+  font-size: 9px;
+  font-weight: 500;
+  color: #495057;
+  text-align: center;
+  line-height: 1.2;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Custom Marker Styles */
