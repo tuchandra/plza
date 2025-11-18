@@ -47,8 +47,10 @@ Pokemon Legends: Z-A Interactive Map - a fast, clean, static-site map for Lumios
 ## Git Workflow
 
 - Commit directly to main (this is a vibe project)
-- Write clear commit messages
+- Atomic commits: one logical change per commit
+- Clear, concise commit messages (no LLM-isms like "The fix:" or "You're absolutely right!")
 - Test before committing
+- See `.claude/HANDOFF_ROUTINE.md` for handoff checklist
 
 ## Architecture
 
