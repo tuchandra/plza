@@ -2,6 +2,45 @@
 
 ## Recent Major Changes (Nov 17, 2025)
 
+### SVG Icon Integration ✅
+
+**Added PokeOS-style SVG icons to all markers:**
+- Extracted icons from PokeOS.com map with proper attribution
+- All markers now use divIcon with embedded SVGs for better visual distinction
+- Icons scale properly at all zoom levels
+
+**Marker icons:**
+- Spawners: Pokeball icon (white) in gold circle (24px)
+- Wild Zones: Tree icon (white) in green circle (30px)
+- Benches: Bench icon (white) in brown circle (24px)
+- Holovators: Chevrons icon (dark) in yellow circle (24px)
+- Ladders: Ladder icon (dark) in white semi-transparent circle (22px)
+- Fly Points: Map pin icon (white) in blue circle (28px)
+- Static Alphas: Alpha icon SVG (red, 24px) - kept existing
+
+**Files:**
+- `public/images/icons/*.svg` - Individual icon files with PokeOS attribution
+- `CREDITS.md` - Attribution for PokeOS, Serebii, PokeAPI, PokemonDB
+- `scripts/extract-pokeos-svgs.js` - Browser console script for SVG extraction
+
+### Popup UI Improvements ✅
+
+**Type badges:**
+- Updated to PokemonDB color scheme (brighter, more modern)
+- 18 type colors: Fire #FF9D55, Water #5090D6, Grass #63BC5A, etc.
+
+**Spawner popups:**
+- Larger sprites: 36px → 56px with pixelated rendering
+- Level on top: "Lv. 53 – 54"
+- Rate + alpha on one line: "35%    [icon] 5%"
+- Omit "Pokemon Spawner" header for single-Pokemon spawners
+
+**Simple popups:**
+- Bench, fly point, holovator, ladder popups: just header, no description
+- Removed "Click to show spawn radius" instructions
+
+## Earlier Changes (Nov 17, 2025)
+
 ### 4K Map Upgrade ✅
 
 **Upgraded to Serebii zoom level 3 tiles:**
@@ -236,11 +275,13 @@ cat public/data/spawners.json | jq '.[] | select(.lat > -251 and .lat < -250 and
 - [ ] Extract map labels (district names, etc.)
 
 **Map features:**
+- [ ] **Implement PokeOS-style filtering** - Multi-toggle filter buttons (Wild Zones, Pokemon, Battle Zones, Missions, Side Quests, etc.)
 - [ ] Add type filtering (bug, fire, water, etc.)
 - [ ] Add Pokemon search/autocomplete
 - [x] Add radius circles for benches (click to toggle)
 - [x] Add Pokemon sprites to popups
 - [x] Show alpha spawns differently (red header, 100% indicator)
+- [x] Add SVG icons to markers (from PokeOS)
 - [ ] Time-of-day filters
 
 **Polish:**
