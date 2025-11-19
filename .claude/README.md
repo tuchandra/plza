@@ -40,9 +40,12 @@ See `docs/data-extraction-guide.md` for full details.
 - [ ] Add visual boundaries around wild zones
 - [ ] Add location names to fly point popups
 - [ ] Add wild zone entrance fly points (separate from regular fly points)
+- [ ] Fix wild zone 16 duplicate Ampharos in popup
 
 **Medium Priority:**
 - [ ] Implement PokeOS-style filtering (multi-toggle buttons)
+- [ ] Add show/hide controls for all marker types
+- [ ] Hide spawners with no data available
 - [ ] Add type/Pokemon filtering
 - [ ] Better mobile UI
 - [ ] Map labels (district names)
