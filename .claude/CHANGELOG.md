@@ -4,6 +4,14 @@ Detailed changelog of major changes. See git log for commit-level details.
 
 ## November 18, 2025
 
+### Compact Grid Layout for Large Alpha Popups
+- Static alpha spawners with >10 Pokemon now use scrollable 4-column grid layout
+- Displays Pokemon sprite, name, and type badges in compact cards
+- Omits levels and spawn rates to save vertical space
+- 400px max-height with scrolling for large spawners
+- Small spawners (≤10 Pokemon) keep original detailed table layout
+- Fixes Wild Zone 20 static alpha popup readability
+
 ### Wild Zone 20 Static Alpha Spawner Fix
 - Fixed critical data extraction bug for tableIDs 1084/1085
 - Restored all 67 Pokemon to Wild Zone 20 static alpha spawners (was only showing 6)
