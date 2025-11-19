@@ -376,13 +376,13 @@ function updateSpawnerVisibility(): void {
   // At higher zoom (more zoomed in), require larger radius to show cluster
   // At lower zoom (more zoomed out), show clusters even with small radius
   let minClusterRadius: number;
-  if (zoom >= 1.5) {
+  if (zoom >= 0.5) {
     minClusterRadius = Infinity; // Never cluster
-  } else if (zoom >= 0.75) {
-    minClusterRadius = 6; // Only very tight clusters (~50px)
   } else if (zoom >= 0) {
+    minClusterRadius = 6; // Only very tight clusters (~50px)
+  } else if (zoom >= -0.5) {
     minClusterRadius = 4; // Medium clusters (~30px)
-  } else if (zoom >= -0.75) {
+  } else if (zoom >= -1) {
     minClusterRadius = 2; // Looser clusters (~15px)
   } else {
     minClusterRadius = 0; // All clusters
