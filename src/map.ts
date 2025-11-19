@@ -40,8 +40,18 @@ let holovatorMarkers: MarkerData<Holovator>[] = [];
 let ladderMarkers: MarkerData<Ladder>[] = [];
 let wildZoneMarkers: MarkerData<WildZone>[] = [];
 let wildZoneBoundaries: L.Layer[] = [];
+let rawBoundaryData: any[] = []; // Store raw PokeOS data
 let staticAlphaMarkers: MarkerData<StaticAlpha>[] = [];
 let activeRadiusCircles: RadiusCircle[] = [];
+
+// Transformation parameters for wild zone boundaries
+// Calibrated using least-squares fit on all 6 circle wild zones
+let transformParams = {
+  lngScale: 0.2680,
+  lngOffset: -0.97,
+  latScale: -0.2683,
+  latOffset: 1.41,
+};
 
 // Pre-computed visibility states for performance
 interface VisibilityState {
@@ -146,12 +156,12 @@ async function loadData(): Promise<void> {
       console.log('No wild zone data available');
     }
 
-    // Load wild zone boundaries
+    // Load raw wild zone boundaries (PokeOS coordinates)
     try {
-      const boundaryResponse = await fetch('data/wild_zone_boundaries.json');
+      const boundaryResponse = await fetch('data/wild_zone_boundaries_raw.json');
       if (boundaryResponse.ok) {
-        const boundaryData: WildZoneBoundary[] = await boundaryResponse.json();
-        createWildZoneBoundaries(boundaryData);
+        rawBoundaryData = await boundaryResponse.json();
+        rebuildBoundaries();
       }
     } catch (e) {
       console.log('No wild zone boundary data available');
@@ -708,6 +718,143 @@ function createWildZoneMarkers(wildZones: WildZone[]): void {
   });
 }
 
+// Parse SVG path data properly handling relative/absolute commands
+function parseSVGPath(pathData: string): Array<[number, number]> {
+  const points: Array<[number, number]> = [];
+  let currentX = 0;
+  let currentY = 0;
+  let startX = 0;
+  let startY = 0;
+
+  const tokens = pathData.match(/[a-zA-Z]|[-+]?[0-9]*\.?[0-9]+/g);
+  if (!tokens) return points;
+
+  let i = 0;
+  while (i < tokens.length) {
+    const command = tokens[i];
+
+    if (command === 'M') {
+      currentX = parseFloat(tokens[++i]);
+      currentY = parseFloat(tokens[++i]);
+      startX = currentX;
+      startY = currentY;
+      points.push([currentX, currentY]);
+    } else if (command === 'm') {
+      currentX += parseFloat(tokens[++i]);
+      currentY += parseFloat(tokens[++i]);
+      startX = currentX;
+      startY = currentY;
+      points.push([currentX, currentY]);
+    } else if (command === 'L') {
+      currentX = parseFloat(tokens[++i]);
+      currentY = parseFloat(tokens[++i]);
+      points.push([currentX, currentY]);
+    } else if (command === 'l') {
+      currentX += parseFloat(tokens[++i]);
+      currentY += parseFloat(tokens[++i]);
+      points.push([currentX, currentY]);
+    } else if (command === 'H') {
+      currentX = parseFloat(tokens[++i]);
+      points.push([currentX, currentY]);
+    } else if (command === 'h') {
+      currentX += parseFloat(tokens[++i]);
+      points.push([currentX, currentY]);
+    } else if (command === 'V') {
+      currentY = parseFloat(tokens[++i]);
+      points.push([currentX, currentY]);
+    } else if (command === 'v') {
+      currentY += parseFloat(tokens[++i]);
+      points.push([currentX, currentY]);
+    } else if (command === 'S' || command === 's') {
+      const isRelative = command === 's';
+      parseFloat(tokens[++i]); // x2
+      parseFloat(tokens[++i]); // y2
+      const x = parseFloat(tokens[++i]);
+      const y = parseFloat(tokens[++i]);
+      if (isRelative) {
+        currentX += x;
+        currentY += y;
+      } else {
+        currentX = x;
+        currentY = y;
+      }
+      points.push([currentX, currentY]);
+    } else if (command === 'C' || command === 'c') {
+      const isRelative = command === 'c';
+      parseFloat(tokens[++i]); // x1
+      parseFloat(tokens[++i]); // y1
+      parseFloat(tokens[++i]); // x2
+      parseFloat(tokens[++i]); // y2
+      const x = parseFloat(tokens[++i]);
+      const y = parseFloat(tokens[++i]);
+      if (isRelative) {
+        currentX += x;
+        currentY += y;
+      } else {
+        currentX = x;
+        currentY = y;
+      }
+      points.push([currentX, currentY]);
+    } else if (command === 'Z' || command === 'z') {
+      if (currentX !== startX || currentY !== startY) {
+        points.push([startX, startY]);
+      }
+    } else if (!isNaN(parseFloat(command))) {
+      currentX += parseFloat(command);
+      currentY += parseFloat(tokens[++i]);
+      points.push([currentX, currentY]);
+    }
+    i++;
+  }
+  return points;
+}
+
+// Transform PokeOS coordinates to our system
+function transformCoords(pokeosX: number, pokeosY: number): { lat: number; lng: number } {
+  return {
+    lng: (pokeosX * transformParams.lngScale) + transformParams.lngOffset,
+    lat: (pokeosY * transformParams.latScale) + transformParams.latOffset,
+  };
+}
+
+// Convert raw PokeOS boundary data to our coordinate system
+function convertRawBoundary(rawBoundary: any): WildZoneBoundary {
+  const converted: any = {
+    wzNumber: rawBoundary.wzNumber,
+    type: rawBoundary.type,
+  };
+
+  if (rawBoundary.type === 'circle') {
+    const center = transformCoords(rawBoundary.cx, rawBoundary.cy);
+    converted.center = center;
+    converted.radius = rawBoundary.r * transformParams.lngScale; // Use lng scale for radius
+  } else if (rawBoundary.type === 'polygon') {
+    converted.points = rawBoundary.points.map(([x, y]: [number, number]) => transformCoords(x, y));
+  } else if (rawBoundary.type === 'path') {
+    const parsedPoints = parseSVGPath(rawBoundary.d);
+    converted.points = parsedPoints.map(([x, y]) => transformCoords(x, y));
+  } else if (rawBoundary.type === 'rect') {
+    const topLeft = transformCoords(rawBoundary.x, rawBoundary.y);
+    const topRight = transformCoords(rawBoundary.x + rawBoundary.width, rawBoundary.y);
+    const bottomRight = transformCoords(rawBoundary.x + rawBoundary.width, rawBoundary.y + rawBoundary.height);
+    const bottomLeft = transformCoords(rawBoundary.x, rawBoundary.y + rawBoundary.height);
+    converted.points = [topLeft, topRight, bottomRight, bottomLeft];
+  }
+
+  return converted as WildZoneBoundary;
+}
+
+// Rebuild boundaries with current transformation parameters
+function rebuildBoundaries(): void {
+  // Clear existing boundaries
+  wildZoneBoundaries.forEach(layer => map.removeLayer(layer));
+  wildZoneBoundaries = [];
+
+  // Convert and create new boundaries
+  const convertedBoundaries = rawBoundaryData.map(raw => convertRawBoundary(raw));
+  createWildZoneBoundaries(convertedBoundaries);
+}
+
 // Create wild zone boundaries (polygons, circles, etc.)
 function createWildZoneBoundaries(boundaries: WildZoneBoundary[]): void {
   // Style for wild zone boundaries - green with transparency like PokeOS
@@ -720,13 +867,6 @@ function createWildZoneBoundaries(boundaries: WildZoneBoundary[]): void {
   };
 
   boundaries.forEach((boundary) => {
-    // Skip path types for now - they need proper SVG path parsing
-    // TODO: Fix WZ 5, 11, 14, 18 (path types)
-    if (boundary.type === 'path') {
-      console.log(`Skipping WZ${boundary.wzNumber} - path type needs proper parsing`);
-      return;
-    }
-
     let layer: L.Layer;
 
     if (boundary.type === 'circle' && boundary.center && boundary.radius) {
@@ -736,13 +876,8 @@ function createWildZoneBoundaries(boundaries: WildZoneBoundary[]): void {
         ...boundaryStyle,
       });
 
-    } else if (boundary.type === 'polygon' && boundary.points) {
-      // Create polygon
-      const latLngs: [number, number][] = boundary.points.map(p => [p.lat * 8, p.lng * 8]);
-      layer = L.polygon(latLngs, boundaryStyle);
-
-    } else if (boundary.type === 'rect' && boundary.points) {
-      // Rectangle as polygon
+    } else if ((boundary.type === 'polygon' || boundary.type === 'path' || boundary.type === 'rect') && boundary.points) {
+      // Create polygon (works for polygon, path, and rect types)
       const latLngs: [number, number][] = boundary.points.map(p => [p.lat * 8, p.lng * 8]);
       layer = L.polygon(latLngs, boundaryStyle);
 
@@ -1136,6 +1271,129 @@ function setupEventListeners(): void {
   if (pokemonSearch) {
     pokemonSearch.addEventListener('input', (e) => {
       filterByPokemonName((e.target as HTMLInputElement).value);
+    });
+  }
+
+  // Setup boundary transformation sliders and buttons
+  const lngScaleSlider = document.getElementById('lng-scale') as HTMLInputElement;
+  const lngOffsetSlider = document.getElementById('lng-offset') as HTMLInputElement;
+  const latScaleSlider = document.getElementById('lat-scale') as HTMLInputElement;
+  const latOffsetSlider = document.getElementById('lat-offset') as HTMLInputElement;
+  const resetButton = document.getElementById('reset-transform') as HTMLButtonElement;
+
+  // Helper to increment/decrement slider
+  function adjustSlider(slider: HTMLInputElement, valueId: string, decimals: number, paramKey: keyof typeof transformParams, delta: number) {
+    const min = parseFloat(slider.min);
+    const max = parseFloat(slider.max);
+    const step = parseFloat(slider.step);
+    let newValue = parseFloat(slider.value) + (delta * step);
+
+    // Clamp to min/max
+    newValue = Math.max(min, Math.min(max, newValue));
+
+    slider.value = newValue.toString();
+    transformParams[paramKey] = newValue as any;
+    document.getElementById(valueId)!.textContent = newValue.toFixed(decimals);
+    rebuildBoundaries();
+  }
+
+  if (lngScaleSlider) {
+    lngScaleSlider.addEventListener('input', (e) => {
+      const value = parseFloat((e.target as HTMLInputElement).value);
+      transformParams.lngScale = value;
+      document.getElementById('lng-scale-value')!.textContent = value.toFixed(4);
+      rebuildBoundaries();
+    });
+
+    document.getElementById('lng-scale-dec')?.addEventListener('click', () => {
+      adjustSlider(lngScaleSlider, 'lng-scale-value', 4, 'lngScale', -1);
+    });
+
+    document.getElementById('lng-scale-inc')?.addEventListener('click', () => {
+      adjustSlider(lngScaleSlider, 'lng-scale-value', 4, 'lngScale', 1);
+    });
+  }
+
+  if (lngOffsetSlider) {
+    lngOffsetSlider.addEventListener('input', (e) => {
+      const value = parseFloat((e.target as HTMLInputElement).value);
+      transformParams.lngOffset = value;
+      document.getElementById('lng-offset-value')!.textContent = value.toFixed(2);
+      rebuildBoundaries();
+    });
+
+    document.getElementById('lng-offset-dec')?.addEventListener('click', () => {
+      adjustSlider(lngOffsetSlider, 'lng-offset-value', 2, 'lngOffset', -1);
+    });
+
+    document.getElementById('lng-offset-inc')?.addEventListener('click', () => {
+      adjustSlider(lngOffsetSlider, 'lng-offset-value', 2, 'lngOffset', 1);
+    });
+  }
+
+  if (latScaleSlider) {
+    latScaleSlider.addEventListener('input', (e) => {
+      const value = parseFloat((e.target as HTMLInputElement).value);
+      transformParams.latScale = value;
+      document.getElementById('lat-scale-value')!.textContent = value.toFixed(4);
+      rebuildBoundaries();
+    });
+
+    document.getElementById('lat-scale-dec')?.addEventListener('click', () => {
+      adjustSlider(latScaleSlider, 'lat-scale-value', 4, 'latScale', -1);
+    });
+
+    document.getElementById('lat-scale-inc')?.addEventListener('click', () => {
+      adjustSlider(latScaleSlider, 'lat-scale-value', 4, 'latScale', 1);
+    });
+  }
+
+  if (latOffsetSlider) {
+    latOffsetSlider.addEventListener('input', (e) => {
+      const value = parseFloat((e.target as HTMLInputElement).value);
+      transformParams.latOffset = value;
+      document.getElementById('lat-offset-value')!.textContent = value.toFixed(2);
+      rebuildBoundaries();
+    });
+
+    document.getElementById('lat-offset-dec')?.addEventListener('click', () => {
+      adjustSlider(latOffsetSlider, 'lat-offset-value', 2, 'latOffset', -1);
+    });
+
+    document.getElementById('lat-offset-inc')?.addEventListener('click', () => {
+      adjustSlider(latOffsetSlider, 'lat-offset-value', 2, 'latOffset', 1);
+    });
+  }
+
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
+      // Reset to calibrated values (least-squares fit on all 6 circle wild zones)
+      transformParams = {
+        lngScale: 0.2680,
+        lngOffset: -0.97,
+        latScale: -0.2683,
+        latOffset: 1.41,
+      };
+
+      // Update UI
+      if (lngScaleSlider) {
+        lngScaleSlider.value = '0.2680';
+        document.getElementById('lng-scale-value')!.textContent = '0.2680';
+      }
+      if (lngOffsetSlider) {
+        lngOffsetSlider.value = '-0.97';
+        document.getElementById('lng-offset-value')!.textContent = '-0.97';
+      }
+      if (latScaleSlider) {
+        latScaleSlider.value = '-0.2683';
+        document.getElementById('lat-scale-value')!.textContent = '-0.2683';
+      }
+      if (latOffsetSlider) {
+        latOffsetSlider.value = '1.41';
+        document.getElementById('lat-offset-value')!.textContent = '1.41';
+      }
+
+      rebuildBoundaries();
     });
   }
 }
