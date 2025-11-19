@@ -1072,6 +1072,714 @@
         "levelMax": 64,
         "rarity": 1.49,
         "alphaChance": 100
+      },
+      {
+        "name": "Kangaskhan",
+        "pokedexNumber": 115,
+        "types": [
+          "normal"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Starmie",
+        "pokedexNumber": 121,
+        "types": [
+          "water",
+          "psychic"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Pinsir",
+        "pokedexNumber": 127,
+        "types": [
+          "bug"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gyarados",
+        "pokedexNumber": 130,
+        "types": [
+          "water",
+          "flying"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Vaporeon",
+        "pokedexNumber": 134,
+        "types": [
+          "water"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Jolteon",
+        "pokedexNumber": 135,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Flareon",
+        "pokedexNumber": 136,
+        "types": [
+          "fire"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Dragonite",
+        "pokedexNumber": 149,
+        "types": [
+          "dragon",
+          "flying"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Ariados",
+        "pokedexNumber": 168,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Heracross",
+        "pokedexNumber": 214,
+        "types": [
+          "bug",
+          "fighting"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Delibird",
+        "pokedexNumber": 225,
+        "types": [
+          "ice",
+          "flying"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Skarmory",
+        "pokedexNumber": 227,
+        "types": [
+          "steel",
+          "flying"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Tyranitar",
+        "pokedexNumber": 248,
+        "types": [
+          "rock",
+          "dark"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gardevoir",
+        "pokedexNumber": 282,
+        "types": [
+          "psychic",
+          "fairy"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Sableye",
+        "pokedexNumber": 302,
+        "types": [
+          "dark",
+          "ghost"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Aggron",
+        "pokedexNumber": 306,
+        "types": [
+          "steel",
+          "rock"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Medicham",
+        "pokedexNumber": 308,
+        "types": [
+          "fighting",
+          "psychic"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Altaria",
+        "pokedexNumber": 334,
+        "types": [
+          "dragon",
+          "flying"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Absol",
+        "pokedexNumber": 359,
+        "types": [
+          "dark"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Metagross",
+        "pokedexNumber": 376,
+        "types": [
+          "steel",
+          "psychic"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Roserade",
+        "pokedexNumber": 407,
+        "types": [
+          "grass",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Garchomp",
+        "pokedexNumber": 445,
+        "types": [
+          "dragon",
+          "ground"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Lucario",
+        "pokedexNumber": 448,
+        "types": [
+          "fighting",
+          "steel"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Hippowdon",
+        "pokedexNumber": 450,
+        "types": [
+          "ground"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Leafeon",
+        "pokedexNumber": 470,
+        "types": [
+          "grass"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Glaceon",
+        "pokedexNumber": 471,
+        "types": [
+          "ice"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gallade",
+        "pokedexNumber": 475,
+        "types": [
+          "psychic",
+          "fighting"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Froslass",
+        "pokedexNumber": 478,
+        "types": [
+          "ice",
+          "ghost"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Simisage",
+        "pokedexNumber": 512,
+        "types": [
+          "grass"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Simisear",
+        "pokedexNumber": 514,
+        "types": [
+          "fire"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Simipour",
+        "pokedexNumber": 516,
+        "types": [
+          "water"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Scolipede",
+        "pokedexNumber": 545,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Krookodile",
+        "pokedexNumber": 553,
+        "types": [
+          "ground",
+          "dark"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Scrafty",
+        "pokedexNumber": 560,
+        "types": [
+          "dark",
+          "fighting"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Garbodor",
+        "pokedexNumber": 569,
+        "types": [
+          "poison"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Vanilluxe",
+        "pokedexNumber": 584,
+        "types": [
+          "ice"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Eelektross",
+        "pokedexNumber": 604,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Chandelure",
+        "pokedexNumber": 609,
+        "types": [
+          "ghost",
+          "fire"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Stunfisk",
+        "pokedexNumber": 618,
+        "types": [
+          "ground",
+          "electric"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Diggersby",
+        "pokedexNumber": 660,
+        "types": [
+          "normal",
+          "ground"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Talonflame",
+        "pokedexNumber": 663,
+        "types": [
+          "fire",
+          "flying"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Vivillon",
+        "pokedexNumber": 666,
+        "types": [],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Florges",
+        "pokedexNumber": 671,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gogoat",
+        "pokedexNumber": 673,
+        "types": [
+          "grass"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Pangoro",
+        "pokedexNumber": 675,
+        "types": [
+          "fighting",
+          "dark"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Furfrou",
+        "pokedexNumber": 676,
+        "types": [
+          "normal"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Aegislash",
+        "pokedexNumber": 681,
+        "types": [
+          "steel",
+          "ghost"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Malamar",
+        "pokedexNumber": 687,
+        "types": [
+          "dark",
+          "psychic"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Barbaracle",
+        "pokedexNumber": 689,
+        "types": [
+          "rock",
+          "water"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Dragalge",
+        "pokedexNumber": 691,
+        "types": [
+          "poison",
+          "dragon"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Heliolisk",
+        "pokedexNumber": 695,
+        "types": [
+          "electric",
+          "normal"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Sylveon",
+        "pokedexNumber": 700,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Hawlucha",
+        "pokedexNumber": 701,
+        "types": [
+          "fighting",
+          "flying"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Dedenne",
+        "pokedexNumber": 702,
+        "types": [
+          "electric",
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Carbink",
+        "pokedexNumber": 703,
+        "types": [
+          "rock",
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Goodra",
+        "pokedexNumber": 706,
+        "types": [
+          "dragon"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Klefki",
+        "pokedexNumber": 707,
+        "types": [
+          "steel",
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gourgeist",
+        "pokedexNumber": 711,
+        "types": [
+          "ghost",
+          "grass"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Noivern",
+        "pokedexNumber": 715,
+        "types": [
+          "flying",
+          "dragon"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Drampa",
+        "pokedexNumber": 780,
+        "types": [
+          "normal",
+          "dragon"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Falinks",
+        "pokedexNumber": 870,
+        "types": [
+          "fighting"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
       }
     ]
   },
@@ -1145,6 +1853,714 @@
         ],
         "levelMin": 63,
         "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Kangaskhan",
+        "pokedexNumber": 115,
+        "types": [
+          "normal"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Starmie",
+        "pokedexNumber": 121,
+        "types": [
+          "water",
+          "psychic"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Pinsir",
+        "pokedexNumber": 127,
+        "types": [
+          "bug"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gyarados",
+        "pokedexNumber": 130,
+        "types": [
+          "water",
+          "flying"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Vaporeon",
+        "pokedexNumber": 134,
+        "types": [
+          "water"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Jolteon",
+        "pokedexNumber": 135,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Flareon",
+        "pokedexNumber": 136,
+        "types": [
+          "fire"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Dragonite",
+        "pokedexNumber": 149,
+        "types": [
+          "dragon",
+          "flying"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Ariados",
+        "pokedexNumber": 168,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Heracross",
+        "pokedexNumber": 214,
+        "types": [
+          "bug",
+          "fighting"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Delibird",
+        "pokedexNumber": 225,
+        "types": [
+          "ice",
+          "flying"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Skarmory",
+        "pokedexNumber": 227,
+        "types": [
+          "steel",
+          "flying"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Tyranitar",
+        "pokedexNumber": 248,
+        "types": [
+          "rock",
+          "dark"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gardevoir",
+        "pokedexNumber": 282,
+        "types": [
+          "psychic",
+          "fairy"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Sableye",
+        "pokedexNumber": 302,
+        "types": [
+          "dark",
+          "ghost"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Aggron",
+        "pokedexNumber": 306,
+        "types": [
+          "steel",
+          "rock"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Medicham",
+        "pokedexNumber": 308,
+        "types": [
+          "fighting",
+          "psychic"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Altaria",
+        "pokedexNumber": 334,
+        "types": [
+          "dragon",
+          "flying"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Absol",
+        "pokedexNumber": 359,
+        "types": [
+          "dark"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Metagross",
+        "pokedexNumber": 376,
+        "types": [
+          "steel",
+          "psychic"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Roserade",
+        "pokedexNumber": 407,
+        "types": [
+          "grass",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Garchomp",
+        "pokedexNumber": 445,
+        "types": [
+          "dragon",
+          "ground"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Lucario",
+        "pokedexNumber": 448,
+        "types": [
+          "fighting",
+          "steel"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Hippowdon",
+        "pokedexNumber": 450,
+        "types": [
+          "ground"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Leafeon",
+        "pokedexNumber": 470,
+        "types": [
+          "grass"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Glaceon",
+        "pokedexNumber": 471,
+        "types": [
+          "ice"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gallade",
+        "pokedexNumber": 475,
+        "types": [
+          "psychic",
+          "fighting"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Froslass",
+        "pokedexNumber": 478,
+        "types": [
+          "ice",
+          "ghost"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Simisage",
+        "pokedexNumber": 512,
+        "types": [
+          "grass"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Simisear",
+        "pokedexNumber": 514,
+        "types": [
+          "fire"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Simipour",
+        "pokedexNumber": 516,
+        "types": [
+          "water"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Scolipede",
+        "pokedexNumber": 545,
+        "types": [
+          "bug",
+          "poison"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Krookodile",
+        "pokedexNumber": 553,
+        "types": [
+          "ground",
+          "dark"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Scrafty",
+        "pokedexNumber": 560,
+        "types": [
+          "dark",
+          "fighting"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Garbodor",
+        "pokedexNumber": 569,
+        "types": [
+          "poison"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Vanilluxe",
+        "pokedexNumber": 584,
+        "types": [
+          "ice"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Eelektross",
+        "pokedexNumber": 604,
+        "types": [
+          "electric"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Chandelure",
+        "pokedexNumber": 609,
+        "types": [
+          "ghost",
+          "fire"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Stunfisk",
+        "pokedexNumber": 618,
+        "types": [
+          "ground",
+          "electric"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Diggersby",
+        "pokedexNumber": 660,
+        "types": [
+          "normal",
+          "ground"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Talonflame",
+        "pokedexNumber": 663,
+        "types": [
+          "fire",
+          "flying"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Vivillon",
+        "pokedexNumber": 666,
+        "types": [],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Florges",
+        "pokedexNumber": 671,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gogoat",
+        "pokedexNumber": 673,
+        "types": [
+          "grass"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Pangoro",
+        "pokedexNumber": 675,
+        "types": [
+          "fighting",
+          "dark"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Furfrou",
+        "pokedexNumber": 676,
+        "types": [
+          "normal"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Aegislash",
+        "pokedexNumber": 681,
+        "types": [
+          "steel",
+          "ghost"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Malamar",
+        "pokedexNumber": 687,
+        "types": [
+          "dark",
+          "psychic"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Barbaracle",
+        "pokedexNumber": 689,
+        "types": [
+          "rock",
+          "water"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Dragalge",
+        "pokedexNumber": 691,
+        "types": [
+          "poison",
+          "dragon"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Heliolisk",
+        "pokedexNumber": 695,
+        "types": [
+          "electric",
+          "normal"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Sylveon",
+        "pokedexNumber": 700,
+        "types": [
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Hawlucha",
+        "pokedexNumber": 701,
+        "types": [
+          "fighting",
+          "flying"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Dedenne",
+        "pokedexNumber": 702,
+        "types": [
+          "electric",
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Carbink",
+        "pokedexNumber": 703,
+        "types": [
+          "rock",
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Goodra",
+        "pokedexNumber": 706,
+        "types": [
+          "dragon"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Klefki",
+        "pokedexNumber": 707,
+        "types": [
+          "steel",
+          "fairy"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Gourgeist",
+        "pokedexNumber": 711,
+        "types": [
+          "ghost",
+          "grass"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Noivern",
+        "pokedexNumber": 715,
+        "types": [
+          "flying",
+          "dragon"
+        ],
+        "levelMin": 63,
+        "levelMax": 64,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Drampa",
+        "pokedexNumber": 780,
+        "types": [
+          "normal",
+          "dragon"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
+        "rarity": 1.49,
+        "alphaChance": 100
+      },
+      {
+        "name": "Falinks",
+        "pokedexNumber": 870,
+        "types": [
+          "fighting"
+        ],
+        "levelMin": 64,
+        "levelMax": 65,
         "rarity": 1.49,
         "alphaChance": 100
       }
