@@ -151,7 +151,7 @@ async function loadData(): Promise<void> {
 }
 
 // Cluster spawners by proximity
-function clusterSpawners(spawners: Spawner[], pixelThreshold: number = 50): SpawnerCluster[] {
+function clusterSpawners(spawners: Spawner[], pixelThreshold: number = 100): SpawnerCluster[] {
   const clusters: SpawnerCluster[] = [];
   const used = new Set<number>();
 
@@ -585,7 +585,7 @@ function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
 function createAlphaPopup(alpha: StaticAlpha): string {
   let html = '<div class="alpha-popup">';
   html += '<div class="popup-header alpha-header">';
-  html += '<h4><img src="images/alpha-icon.svg" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"> Static Alpha</h4>';
+  html += '<h4><img src="images/alpha-icon.svg" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 4px;"> Static Alpha</h4>';
 
   // Show Pokemon count for large spawners
   if (alpha.pokemon.length > 10) {

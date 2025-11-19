@@ -352,6 +352,11 @@ body {
   padding: 0;
 }
 
+.simple-popup .leaflet-popup-content {
+  min-width: 140px;
+  max-width: 180px;
+}
+
 .simple-popup .popup-body {
   padding: 12px;
   font-size: 12px;
