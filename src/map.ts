@@ -41,16 +41,39 @@ let ladderMarkers: MarkerData<Ladder>[] = [];
 let wildZoneMarkers: MarkerData<WildZone>[] = [];
 let wildZoneBoundaries: L.Layer[] = [];
 let rawBoundaryData: any[] = []; // Store raw PokeOS data
+let altBoundaryData: any[] = []; // Store alternate Mapgenie data
+let altBoundaries: L.Layer[] = []; // Alternate (blue) boundaries
 let staticAlphaMarkers: MarkerData<StaticAlpha>[] = [];
 let activeRadiusCircles: RadiusCircle[] = [];
 
-// Transformation parameters for wild zone boundaries
+// Transformation parameters for wild zone boundaries (PokeOS)
 // Calibrated using least-squares fit on all 6 circle wild zones
 let transformParams = {
   lngScale: 0.267951,
   lngOffset: -0.97,
   latScale: -0.268258,
   latOffset: 1.41,
+};
+
+// Transformation parameters for alternate boundaries (Mapgenie)
+// Mapgenie uses a different coordinate system than Serebii. Two key challenges:
+// 1. Mapgenie has TWO coordinate sets: marker positions (lat/lng) and geometry polygons
+// 2. The transformation is not uniform - horizontal and vertical need different calibrations
+//
+// Calibration approach (after multiple failed attempts):
+// - Horizontal (lng): Calibrated using marker positions matched to wild zone spawner markers
+//   - Failed approaches: using geometry bounds (caused horizontal compression)
+// - Vertical (lat): Calibrated using PokeOS boundary centers as reference
+//   - Failed approaches: using spawner markers (bottom zones too far north)
+//   - Works because PokeOS boundaries represent the actual zone areas
+// - Geometry polygons: Transformed relative to their marker positions to preserve shape
+//
+// This hybrid approach achieves good alignment across all 20 wild zones
+let mapgenieTransformParams = {
+  lngScale: 964.243009,
+  lngOffset: 934.661387,
+  latScale: 974.795485,
+  latOffset: -941.697851,
 };
 
 // Pre-computed visibility states for performance
@@ -165,6 +188,17 @@ async function loadData(): Promise<void> {
       }
     } catch (e) {
       console.log('No wild zone boundary data available');
+    }
+
+    // Load alternate wild zone boundaries (Mapgenie coordinates)
+    try {
+      const altBoundaryResponse = await fetch('coordinates-alt.json');
+      if (altBoundaryResponse.ok) {
+        altBoundaryData = await altBoundaryResponse.json();
+        createAltBoundaries();
+      }
+    } catch (e) {
+      console.log('No alternate boundary data available');
     }
 
     // Load static alpha data
@@ -855,6 +889,182 @@ function rebuildBoundaries(): void {
   createWildZoneBoundaries(convertedBoundaries);
 }
 
+// Transform Mapgenie coordinates to Serebii coordinate system
+function transformMapgenieCoords(mapgenieLat: number, mapgenieLng: number): { lat: number; lng: number } {
+  return {
+    lat: (mapgenieLat * mapgenieTransformParams.latScale) + mapgenieTransformParams.latOffset,
+    lng: (mapgenieLng * mapgenieTransformParams.lngScale) + mapgenieTransformParams.lngOffset,
+  };
+}
+
+// Create alternate wild zone boundaries from Mapgenie data (blue styling)
+function createAltBoundaries(): void {
+  // Clear existing alternate boundaries
+  altBoundaries.forEach(layer => map.removeLayer(layer));
+  altBoundaries = [];
+
+  console.log('Creating alternate boundaries with params:', mapgenieTransformParams);
+
+  // Style for alternate boundaries - blue with transparency
+  const altBoundaryStyle = {
+    color: '#2196F3',
+    fillColor: '#2196F3',
+    fillOpacity: 0.25,
+    weight: 2,
+    opacity: 0.6,
+  };
+
+  altBoundaryData.forEach((wzData: any) => {
+    let layer: L.Layer;
+
+    // Each wild zone has a features array with geometry
+    if (!wzData.features || wzData.features.length === 0) {
+      console.warn(`No features for WZ${wzData.id}`);
+      return;
+    }
+
+    const feature = wzData.features[0];
+    const geometry = feature.geometry;
+
+    if (geometry.type === 'Polygon') {
+      // Get the marker position for this wild zone
+      const markerLat = parseFloat(wzData.latitude);
+      const markerLng = parseFloat(wzData.longitude);
+
+      // Transform the marker position (this is accurate)
+      const transformedMarker = transformMapgenieCoords(markerLat, markerLng);
+
+      // Convert coordinates from Mapgenie format [lng, lat] to our system
+      // Transform each point relative to the marker position
+      const coordinates = geometry.coordinates[0]; // First ring of polygon
+      const latLngs: [number, number][] = coordinates.map((coord: [number, number]) => {
+        // Get offset from marker in mapgenie space
+        const latOffset = coord[1] - markerLat;
+        const lngOffset = coord[0] - markerLng;
+
+        // Apply the same offset in our transformed space
+        // Scale the offset by the transformation scales
+        const transformedLat = transformedMarker.lat + (latOffset * mapgenieTransformParams.latScale);
+        const transformedLng = transformedMarker.lng + (lngOffset * mapgenieTransformParams.lngScale);
+
+        return [transformedLat * 8, transformedLng * 8];
+      });
+      layer = L.polygon(latLngs, altBoundaryStyle);
+    } else {
+      console.warn(`Unsupported geometry type for WZ${wzData.id}: ${geometry.type}`);
+      return;
+    }
+
+    // Add popup with wild zone title
+    layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>${wzData.title} (Mapgenie)</h4></div></div>`);
+
+    // Add to map (always visible for comparison)
+    layer.addTo(map);
+    altBoundaries.push(layer);
+  });
+
+  console.log(`Created ${altBoundaries.length} alternate boundaries`);
+
+  // Generate debug info
+  generateDebugInfo();
+}
+
+// Generate coordinate debug information
+function generateDebugInfo(): void {
+  const debugDiv = document.getElementById('coord-debug-info');
+  if (!debugDiv) return;
+
+  let html = '<div style="font-size: 10px; font-family: monospace;">';
+
+  // Load PokeOS data for comparison
+  fetch('data/wild_zone_boundaries.json')
+    .then(res => res.json())
+    .then((pokeosData: any[]) => {
+      // Sort by wild zone number
+      const sortedData = [...altBoundaryData].sort((a, b) => {
+        const aNum = parseInt(a.title.replace('Wild Zone ', ''));
+        const bNum = parseInt(b.title.replace('Wild Zone ', ''));
+        return aNum - bNum;
+      });
+
+      // Also load wild zones for marker positions
+      fetch('data/wild_zones.json')
+        .then(res => res.json())
+        .then((wildZonesData: any[]) => {
+          // Group wild zones by table ID range (approx)
+          // WZ1: 5001, WZ2: 5002, etc.
+          const wzMarkerPositions = new Map<number, {lat: number, lng: number}>();
+          wildZonesData.forEach((wz: any) => {
+            const tableID = wz.tableID;
+            if (tableID >= 5001 && tableID <= 5020) {
+              const wzNum = tableID - 5000;
+              if (!wzMarkerPositions.has(wzNum)) {
+                wzMarkerPositions.set(wzNum, { lat: wz.lat, lng: wz.lng });
+              }
+            }
+          });
+
+          sortedData.forEach((mgWZ: any) => {
+            // Extract WZ number from title
+            const wzNum = parseInt(mgWZ.title.replace('Wild Zone ', ''));
+            const poWZ = pokeosData.find((wz: any) => wz.wzNumber === wzNum);
+            const actualMarker = wzMarkerPositions.get(wzNum);
+
+            if (!poWZ && !actualMarker) return;
+
+            // Use mapgenie MARKER position, not geometry center
+            const mgMarker = {
+              lat: parseFloat(mgWZ.latitude),
+              lng: parseFloat(mgWZ.longitude)
+            };
+
+            // Transform mapgenie marker
+            const transformed = transformMapgenieCoords(mgMarker.lat, mgMarker.lng);
+
+            // Use actual wild zone marker if available, otherwise PokeOS boundary center
+            let reference = actualMarker;
+            if (!reference && poWZ) {
+              if (poWZ.type === 'circle') {
+                reference = poWZ.center;
+              } else if (poWZ.points) {
+                let sumLat = 0, sumLng = 0;
+                poWZ.points.forEach((p: any) => {
+                  sumLat += p.lat;
+                  sumLng += p.lng;
+                });
+                reference = { lat: sumLat / poWZ.points.length, lng: sumLng / poWZ.points.length };
+              }
+            }
+
+            if (!reference) return;
+
+            // Calculate error
+            const errorLat = Math.abs(transformed.lat - reference.lat);
+            const errorLng = Math.abs(transformed.lng - reference.lng);
+            const totalError = Math.sqrt(errorLat * errorLat + errorLng * errorLng);
+
+            // Color code by error magnitude
+            let color = 'green';
+            if (totalError > 20) color = 'red';
+            else if (totalError > 10) color = 'orange';
+
+            const refType = actualMarker ? 'WZ Marker' : 'Boundary';
+
+            html += `<div style="margin-bottom: 6px; padding: 4px; background: white; border-left: 3px solid ${color};">`;
+            html += `<strong>WZ${wzNum}</strong><br/>`;
+            html += `MG Marker: (${mgMarker.lat.toFixed(3)}, ${mgMarker.lng.toFixed(3)})<br/>`;
+            html += `→ (${transformed.lat.toFixed(1)}, ${transformed.lng.toFixed(1)})<br/>`;
+            html += `${refType}: (${reference.lat.toFixed(1)}, ${reference.lng.toFixed(1)})<br/>`;
+            html += `<span style="color: ${color};">Δ: ${totalError.toFixed(1)} units</span>`;
+            html += `</div>`;
+          });
+
+          html += '</div>';
+          debugDiv.innerHTML = html;
+        });
+    });
+}
+
 // Create wild zone boundaries (polygons, circles, etc.)
 function createWildZoneBoundaries(boundaries: WildZoneBoundary[]): void {
   // Style for wild zone boundaries - green with transparency like PokeOS
@@ -1274,128 +1484,6 @@ function setupEventListeners(): void {
     });
   }
 
-  // Setup boundary transformation sliders and buttons
-  const lngScaleSlider = document.getElementById('lng-scale') as HTMLInputElement;
-  const lngOffsetSlider = document.getElementById('lng-offset') as HTMLInputElement;
-  const latScaleSlider = document.getElementById('lat-scale') as HTMLInputElement;
-  const latOffsetSlider = document.getElementById('lat-offset') as HTMLInputElement;
-  const resetButton = document.getElementById('reset-transform') as HTMLButtonElement;
-
-  // Helper to increment/decrement slider
-  function adjustSlider(slider: HTMLInputElement, valueId: string, decimals: number, paramKey: keyof typeof transformParams, delta: number) {
-    const min = parseFloat(slider.min);
-    const max = parseFloat(slider.max);
-    const step = parseFloat(slider.step);
-    let newValue = parseFloat(slider.value) + (delta * step);
-
-    // Clamp to min/max
-    newValue = Math.max(min, Math.min(max, newValue));
-
-    slider.value = newValue.toString();
-    transformParams[paramKey] = newValue as any;
-    document.getElementById(valueId)!.textContent = newValue.toFixed(decimals);
-    rebuildBoundaries();
-  }
-
-  if (lngScaleSlider) {
-    lngScaleSlider.addEventListener('input', (e) => {
-      const value = parseFloat((e.target as HTMLInputElement).value);
-      transformParams.lngScale = value;
-      document.getElementById('lng-scale-value')!.textContent = value.toFixed(4);
-      rebuildBoundaries();
-    });
-
-    document.getElementById('lng-scale-dec')?.addEventListener('click', () => {
-      adjustSlider(lngScaleSlider, 'lng-scale-value', 4, 'lngScale', -1);
-    });
-
-    document.getElementById('lng-scale-inc')?.addEventListener('click', () => {
-      adjustSlider(lngScaleSlider, 'lng-scale-value', 4, 'lngScale', 1);
-    });
-  }
-
-  if (lngOffsetSlider) {
-    lngOffsetSlider.addEventListener('input', (e) => {
-      const value = parseFloat((e.target as HTMLInputElement).value);
-      transformParams.lngOffset = value;
-      document.getElementById('lng-offset-value')!.textContent = value.toFixed(2);
-      rebuildBoundaries();
-    });
-
-    document.getElementById('lng-offset-dec')?.addEventListener('click', () => {
-      adjustSlider(lngOffsetSlider, 'lng-offset-value', 2, 'lngOffset', -1);
-    });
-
-    document.getElementById('lng-offset-inc')?.addEventListener('click', () => {
-      adjustSlider(lngOffsetSlider, 'lng-offset-value', 2, 'lngOffset', 1);
-    });
-  }
-
-  if (latScaleSlider) {
-    latScaleSlider.addEventListener('input', (e) => {
-      const value = parseFloat((e.target as HTMLInputElement).value);
-      transformParams.latScale = value;
-      document.getElementById('lat-scale-value')!.textContent = value.toFixed(4);
-      rebuildBoundaries();
-    });
-
-    document.getElementById('lat-scale-dec')?.addEventListener('click', () => {
-      adjustSlider(latScaleSlider, 'lat-scale-value', 4, 'latScale', -1);
-    });
-
-    document.getElementById('lat-scale-inc')?.addEventListener('click', () => {
-      adjustSlider(latScaleSlider, 'lat-scale-value', 4, 'latScale', 1);
-    });
-  }
-
-  if (latOffsetSlider) {
-    latOffsetSlider.addEventListener('input', (e) => {
-      const value = parseFloat((e.target as HTMLInputElement).value);
-      transformParams.latOffset = value;
-      document.getElementById('lat-offset-value')!.textContent = value.toFixed(2);
-      rebuildBoundaries();
-    });
-
-    document.getElementById('lat-offset-dec')?.addEventListener('click', () => {
-      adjustSlider(latOffsetSlider, 'lat-offset-value', 2, 'latOffset', -1);
-    });
-
-    document.getElementById('lat-offset-inc')?.addEventListener('click', () => {
-      adjustSlider(latOffsetSlider, 'lat-offset-value', 2, 'latOffset', 1);
-    });
-  }
-
-  if (resetButton) {
-    resetButton.addEventListener('click', () => {
-      // Reset to calibrated values (least-squares fit on all 6 circle wild zones)
-      transformParams = {
-        lngScale: 0.267951,
-        lngOffset: -0.97,
-        latScale: -0.268258,
-        latOffset: 1.41,
-      };
-
-      // Update UI
-      if (lngScaleSlider) {
-        lngScaleSlider.value = '0.267951';
-        document.getElementById('lng-scale-value')!.textContent = '0.2680';
-      }
-      if (lngOffsetSlider) {
-        lngOffsetSlider.value = '-0.97';
-        document.getElementById('lng-offset-value')!.textContent = '-0.97';
-      }
-      if (latScaleSlider) {
-        latScaleSlider.value = '-0.268258';
-        document.getElementById('lat-scale-value')!.textContent = '-0.2683';
-      }
-      if (latOffsetSlider) {
-        latOffsetSlider.value = '1.41';
-        document.getElementById('lat-offset-value')!.textContent = '1.41';
-      }
-
-      rebuildBoundaries();
-    });
-  }
 }
 
 // Toggle marker visibility

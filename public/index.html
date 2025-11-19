@@ -81,89 +81,10 @@
             Zoom: <span id="zoom-level">0</span>
           </div>
 
-          <h4 style="margin-top: 16px; margin-bottom: 8px;">Boundary Transform</h4>
-          <div style="font-size: 12px; margin-bottom: 8px;">
-            <label style="display: block; margin-bottom: 4px;">
-              Lng Scale: <span id="lng-scale-value">0.2680</span>
-            </label>
-            <div style="display: flex; gap: 4px; align-items: center;">
-              <button id="lng-scale-dec" style="width: 24px; padding: 2px; font-size: 14px;">-</button>
-              <input
-                type="range"
-                id="lng-scale"
-                min="0.2"
-                max="0.35"
-                step="0.0001"
-                value="0.267951"
-                style="flex: 1;"
-              />
-              <button id="lng-scale-inc" style="width: 24px; padding: 2px; font-size: 14px;">+</button>
-            </div>
+          <h4 style="margin-top: 16px; margin-bottom: 8px;">Coordinate Debug</h4>
+          <div id="coord-debug-info" style="font-size: 10px; max-height: 400px; overflow-y: auto; background: #fafafa; padding: 8px; border-radius: 4px;">
+            Loading...
           </div>
-
-          <div style="font-size: 12px; margin-bottom: 8px;">
-            <label style="display: block; margin-bottom: 4px;">
-              Lng Offset: <span id="lng-offset-value">-0.97</span>
-            </label>
-            <div style="display: flex; gap: 4px; align-items: center;">
-              <button id="lng-offset-dec" style="width: 24px; padding: 2px; font-size: 14px;">-</button>
-              <input
-                type="range"
-                id="lng-offset"
-                min="-50"
-                max="50"
-                step="0.1"
-                value="-0.97"
-                style="flex: 1;"
-              />
-              <button id="lng-offset-inc" style="width: 24px; padding: 2px; font-size: 14px;">+</button>
-            </div>
-          </div>
-
-          <div style="font-size: 12px; margin-bottom: 8px;">
-            <label style="display: block; margin-bottom: 4px;">
-              Lat Scale: <span id="lat-scale-value">-0.2683</span>
-            </label>
-            <div style="display: flex; gap: 4px; align-items: center;">
-              <button id="lat-scale-dec" style="width: 24px; padding: 2px; font-size: 14px;">-</button>
-              <input
-                type="range"
-                id="lat-scale"
-                min="-0.35"
-                max="-0.2"
-                step="0.0001"
-                value="-0.268258"
-                style="flex: 1;"
-              />
-              <button id="lat-scale-inc" style="width: 24px; padding: 2px; font-size: 14px;">+</button>
-            </div>
-          </div>
-
-          <div style="font-size: 12px; margin-bottom: 8px;">
-            <label style="display: block; margin-bottom: 4px;">
-              Lat Offset: <span id="lat-offset-value">1.41</span>
-            </label>
-            <div style="display: flex; gap: 4px; align-items: center;">
-              <button id="lat-offset-dec" style="width: 24px; padding: 2px; font-size: 14px;">-</button>
-              <input
-                type="range"
-                id="lat-offset"
-                min="-100"
-                max="100"
-                step="0.1"
-                value="1.41"
-                style="flex: 1;"
-              />
-              <button id="lat-offset-inc" style="width: 24px; padding: 2px; font-size: 14px;">+</button>
-            </div>
-          </div>
-
-          <button
-            id="reset-transform"
-            style="width: 100%; padding: 4px; margin-top: 8px; font-size: 11px;"
-          >
-            Reset to Calculated
-          </button>
         </div>
       </div>
 
