@@ -570,3 +570,9 @@ body {
   font-size: 12px;
   text-align: center;
 }
+
+.spawner-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #dee2e6 20%, #dee2e6 80%, transparent);
+  margin: 8px 0;
+}

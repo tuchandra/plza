@@ -286,68 +286,71 @@ function createClusterIcon(count: number): L.DivIcon {
 
 // Create popup content for cluster
 function createClusterPopup(cluster: SpawnerCluster): string {
-  // Collect all Pokemon from all spawners in cluster
-  const allPokemon: Pokemon[] = [];
-  cluster.spawners.forEach(spawner => {
-    allPokemon.push(...spawner.pokemon);
-  });
-
-  // Count unique Pokemon species
-  const uniqueSpecies = new Set(allPokemon.map(p => p.pokedexNumber)).size;
-
   let html = '<div class="spawner-popup">';
   html += '<div class="popup-header">';
-  html += `<h4>${cluster.spawners.length} Spawners - ${uniqueSpecies} Species</h4>`;
+  html += `<h4>${cluster.spawners.length} Spawners</h4>`;
   html += '</div>';
 
-  if (allPokemon.length === 0) {
+  if (cluster.spawners.every(s => s.pokemon.length === 0)) {
     html += '<p class="no-data">No spawn data available</p>';
     html += '</div>';
     return html;
   }
 
   html += '<div class="popup-content">';
-  html += '<table class="pokemon-table">';
-  html += '<tbody>';
 
-  allPokemon.forEach((poke) => {
-    const spriteUrl = getPokemonSprite(poke.pokedexNumber);
-    const types = poke.types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(' ');
+  // Show each spawner's Pokemon separately
+  cluster.spawners.forEach((spawner, index) => {
+    if (spawner.pokemon.length === 0) return;
 
-    html += '<tr>';
-
-    // Pokemon column (sprite + name + types)
-    html += '<td class="pokemon-col">';
-    html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />`;
-    html += '<div class="pokemon-details">';
-    html += `<div class="pokemon-name">${poke.name}</div>`;
-    html += `<div class="pokemon-types">${types}</div>`;
-    html += '</div>';
-    html += '</td>';
-
-    // Level and rate column
-    html += '<td class="rate-col">';
-    const levelText = poke.levelMin === poke.levelMax
-      ? `Lv. ${poke.levelMin}`
-      : `Lv. ${poke.levelMin} - ${poke.levelMax}`;
-    html += `<div class="level-text">${levelText}</div>`;
-
-    html += '<div class="rate-alpha-line">';
-    if (poke.rarity !== undefined) {
-      html += `<span class="rarity">${poke.rarity}%</span>`;
+    // Add divider between spawners
+    if (index > 0) {
+      html += '<div class="spawner-divider"></div>';
     }
-    if (poke.alphaChance > 0 && poke.alphaChance < 100) {
-      html += `<span class="alpha-chance">${poke.alphaChance}% α</span>`;
-    }
-    html += '</div>';
 
-    html += '</td>';
+    html += '<table class="pokemon-table">';
+    html += '<tbody>';
 
-    html += '</tr>';
+    spawner.pokemon.forEach((poke) => {
+      const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+      const types = poke.types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(' ');
+
+      html += '<tr>';
+
+      // Pokemon column (sprite + name + types)
+      html += '<td class="pokemon-col">';
+      html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />`;
+      html += '<div class="pokemon-details">';
+      html += `<div class="pokemon-name">${poke.name}</div>`;
+      html += `<div class="pokemon-types">${types}</div>`;
+      html += '</div>';
+      html += '</td>';
+
+      // Level and rate column
+      html += '<td class="rate-col">';
+      const levelText = poke.levelMin === poke.levelMax
+        ? `Lv. ${poke.levelMin}`
+        : `Lv. ${poke.levelMin} - ${poke.levelMax}`;
+      html += `<div class="level-text">${levelText}</div>`;
+
+      html += '<div class="rate-alpha-line">';
+      if (poke.rarity !== undefined) {
+        html += `<span class="rarity">${poke.rarity}%</span>`;
+      }
+      if (poke.alphaChance > 0 && poke.alphaChance < 100) {
+        html += `<span class="alpha-chance">${poke.alphaChance}% α</span>`;
+      }
+      html += '</div>';
+
+      html += '</td>';
+
+      html += '</tr>';
+    });
+
+    html += '</tbody>';
+    html += '</table>';
   });
 
-  html += '</tbody>';
-  html += '</table>';
   html += '</div>';
   html += '</div>';
 
