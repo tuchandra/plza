@@ -71,6 +71,25 @@ body {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
+.debug-section {
+  border-top: 2px solid #dee2e6;
+  padding-top: 15px;
+}
+
+.zoom-display {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #495057;
+  background: #e9ecef;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+#zoom-level {
+  font-weight: 600;
+  color: #212529;
+}
+
 /* Map Styles */
 #map {
   flex: 1;

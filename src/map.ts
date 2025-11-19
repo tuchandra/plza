@@ -66,6 +66,10 @@ export function initMap(): void {
   // Fit the entire map with some padding to show full city on load
   map.fitBounds(imageBounds, { padding: [50, 50] });
 
+  // Update zoom level display
+  updateZoomDisplay();
+  map.on('zoomend', updateZoomDisplay);
+
   // Load data and create markers
   loadData();
 
@@ -366,6 +370,15 @@ function createClusterPopup(cluster: SpawnerCluster): string {
   html += '</div>';
 
   return html;
+}
+
+// Update zoom level display
+function updateZoomDisplay(): void {
+  const zoom = map.getZoom();
+  const zoomElement = document.getElementById('zoom-level');
+  if (zoomElement) {
+    zoomElement.textContent = zoom.toFixed(2);
+  }
 }
 
 // Update spawner visibility based on zoom level
