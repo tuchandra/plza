@@ -92,4 +92,5 @@ export interface SpawnerCluster {
   lng: number;
   spawners: Spawner[];
   marker: L.Marker | null;
+  radius: number; // Maximum distance from cluster center to any spawner
 }

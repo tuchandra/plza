@@ -164,6 +164,7 @@ function clusterSpawners(spawners: Spawner[], pixelThreshold: number = 100): Spa
       lng: spawner.lng,
       spawners: [spawner],
       marker: null,
+      radius: 0,
     };
 
     used.add(index);
@@ -193,6 +194,16 @@ function clusterSpawners(spawners: Spawner[], pixelThreshold: number = 100): Spa
       const avgLng = cluster.spawners.reduce((sum, s) => sum + s.lng, 0) / cluster.spawners.length;
       cluster.lat = avgLat;
       cluster.lng = avgLng;
+
+      // Calculate cluster radius (max distance from center to any spawner)
+      cluster.radius = Math.max(
+        ...cluster.spawners.map(s =>
+          Math.sqrt(
+            Math.pow(cluster.lat - s.lat, 2) +
+            Math.pow(cluster.lng - s.lng, 2)
+          )
+        )
+      );
     }
 
     clusters.push(cluster);
@@ -360,12 +371,27 @@ function createClusterPopup(cluster: SpawnerCluster): string {
 // Update spawner visibility based on zoom level
 function updateSpawnerVisibility(): void {
   const zoom = map.getZoom();
-  const showClusters = zoom < 0;
 
-  // Build set of spawners that are in multi-spawner clusters
+  // Calculate minimum cluster radius threshold based on zoom level
+  // At higher zoom (more zoomed in), require larger radius to show cluster
+  // At lower zoom (more zoomed out), show clusters even with small radius
+  let minClusterRadius: number;
+  if (zoom >= 1.5) {
+    minClusterRadius = Infinity; // Never cluster
+  } else if (zoom >= 0.75) {
+    minClusterRadius = 6; // Only very tight clusters (~50px)
+  } else if (zoom >= 0) {
+    minClusterRadius = 4; // Medium clusters (~30px)
+  } else if (zoom >= -0.75) {
+    minClusterRadius = 2; // Looser clusters (~15px)
+  } else {
+    minClusterRadius = 0; // All clusters
+  }
+
+  // Build set of spawners that should be clustered at this zoom level
   const clusteredSpawnerSet = new Set<Spawner>();
   spawnerClusters.forEach((cluster) => {
-    if (cluster.spawners.length > 1) {
+    if (cluster.spawners.length > 1 && cluster.radius >= minClusterRadius) {
       cluster.spawners.forEach(spawner => clusteredSpawnerSet.add(spawner));
     }
   });
@@ -374,11 +400,11 @@ function updateSpawnerVisibility(): void {
   spawnerMarkers.forEach(({ marker, data }) => {
     const isInCluster = clusteredSpawnerSet.has(data);
 
-    if (showClusters && isInCluster) {
-      // Hide spawners that are part of multi-spawner clusters
+    if (isInCluster) {
+      // Hide spawners that are part of visible clusters
       map.removeLayer(marker);
     } else {
-      // Show isolated spawners and all spawners when zoomed in
+      // Show spawners not in clusters or in clusters too small for this zoom
       if (!map.hasLayer(marker)) {
         marker.addTo(map);
       }
@@ -388,7 +414,9 @@ function updateSpawnerVisibility(): void {
   // Toggle cluster markers
   spawnerClusters.forEach((cluster) => {
     if (cluster.marker) {
-      if (showClusters) {
+      const shouldShowCluster = cluster.spawners.length > 1 && cluster.radius >= minClusterRadius;
+
+      if (shouldShowCluster) {
         if (!map.hasLayer(cluster.marker)) {
           cluster.marker.addTo(map);
         }
