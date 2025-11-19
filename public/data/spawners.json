@@ -2431,7 +2431,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 13,
         "levelMax": 16,
         "alphaChance": 0
@@ -4222,7 +4225,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 14,
         "levelMax": 16,
         "rarity": 10,
@@ -4259,7 +4265,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 14,
         "levelMax": 16,
         "rarity": 10,
@@ -4287,7 +4296,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 14,
         "levelMax": 16,
         "rarity": 30,
@@ -4315,7 +4327,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 14,
         "levelMax": 16,
         "rarity": 60,
@@ -6248,7 +6263,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 13,
         "levelMax": 16,
         "alphaChance": 0
@@ -6266,7 +6284,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 13,
         "levelMax": 16,
         "alphaChance": 0
@@ -7861,7 +7882,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 14,
         "levelMax": 17,
         "alphaChance": 0
@@ -10515,7 +10539,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 12,
         "levelMax": 15,
         "alphaChance": 0
@@ -12163,7 +12190,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 13,
         "levelMax": 15,
         "alphaChance": 0
@@ -21500,7 +21530,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 36,
         "levelMax": 37,
         "timeOfDay": "Daytime",
@@ -21521,7 +21554,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 36,
         "levelMax": 37,
         "timeOfDay": "Daytime",
@@ -21542,7 +21578,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 36,
         "levelMax": 37,
         "timeOfDay": "Daytime",
@@ -21563,7 +21602,10 @@
       {
         "name": "Vivillon",
         "pokedexNumber": 666,
-        "types": [],
+        "types": [
+          "bug",
+          "flying"
+        ],
         "levelMin": 36,
         "levelMax": 37,
         "timeOfDay": "Daytime",

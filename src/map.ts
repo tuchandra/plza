@@ -338,7 +338,7 @@ function createClusterPopup(cluster: SpawnerCluster): string {
         html += `<span class="rarity">${poke.rarity}%</span>`;
       }
       if (poke.alphaChance > 0 && poke.alphaChance < 100) {
-        html += `<span class="alpha-chance">${poke.alphaChance}% α</span>`;
+        html += `<span class="alpha-chance"><img src="images/alpha-icon.svg" style="width: 12px; height: 12px; vertical-align: middle;">${poke.alphaChance}%</span>`;
       }
       html += '</div>';
 
@@ -561,9 +561,9 @@ function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
   // Create alpha icon
   const alphaIcon = L.icon({
     iconUrl: 'images/alpha-icon.svg',
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-    popupAnchor: [0, -12],
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16],
   });
 
   staticAlphas.forEach((alpha) => {
@@ -777,8 +777,8 @@ function createWildZonePopup(zone: WildZone): string {
 function createSpawnerPopup(spawner: Spawner): string {
   let html = '<div class="spawner-popup">';
 
-  // Only show header if more than one Pokemon
-  if (spawner.pokemon.length > 1) {
+  // Show header if more than one Pokemon OR if there's a respawn time
+  if (spawner.pokemon.length > 1 || spawner.respawnTime) {
     html += '<div class="popup-header">';
     html += '<h4>Pokemon Spawner</h4>';
     if (spawner.respawnTime) {
