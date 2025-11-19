@@ -89,6 +89,10 @@ body {
   max-width: 320px;
 }
 
+.alpha-popup .leaflet-popup-content {
+  max-width: 440px;
+}
+
 /* Popup Styles */
 .spawner-popup,
 .alpha-popup {
@@ -458,11 +462,6 @@ body {
   font-size: 7px;
   padding: 1px 4px;
   border-radius: 4px;
-}
-
-.alpha-grid {
-  max-height: 400px;
-  overflow-y: auto;
 }
 
 .alpha-grid-item {

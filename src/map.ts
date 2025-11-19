@@ -386,8 +386,8 @@ function createAlphaPopup(alpha: StaticAlpha): string {
 
   // Use grid layout for large spawners (>10 Pokemon), table for smaller ones
   if (alpha.pokemon.length > 10) {
-    html += '<div class="popup-content">';
-    html += '<div class="pokemon-grid alpha-grid">';
+    html += '<div class="popup-content alpha-grid-content">';
+    html += '<div class="pokemon-grid">';
 
     alpha.pokemon.forEach((poke) => {
       const spriteUrl = getPokemonSprite(poke.pokedexNumber);
