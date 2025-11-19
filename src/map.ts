@@ -10,6 +10,7 @@ import type {
   StaticAlpha,
   MarkerData,
   RadiusCircle,
+  SpawnerCluster,
 } from './types';
 
 // Configuration
@@ -31,6 +32,7 @@ const CONFIG: MapConfig = {
 // Global variables
 let map: L.Map;
 let spawnerMarkers: MarkerData<Spawner>[] = [];
+let spawnerClusters: SpawnerCluster[] = [];
 let benchMarkers: MarkerData<Bench>[] = [];
 let flyPointMarkers: MarkerData<FlyPoint>[] = [];
 let holovatorMarkers: MarkerData<Holovator>[] = [];
@@ -148,6 +150,57 @@ async function loadData(): Promise<void> {
   }
 }
 
+// Cluster spawners by proximity
+function clusterSpawners(spawners: Spawner[], pixelThreshold: number = 50): SpawnerCluster[] {
+  const clusters: SpawnerCluster[] = [];
+  const used = new Set<number>();
+
+  spawners.forEach((spawner, index) => {
+    if (used.has(index)) return;
+
+    // Start a new cluster with this spawner
+    const cluster: SpawnerCluster = {
+      lat: spawner.lat,
+      lng: spawner.lng,
+      spawners: [spawner],
+      marker: null,
+    };
+
+    used.add(index);
+
+    // Find nearby spawners (within pixelThreshold pixels at zoom 0)
+    // At zoom 0, the scale is roughly 1:1 with our coordinate system
+    // So we can use the threshold directly in coordinate space
+    const threshold = pixelThreshold / 8; // Convert pixel threshold to coordinate space
+
+    spawners.forEach((otherSpawner, otherIndex) => {
+      if (used.has(otherIndex)) return;
+
+      const distance = Math.sqrt(
+        Math.pow(spawner.lat - otherSpawner.lat, 2) +
+        Math.pow(spawner.lng - otherSpawner.lng, 2)
+      );
+
+      if (distance < threshold) {
+        cluster.spawners.push(otherSpawner);
+        used.add(otherIndex);
+      }
+    });
+
+    // Calculate cluster center (average of all spawner positions)
+    if (cluster.spawners.length > 1) {
+      const avgLat = cluster.spawners.reduce((sum, s) => sum + s.lat, 0) / cluster.spawners.length;
+      const avgLng = cluster.spawners.reduce((sum, s) => sum + s.lng, 0) / cluster.spawners.length;
+      cluster.lat = avgLat;
+      cluster.lng = avgLng;
+    }
+
+    clusters.push(cluster);
+  });
+
+  return clusters;
+}
+
 // Create spawner markers
 function createSpawnerMarkers(spawners: Spawner[]): void {
   // Create pokeball icon for spawners
@@ -166,6 +219,10 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
     iconAnchor: [12, 12],
   });
 
+  // Create clusters
+  spawnerClusters = clusterSpawners(spawners);
+
+  // Create individual spawner markers
   spawners.forEach((spawner, index) => {
     const marker = L.marker([spawner.lat * 8, spawner.lng * 8], {
       icon: pokeballIcon,
@@ -180,6 +237,91 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
       marker: marker as any,
       data: spawner,
     });
+  });
+
+  // Create cluster markers
+  spawnerClusters.forEach((cluster) => {
+    if (cluster.spawners.length > 1) {
+      const clusterIcon = createClusterIcon(cluster.spawners.length);
+      const marker = L.marker([cluster.lat * 8, cluster.lng * 8], {
+        icon: clusterIcon,
+      });
+
+      // Create popup with cluster info
+      const popupContent = `<div class="cluster-popup">
+        <div class="popup-header"><h4>${cluster.spawners.length} Pokemon Spawners</h4></div>
+        <p>Click to zoom in</p>
+      </div>`;
+      marker.bindPopup(popupContent);
+
+      // Zoom to cluster bounds on click
+      marker.on('click', () => {
+        const bounds = L.latLngBounds(
+          cluster.spawners.map(s => L.latLng(s.lat * 8, s.lng * 8))
+        );
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 1 });
+      });
+
+      cluster.marker = marker;
+      marker.addTo(map);
+    }
+  });
+
+  // Set initial visibility based on zoom level
+  updateSpawnerVisibility();
+
+  // Add zoom event handler
+  map.on('zoomend', updateSpawnerVisibility);
+}
+
+// Create cluster marker icon with count badge
+function createClusterIcon(count: number): L.DivIcon {
+  return L.divIcon({
+    html: `<div class="cluster-marker">
+      <div class="cluster-icon">
+        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: #fff;">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+          <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>
+          <path d="M3 12h6"/>
+          <path d="M15 12h6"/>
+        </svg>
+      </div>
+      <div class="cluster-count">${count}</div>
+    </div>`,
+    className: '',
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+  });
+}
+
+// Update spawner visibility based on zoom level
+function updateSpawnerVisibility(): void {
+  const zoom = map.getZoom();
+  const showClusters = zoom < 0;
+
+  // Toggle individual spawner markers
+  spawnerMarkers.forEach(({ marker }) => {
+    if (showClusters) {
+      map.removeLayer(marker);
+    } else {
+      if (!map.hasLayer(marker)) {
+        marker.addTo(map);
+      }
+    }
+  });
+
+  // Toggle cluster markers
+  spawnerClusters.forEach((cluster) => {
+    if (cluster.marker) {
+      if (showClusters) {
+        if (!map.hasLayer(cluster.marker)) {
+          cluster.marker.addTo(map);
+        }
+      } else {
+        map.removeLayer(cluster.marker);
+      }
+    }
   });
 }
 

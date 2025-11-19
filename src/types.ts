@@ -86,3 +86,10 @@ export interface RadiusCircle {
   y: number;
   circle: L.Circle;
 }
+
+export interface SpawnerCluster {
+  lat: number;
+  lng: number;
+  spawners: Spawner[];
+  marker: L.Marker | null;
+}

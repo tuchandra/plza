@@ -36,7 +36,7 @@ See `docs/data-extraction-guide.md` for full details.
 ## Next Priorities
 
 **High Priority:**
-- [ ] Implement marker clustering/combining based on zoom level (overlapping spawners unclickable)
+- [x] Implement marker clustering/combining based on zoom level (overlapping spawners unclickable)
 - [ ] Add visual boundaries around wild zones
 - [ ] Add location names to fly point popups
 - [ ] Add wild zone entrance fly points (separate from regular fly points)
