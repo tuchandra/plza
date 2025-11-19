@@ -6,7 +6,7 @@ Pokemon Legends: Z-A Interactive Map - Lumiose City map with precise spawner dat
 
 **Dataset (97% complete):**
 - 1,063 spawners (1,028 with Pokemon data)
-- 54 static alphas, 20 wild zones, 47 fly points
+- 54 static alphas, 20 wild zones, 46 fly points (all labeled)
 - 253 benches, 23 holovators, 147 ladders
 
 **Tech:** TypeScript, Leaflet.js, Bun, GitHub Pages
@@ -26,10 +26,14 @@ Pokemon Legends: Z-A Interactive Map - Lumiose City map with precise spawner dat
 
 See `docs/data-extraction-guide.md` for full details.
 
+**Spawner data (Serebii):**
 1. `scripts/extract-all-serebii-data.js` - Browser console, get coordinates + tableIDs
 2. `scripts/fetch-spawn-tables.ts` - Fetch spawn tables from Serebii
 3. `scripts/parse-spawn-tables.ts` - Parse HTML to structured JSON
 4. `scripts/merge-complete-data.ts` - Merge using tableIDs for alignment
+
+**Fly point labels (gamerguides):**
+5. `scripts/match-flypoints-to-gamerguides.ts` - Match Serebii coords to gamerguides labels
 
 **Critical:** Use tableIDs to link coordinates with Pokemon data. Serebii's table IDs ≠ marker array positions.
 
@@ -37,8 +41,8 @@ See `docs/data-extraction-guide.md` for full details.
 
 **High Priority:**
 - [x] Implement marker clustering/combining based on zoom level (overlapping spawners unclickable)
+- [x] Add location names to fly point popups (46/46 labeled via gamerguides)
 - [ ] Add visual boundaries around wild zones
-- [ ] Add location names to fly point popups
 - [ ] Add wild zone entrance fly points (separate from regular fly points)
 - [ ] Fix wild zone 16 duplicate Ampharos in popup
 

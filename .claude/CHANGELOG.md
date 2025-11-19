@@ -4,6 +4,32 @@ Detailed changelog of major changes. See git log for commit-level details.
 
 ## November 18, 2025
 
+### Fly Point Labels and Category-Specific Icons
+- Extracted 80 travel points from gamerguides.com data (`ggresp.json`)
+- Matched 42/47 fly points automatically via coordinate transformation (linear mapping with inverted Y)
+- User-provided labels for 4 points: Centrico Plaza, Nouveau Café, Hotel Z, Quasartico Inc.
+- Removed 1 temporary mid-game fly point (Wild Zone 8 unlock)
+- **Final dataset: 46/46 fly points fully labeled (100%)**
+- Category breakdown: 16 Cafes, 10 Landmarks, 9 Pokémon Centers, 4 Restaurants, 3 Plazas, 2 Nouveau Cafe Trucks, 1 Hotel Z, 1 Pokémon Research Lab
+
+**Category-specific icons:**
+- Replaced generic SVG pin markers with PNG icons from gamerguides and game8
+- Cafe: gamerguides coffee cup (2.1KB, 52x52px native)
+- Building: gamerguides building (2.7KB, 52x52px native)
+- Pokémon Center: gamerguides center (2.5KB, 52x52px native)
+- Wild Zone: game8 tree icon (75KB, 728x728px native)
+- Icons displayed at 32x32px for fly points, 36x36px for wild zones
+- Total file size: 82KB (vs 240KB for game8 originals)
+
+**UI improvements:**
+- Added category badges to fly point popups
+- Pulsing orange markers for unlabeled points (44px with glow animation)
+- Updated cluster breakup threshold: zoom ≥0.25 shows all spawners (was ≥0.5)
+
+**Scripts:**
+- Created `scripts/match-flypoints-to-gamerguides.ts` for coordinate matching
+- Transformation: linear mapping with inverted Y axis (avg distance: 7.65 units)
+
 ### Compact Grid Layout for Large Alpha Popups
 - Static alpha spawners with >10 Pokemon now use scrollable 4-column grid layout
 - Displays Pokemon sprite, name, and type badges in compact cards
@@ -97,7 +123,9 @@ Detailed changelog of major changes. See git log for commit-level details.
 - Guarantees coordinate/Pokemon alignment
 
 **Attribution:**
-- PokeOS: SVG icons
+- PokeOS: SVG icons (original version)
 - Serebii: Map tiles, spawn data, coordinates
 - PokeAPI: Pokemon sprites
 - PokemonDB: Type badge colors
+- Gamerguides: Fly point labels, category icons (cafe, building, pokecenter)
+- Game8: Wild zone icon
