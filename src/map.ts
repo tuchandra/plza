@@ -40,22 +40,11 @@ let holovatorMarkers: MarkerData<Holovator>[] = [];
 let ladderMarkers: MarkerData<Ladder>[] = [];
 let wildZoneMarkers: MarkerData<WildZone>[] = [];
 let wildZoneBoundaries: L.Layer[] = [];
-let rawBoundaryData: any[] = []; // Store raw PokeOS data
-let altBoundaryData: any[] = []; // Store alternate Mapgenie data
-let altBoundaries: L.Layer[] = []; // Alternate (blue) boundaries
+let boundaryData: any[] = []; // Store Mapgenie boundary data
 let staticAlphaMarkers: MarkerData<StaticAlpha>[] = [];
 let activeRadiusCircles: RadiusCircle[] = [];
 
-// Transformation parameters for wild zone boundaries (PokeOS)
-// Calibrated using least-squares fit on all 6 circle wild zones
-let transformParams = {
-  lngScale: 0.267951,
-  lngOffset: -0.97,
-  latScale: -0.268258,
-  latOffset: 1.41,
-};
-
-// Transformation parameters for alternate boundaries (Mapgenie)
+// Transformation parameters for wild zone boundaries (Mapgenie)
 // Mapgenie uses a different coordinate system than Serebii. Two key challenges:
 // 1. Mapgenie has TWO coordinate sets: marker positions (lat/lng) and geometry polygons
 // 2. The transformation is not uniform - horizontal and vertical need different calibrations
@@ -179,26 +168,15 @@ async function loadData(): Promise<void> {
       console.log('No wild zone data available');
     }
 
-    // Load raw wild zone boundaries (PokeOS coordinates)
+    // Load wild zone boundaries (Mapgenie coordinates)
     try {
-      const boundaryResponse = await fetch('data/wild_zone_boundaries_raw.json');
+      const boundaryResponse = await fetch('coordinates-alt.json');
       if (boundaryResponse.ok) {
-        rawBoundaryData = await boundaryResponse.json();
-        rebuildBoundaries();
+        boundaryData = await boundaryResponse.json();
+        createWildZoneBoundaries();
       }
     } catch (e) {
-      console.log('No wild zone boundary data available');
-    }
-
-    // Load alternate wild zone boundaries (Mapgenie coordinates)
-    try {
-      const altBoundaryResponse = await fetch('coordinates-alt.json');
-      if (altBoundaryResponse.ok) {
-        altBoundaryData = await altBoundaryResponse.json();
-        createAltBoundaries();
-      }
-    } catch (e) {
-      console.log('No alternate boundary data available');
+      console.log('No boundary data available');
     }
 
     // Load static alpha data
@@ -752,143 +730,6 @@ function createWildZoneMarkers(wildZones: WildZone[]): void {
   });
 }
 
-// Parse SVG path data properly handling relative/absolute commands
-function parseSVGPath(pathData: string): Array<[number, number]> {
-  const points: Array<[number, number]> = [];
-  let currentX = 0;
-  let currentY = 0;
-  let startX = 0;
-  let startY = 0;
-
-  const tokens = pathData.match(/[a-zA-Z]|[-+]?[0-9]*\.?[0-9]+/g);
-  if (!tokens) return points;
-
-  let i = 0;
-  while (i < tokens.length) {
-    const command = tokens[i];
-
-    if (command === 'M') {
-      currentX = parseFloat(tokens[++i]);
-      currentY = parseFloat(tokens[++i]);
-      startX = currentX;
-      startY = currentY;
-      points.push([currentX, currentY]);
-    } else if (command === 'm') {
-      currentX += parseFloat(tokens[++i]);
-      currentY += parseFloat(tokens[++i]);
-      startX = currentX;
-      startY = currentY;
-      points.push([currentX, currentY]);
-    } else if (command === 'L') {
-      currentX = parseFloat(tokens[++i]);
-      currentY = parseFloat(tokens[++i]);
-      points.push([currentX, currentY]);
-    } else if (command === 'l') {
-      currentX += parseFloat(tokens[++i]);
-      currentY += parseFloat(tokens[++i]);
-      points.push([currentX, currentY]);
-    } else if (command === 'H') {
-      currentX = parseFloat(tokens[++i]);
-      points.push([currentX, currentY]);
-    } else if (command === 'h') {
-      currentX += parseFloat(tokens[++i]);
-      points.push([currentX, currentY]);
-    } else if (command === 'V') {
-      currentY = parseFloat(tokens[++i]);
-      points.push([currentX, currentY]);
-    } else if (command === 'v') {
-      currentY += parseFloat(tokens[++i]);
-      points.push([currentX, currentY]);
-    } else if (command === 'S' || command === 's') {
-      const isRelative = command === 's';
-      parseFloat(tokens[++i]); // x2
-      parseFloat(tokens[++i]); // y2
-      const x = parseFloat(tokens[++i]);
-      const y = parseFloat(tokens[++i]);
-      if (isRelative) {
-        currentX += x;
-        currentY += y;
-      } else {
-        currentX = x;
-        currentY = y;
-      }
-      points.push([currentX, currentY]);
-    } else if (command === 'C' || command === 'c') {
-      const isRelative = command === 'c';
-      parseFloat(tokens[++i]); // x1
-      parseFloat(tokens[++i]); // y1
-      parseFloat(tokens[++i]); // x2
-      parseFloat(tokens[++i]); // y2
-      const x = parseFloat(tokens[++i]);
-      const y = parseFloat(tokens[++i]);
-      if (isRelative) {
-        currentX += x;
-        currentY += y;
-      } else {
-        currentX = x;
-        currentY = y;
-      }
-      points.push([currentX, currentY]);
-    } else if (command === 'Z' || command === 'z') {
-      if (currentX !== startX || currentY !== startY) {
-        points.push([startX, startY]);
-      }
-    } else if (!isNaN(parseFloat(command))) {
-      currentX += parseFloat(command);
-      currentY += parseFloat(tokens[++i]);
-      points.push([currentX, currentY]);
-    }
-    i++;
-  }
-  return points;
-}
-
-// Transform PokeOS coordinates to our system
-function transformCoords(pokeosX: number, pokeosY: number): { lat: number; lng: number } {
-  return {
-    lng: (pokeosX * transformParams.lngScale) + transformParams.lngOffset,
-    lat: (pokeosY * transformParams.latScale) + transformParams.latOffset,
-  };
-}
-
-// Convert raw PokeOS boundary data to our coordinate system
-function convertRawBoundary(rawBoundary: any): WildZoneBoundary {
-  const converted: any = {
-    wzNumber: rawBoundary.wzNumber,
-    type: rawBoundary.type,
-  };
-
-  if (rawBoundary.type === 'circle') {
-    const center = transformCoords(rawBoundary.cx, rawBoundary.cy);
-    converted.center = center;
-    converted.radius = rawBoundary.r * transformParams.lngScale; // Use lng scale for radius
-  } else if (rawBoundary.type === 'polygon') {
-    converted.points = rawBoundary.points.map(([x, y]: [number, number]) => transformCoords(x, y));
-  } else if (rawBoundary.type === 'path') {
-    const parsedPoints = parseSVGPath(rawBoundary.d);
-    converted.points = parsedPoints.map(([x, y]) => transformCoords(x, y));
-  } else if (rawBoundary.type === 'rect') {
-    const topLeft = transformCoords(rawBoundary.x, rawBoundary.y);
-    const topRight = transformCoords(rawBoundary.x + rawBoundary.width, rawBoundary.y);
-    const bottomRight = transformCoords(rawBoundary.x + rawBoundary.width, rawBoundary.y + rawBoundary.height);
-    const bottomLeft = transformCoords(rawBoundary.x, rawBoundary.y + rawBoundary.height);
-    converted.points = [topLeft, topRight, bottomRight, bottomLeft];
-  }
-
-  return converted as WildZoneBoundary;
-}
-
-// Rebuild boundaries with current transformation parameters
-function rebuildBoundaries(): void {
-  // Clear existing boundaries
-  wildZoneBoundaries.forEach(layer => map.removeLayer(layer));
-  wildZoneBoundaries = [];
-
-  // Convert and create new boundaries
-  const convertedBoundaries = rawBoundaryData.map(raw => convertRawBoundary(raw));
-  createWildZoneBoundaries(convertedBoundaries);
-}
-
 // Transform Mapgenie coordinates to Serebii coordinate system
 function transformMapgenieCoords(mapgenieLat: number, mapgenieLng: number): { lat: number; lng: number } {
   return {
@@ -897,24 +738,24 @@ function transformMapgenieCoords(mapgenieLat: number, mapgenieLng: number): { la
   };
 }
 
-// Create alternate wild zone boundaries from Mapgenie data (blue styling)
-function createAltBoundaries(): void {
-  // Clear existing alternate boundaries
-  altBoundaries.forEach(layer => map.removeLayer(layer));
-  altBoundaries = [];
+// Create wild zone boundaries from Mapgenie data
+function createWildZoneBoundaries(): void {
+  // Clear existing boundaries
+  wildZoneBoundaries.forEach(layer => map.removeLayer(layer));
+  wildZoneBoundaries = [];
 
-  console.log('Creating alternate boundaries with params:', mapgenieTransformParams);
+  console.log('Creating wild zone boundaries with params:', mapgenieTransformParams);
 
-  // Style for alternate boundaries - blue with transparency
-  const altBoundaryStyle = {
-    color: '#2196F3',
-    fillColor: '#2196F3',
+  // Style for boundaries - green with transparency
+  const boundaryStyle = {
+    color: '#4CAF50',
+    fillColor: '#4CAF50',
     fillOpacity: 0.25,
     weight: 2,
     opacity: 0.6,
   };
 
-  altBoundaryData.forEach((wzData: any) => {
+  boundaryData.forEach((wzData: any) => {
     let layer: L.Layer;
 
     // Each wild zone has a features array with geometry
@@ -949,21 +790,21 @@ function createAltBoundaries(): void {
 
         return [transformedLat * 8, transformedLng * 8];
       });
-      layer = L.polygon(latLngs, altBoundaryStyle);
+      layer = L.polygon(latLngs, boundaryStyle);
     } else {
       console.warn(`Unsupported geometry type for WZ${wzData.id}: ${geometry.type}`);
       return;
     }
 
     // Add popup with wild zone title
-    layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>${wzData.title} (Mapgenie)</h4></div></div>`);
+    layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>${wzData.title}</h4></div></div>`);
 
-    // Add to map (always visible for comparison)
+    // Add to map
     layer.addTo(map);
-    altBoundaries.push(layer);
+    wildZoneBoundaries.push(layer);
   });
 
-  console.log(`Created ${altBoundaries.length} alternate boundaries`);
+  console.log(`Created ${wildZoneBoundaries.length} wild zone boundaries`);
 
   // Generate debug info
   generateDebugInfo();
@@ -981,7 +822,7 @@ function generateDebugInfo(): void {
     .then(res => res.json())
     .then((pokeosData: any[]) => {
       // Sort by wild zone number
-      const sortedData = [...altBoundaryData].sort((a, b) => {
+      const sortedData = [...boundaryData].sort((a, b) => {
         const aNum = parseInt(a.title.replace('Wild Zone ', ''));
         const bNum = parseInt(b.title.replace('Wild Zone ', ''));
         return aNum - bNum;
@@ -1063,48 +904,6 @@ function generateDebugInfo(): void {
           debugDiv.innerHTML = html;
         });
     });
-}
-
-// Create wild zone boundaries (polygons, circles, etc.)
-function createWildZoneBoundaries(boundaries: WildZoneBoundary[]): void {
-  // Style for wild zone boundaries - green with transparency like PokeOS
-  const boundaryStyle = {
-    color: '#4CAF50',
-    fillColor: '#4CAF50',
-    fillOpacity: 0.25,
-    weight: 2,
-    opacity: 0.6,
-  };
-
-  boundaries.forEach((boundary) => {
-    let layer: L.Layer;
-
-    if (boundary.type === 'circle' && boundary.center && boundary.radius) {
-      // Create circle
-      layer = L.circle([boundary.center.lat * 8, boundary.center.lng * 8], {
-        radius: boundary.radius * 8,
-        ...boundaryStyle,
-      });
-
-    } else if ((boundary.type === 'polygon' || boundary.type === 'path' || boundary.type === 'rect') && boundary.points) {
-      // Create polygon (works for polygon, path, and rect types)
-      const latLngs: [number, number][] = boundary.points.map(p => [p.lat * 8, p.lng * 8]);
-      layer = L.polygon(latLngs, boundaryStyle);
-
-    } else {
-      console.warn(`Unknown boundary type or missing data for WZ${boundary.wzNumber}`);
-      return;
-    }
-
-    // Add popup with wild zone number
-    layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>Wild Zone ${boundary.wzNumber}</h4></div></div>`);
-
-    // Only add to map if filter is enabled
-    if (getFilterState('filter-wild-zone-boundaries')) {
-      layer.addTo(map);
-    }
-    wildZoneBoundaries.push(layer);
-  });
 }
 
 // Create static alpha markers
