@@ -446,6 +446,29 @@ body {
   text-overflow: ellipsis;
 }
 
+.pokemon-types-small {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.pokemon-types-small .type-badge {
+  font-size: 7px;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.alpha-grid {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.alpha-grid-item {
+  min-height: 90px;
+}
+
 .pokemon-section-divider {
   height: 1px;
   background: linear-gradient(to right, transparent, #dee2e6 20%, #dee2e6 80%, transparent);

@@ -370,6 +370,12 @@ function createAlphaPopup(alpha: StaticAlpha): string {
   let html = '<div class="alpha-popup">';
   html += '<div class="popup-header alpha-header">';
   html += '<h4><img src="images/alpha-icon.svg" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"> Static Alpha</h4>';
+
+  // Show Pokemon count for large spawners
+  if (alpha.pokemon.length > 10) {
+    html += `<span class="pokemon-count-badge">${alpha.pokemon.length} Pokemon</span>`;
+  }
+
   html += '</div>';
 
   if (alpha.pokemon.length === 0) {
@@ -378,41 +384,65 @@ function createAlphaPopup(alpha: StaticAlpha): string {
     return html;
   }
 
-  html += '<table class="pokemon-table alpha-table">';
-  html += '<tbody>';
+  // Use grid layout for large spawners (>10 Pokemon), table for smaller ones
+  if (alpha.pokemon.length > 10) {
+    html += '<div class="popup-content">';
+    html += '<div class="pokemon-grid alpha-grid">';
 
-  alpha.pokemon.forEach((poke) => {
-    const spriteUrl = getPokemonSprite(poke.pokedexNumber);
-    const types = poke.types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(' ');
+    alpha.pokemon.forEach((poke) => {
+      const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+      const types = poke.types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(' ');
 
-    html += '<tr>';
+      html += '<div class="pokemon-grid-item alpha-grid-item">';
+      html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" />`;
+      html += `<div class="pokemon-name-small">${poke.name}</div>`;
+      if (poke.types.length > 0) {
+        html += `<div class="pokemon-types-small">${types}</div>`;
+      }
+      html += '</div>';
+    });
 
-    // Pokemon column (sprite + name + types)
-    html += '<td class="pokemon-col">';
-    html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />`;
-    html += '<div class="pokemon-details">';
-    html += `<div class="pokemon-name">${poke.name}</div>`;
-    if (poke.types.length > 0) {
-      html += `<div class="pokemon-types">${types}</div>`;
-    }
-    if (poke.rarity !== undefined) {
-      html += `<div class="spawn-rate">${poke.rarity}%</div>`;
-    }
-    html += '</div>';
-    html += '</td>';
+    html += '</div>'; // Close pokemon-grid
+    html += '</div>'; // Close popup-content
+  } else {
+    // Original table layout for smaller spawners
+    html += '<table class="pokemon-table alpha-table">';
+    html += '<tbody>';
 
-    // Level column
-    html += '<td class="level-col alpha-level">';
-    const alphaLevelText = poke.levelMin === poke.levelMax
-      ? `Lv. ${poke.levelMin}`
-      : `Lv. ${poke.levelMin} – ${poke.levelMax}`;
-    html += `<div>${alphaLevelText}</div>`;
-    html += '</td>';
+    alpha.pokemon.forEach((poke) => {
+      const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+      const types = poke.types.map(t => `<span class="type-badge type-${t}">${t}</span>`).join(' ');
 
-    html += '</tr>';
-  });
+      html += '<tr>';
 
-  html += '</tbody></table>';
+      // Pokemon column (sprite + name + types)
+      html += '<td class="pokemon-col">';
+      html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite" />`;
+      html += '<div class="pokemon-details">';
+      html += `<div class="pokemon-name">${poke.name}</div>`;
+      if (poke.types.length > 0) {
+        html += `<div class="pokemon-types">${types}</div>`;
+      }
+      if (poke.rarity !== undefined) {
+        html += `<div class="spawn-rate">${poke.rarity}%</div>`;
+      }
+      html += '</div>';
+      html += '</td>';
+
+      // Level column
+      html += '<td class="level-col alpha-level">';
+      const alphaLevelText = poke.levelMin === poke.levelMax
+        ? `Lv. ${poke.levelMin}`
+        : `Lv. ${poke.levelMin} – ${poke.levelMax}`;
+      html += `<div>${alphaLevelText}</div>`;
+      html += '</td>';
+
+      html += '</tr>';
+    });
+
+    html += '</tbody></table>';
+  }
+
   html += '</div>';
   return html;
 }
