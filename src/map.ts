@@ -41,6 +41,13 @@ let wildZoneMarkers: MarkerData<WildZone>[] = [];
 let staticAlphaMarkers: MarkerData<StaticAlpha>[] = [];
 let activeRadiusCircles: RadiusCircle[] = [];
 
+// Pre-computed visibility states for performance
+interface VisibilityState {
+  hiddenSpawners: Set<Spawner>;
+  visibleClusters: Set<SpawnerCluster>;
+}
+const visibilityCache: Map<number, VisibilityState> = new Map();
+
 // Initialize the map
 export function initMap(): void {
   // Create map without default tiles (we'll use an image overlay)
@@ -271,6 +278,9 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
     }
   });
 
+  // Pre-compute visibility states for all zoom levels (performance optimization)
+  precomputeVisibilityStates();
+
   // Set initial visibility based on zoom level
   updateSpawnerVisibility();
 
@@ -381,43 +391,66 @@ function updateZoomDisplay(): void {
   }
 }
 
-// Update spawner visibility based on zoom level
-function updateSpawnerVisibility(): void {
-  const zoom = map.getZoom();
-
-  // Calculate minimum cluster radius threshold based on zoom level
-  // At higher zoom (more zoomed in), require larger radius to show cluster
-  // At lower zoom (more zoomed out), show clusters even with small radius
-  let minClusterRadius: number;
+// Get minimum cluster radius for a given zoom level
+function getMinClusterRadius(zoom: number): number {
   if (zoom >= 0.5) {
-    minClusterRadius = Infinity; // Never cluster
+    return Infinity; // Never cluster
   } else if (zoom >= 0) {
-    minClusterRadius = 6; // Only very tight clusters (~50px)
+    return 6; // Only very tight clusters (~50px)
   } else if (zoom >= -0.5) {
-    minClusterRadius = 4; // Medium clusters (~30px)
+    return 4; // Medium clusters (~30px)
   } else if (zoom >= -1) {
-    minClusterRadius = 2; // Looser clusters (~15px)
+    return 2; // Looser clusters (~15px)
   } else {
-    minClusterRadius = 0; // All clusters
+    return 0; // All clusters
   }
+}
 
-  // Build set of spawners that should be clustered at this zoom level
-  const clusteredSpawnerSet = new Set<Spawner>();
+// Compute visibility state for a given zoom level
+function computeVisibilityState(zoom: number): VisibilityState {
+  const minClusterRadius = getMinClusterRadius(zoom);
+  const hiddenSpawners = new Set<Spawner>();
+  const visibleClusters = new Set<SpawnerCluster>();
+
   spawnerClusters.forEach((cluster) => {
     if (cluster.spawners.length > 1 && cluster.radius >= minClusterRadius) {
-      cluster.spawners.forEach(spawner => clusteredSpawnerSet.add(spawner));
+      // This cluster should be visible, hide its spawners
+      cluster.spawners.forEach(spawner => hiddenSpawners.add(spawner));
+      visibleClusters.add(cluster);
     }
   });
 
+  return { hiddenSpawners, visibleClusters };
+}
+
+// Pre-compute visibility states for all zoom thresholds
+function precomputeVisibilityStates(): void {
+  // Pre-compute for key zoom levels (every 0.25 steps from -2 to 2)
+  for (let zoom = -2; zoom <= 2; zoom += 0.25) {
+    const roundedZoom = Math.round(zoom * 4) / 4; // Round to nearest 0.25
+    visibilityCache.set(roundedZoom, computeVisibilityState(roundedZoom));
+  }
+}
+
+// Update spawner visibility based on zoom level (optimized with cache)
+function updateSpawnerVisibility(): void {
+  const zoom = map.getZoom();
+  const roundedZoom = Math.round(zoom * 4) / 4; // Round to nearest 0.25
+
+  // Get cached state or compute if not cached
+  let state = visibilityCache.get(roundedZoom);
+  if (!state) {
+    state = computeVisibilityState(roundedZoom);
+    visibilityCache.set(roundedZoom, state);
+  }
+
   // Toggle individual spawner markers
   spawnerMarkers.forEach(({ marker, data }) => {
-    const isInCluster = clusteredSpawnerSet.has(data);
+    const shouldHide = state.hiddenSpawners.has(data);
 
-    if (isInCluster) {
-      // Hide spawners that are part of visible clusters
+    if (shouldHide) {
       map.removeLayer(marker);
     } else {
-      // Show spawners not in clusters or in clusters too small for this zoom
       if (!map.hasLayer(marker)) {
         marker.addTo(map);
       }
@@ -427,9 +460,9 @@ function updateSpawnerVisibility(): void {
   // Toggle cluster markers
   spawnerClusters.forEach((cluster) => {
     if (cluster.marker) {
-      const shouldShowCluster = cluster.spawners.length > 1 && cluster.radius >= minClusterRadius;
+      const shouldShow = state.visibleClusters.has(cluster);
 
-      if (shouldShowCluster) {
+      if (shouldShow) {
         if (!map.hasLayer(cluster.marker)) {
           cluster.marker.addTo(map);
         }
