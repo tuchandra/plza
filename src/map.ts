@@ -7,6 +7,7 @@ import type {
   Holovator,
   Ladder,
   WildZone,
+  WildZoneBoundary,
   StaticAlpha,
   MarkerData,
   RadiusCircle,
@@ -38,6 +39,7 @@ let flyPointMarkers: MarkerData<FlyPoint>[] = [];
 let holovatorMarkers: MarkerData<Holovator>[] = [];
 let ladderMarkers: MarkerData<Ladder>[] = [];
 let wildZoneMarkers: MarkerData<WildZone>[] = [];
+let wildZoneBoundaries: L.Layer[] = [];
 let staticAlphaMarkers: MarkerData<StaticAlpha>[] = [];
 let activeRadiusCircles: RadiusCircle[] = [];
 
@@ -142,6 +144,17 @@ async function loadData(): Promise<void> {
       }
     } catch (e) {
       console.log('No wild zone data available');
+    }
+
+    // Load wild zone boundaries
+    try {
+      const boundaryResponse = await fetch('data/wild_zone_boundaries.json');
+      if (boundaryResponse.ok) {
+        const boundaryData: WildZoneBoundary[] = await boundaryResponse.json();
+        createWildZoneBoundaries(boundaryData);
+      }
+    } catch (e) {
+      console.log('No wild zone boundary data available');
     }
 
     // Load static alpha data
@@ -254,7 +267,10 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
     const popupContent = createSpawnerPopup(spawner);
     marker.bindPopup(popupContent);
 
-    marker.addTo(map);
+    // Only add to map if filter is enabled
+    if (getFilterState('filter-spawners')) {
+      marker.addTo(map);
+    }
     spawnerMarkers.push({
       marker: marker as any,
       data: spawner,
@@ -274,7 +290,7 @@ function createSpawnerMarkers(spawners: Spawner[]): void {
       marker.bindPopup(popupContent);
 
       cluster.marker = marker;
-      marker.addTo(map);
+      // Clusters will be added by updateSpawnerVisibility based on zoom and filter state
     }
   });
 
@@ -437,6 +453,9 @@ function updateSpawnerVisibility(): void {
   const zoom = map.getZoom();
   const roundedZoom = Math.round(zoom * 4) / 4; // Round to nearest 0.25
 
+  // Check if spawners are enabled via filter
+  const spawnersEnabled = getFilterState('filter-spawners');
+
   // Get cached state or compute if not cached
   let state = visibilityCache.get(roundedZoom);
   if (!state) {
@@ -446,7 +465,7 @@ function updateSpawnerVisibility(): void {
 
   // Toggle individual spawner markers
   spawnerMarkers.forEach(({ marker, data }) => {
-    const shouldHide = state.hiddenSpawners.has(data);
+    const shouldHide = state.hiddenSpawners.has(data) || !spawnersEnabled;
 
     if (shouldHide) {
       map.removeLayer(marker);
@@ -460,7 +479,7 @@ function updateSpawnerVisibility(): void {
   // Toggle cluster markers
   spawnerClusters.forEach((cluster) => {
     if (cluster.marker) {
-      const shouldShow = state.visibleClusters.has(cluster);
+      const shouldShow = state.visibleClusters.has(cluster) && spawnersEnabled;
 
       if (shouldShow) {
         if (!map.hasLayer(cluster.marker)) {
@@ -500,7 +519,10 @@ function createBenchMarkers(benches: Bench[]): void {
       toggleRadius(bench, 'bench');
     });
 
-    marker.addTo(map);
+    // Only add to map if filter is enabled
+    if (getFilterState('filter-benches')) {
+      marker.addTo(map);
+    }
     benchMarkers.push({
       marker: marker as any,
       data: bench,
@@ -579,7 +601,10 @@ function createFlyPointMarkers(flyPoints: FlyPoint[]): void {
       toggleRadius(point, 'flypoint');
     });
 
-    marker.addTo(map);
+    // Only add to map if filter is enabled
+    if (getFilterState('filter-fly-points')) {
+      marker.addTo(map);
+    }
     flyPointMarkers.push({
       marker: marker as any,
       data: point,
@@ -609,7 +634,11 @@ function createHolovatorMarkers(holovators: Holovator[]): void {
 
     const popup = '<div class="simple-popup"><div class="popup-header"><h4>Holovator</h4></div></div>';
     marker.bindPopup(popup);
-    marker.addTo(map);
+
+    // Only add to map if filter is enabled
+    if (getFilterState('filter-holovators')) {
+      marker.addTo(map);
+    }
     holovatorMarkers.push({
       marker: marker as any,
       data: holovator,
@@ -638,7 +667,11 @@ function createLadderMarkers(ladders: Ladder[]): void {
 
     const popup = '<div class="simple-popup"><div class="popup-header"><h4>Ladder</h4></div></div>';
     marker.bindPopup(popup);
-    marker.addTo(map);
+
+    // Only add to map if filter is enabled
+    if (getFilterState('filter-ladders')) {
+      marker.addTo(map);
+    }
     ladderMarkers.push({
       marker: marker as any,
       data: ladder,
@@ -663,11 +696,69 @@ function createWildZoneMarkers(wildZones: WildZone[]): void {
 
     const popupContent = createWildZonePopup(zone);
     marker.bindPopup(popupContent, { maxWidth: 400, maxHeight: 400 });
-    marker.addTo(map);
+
+    // Only add to map if filter is enabled
+    if (getFilterState('filter-wild-zones')) {
+      marker.addTo(map);
+    }
     wildZoneMarkers.push({
       marker: marker as any,
       data: zone,
     });
+  });
+}
+
+// Create wild zone boundaries (polygons, circles, etc.)
+function createWildZoneBoundaries(boundaries: WildZoneBoundary[]): void {
+  // Style for wild zone boundaries - green with transparency like PokeOS
+  const boundaryStyle = {
+    color: '#4CAF50',
+    fillColor: '#4CAF50',
+    fillOpacity: 0.25,
+    weight: 2,
+    opacity: 0.6,
+  };
+
+  boundaries.forEach((boundary) => {
+    // Skip path types for now - they need proper SVG path parsing
+    // TODO: Fix WZ 5, 11, 14, 18 (path types)
+    if (boundary.type === 'path') {
+      console.log(`Skipping WZ${boundary.wzNumber} - path type needs proper parsing`);
+      return;
+    }
+
+    let layer: L.Layer;
+
+    if (boundary.type === 'circle' && boundary.center && boundary.radius) {
+      // Create circle
+      layer = L.circle([boundary.center.lat * 8, boundary.center.lng * 8], {
+        radius: boundary.radius * 8,
+        ...boundaryStyle,
+      });
+
+    } else if (boundary.type === 'polygon' && boundary.points) {
+      // Create polygon
+      const latLngs: [number, number][] = boundary.points.map(p => [p.lat * 8, p.lng * 8]);
+      layer = L.polygon(latLngs, boundaryStyle);
+
+    } else if (boundary.type === 'rect' && boundary.points) {
+      // Rectangle as polygon
+      const latLngs: [number, number][] = boundary.points.map(p => [p.lat * 8, p.lng * 8]);
+      layer = L.polygon(latLngs, boundaryStyle);
+
+    } else {
+      console.warn(`Unknown boundary type or missing data for WZ${boundary.wzNumber}`);
+      return;
+    }
+
+    // Add popup with wild zone number
+    layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>Wild Zone ${boundary.wzNumber}</h4></div></div>`);
+
+    // Only add to map if filter is enabled
+    if (getFilterState('filter-wild-zone-boundaries')) {
+      layer.addTo(map);
+    }
+    wildZoneBoundaries.push(layer);
   });
 }
 
@@ -688,7 +779,11 @@ function createStaticAlphaMarkers(staticAlphas: StaticAlpha[]): void {
 
     const popupContent = createAlphaPopup(alpha);
     marker.bindPopup(popupContent);
-    marker.addTo(map);
+
+    // Only add to map if filter is enabled
+    if (getFilterState('filter-static-alphas')) {
+      marker.addTo(map);
+    }
     staticAlphaMarkers.push({
       marker: marker as any,
       data: alpha,
@@ -959,36 +1054,82 @@ function getPokemonSprite(pokemonId: number): string {
 
 // Setup event listeners for filters
 function setupEventListeners(): void {
+  // Restore filter states from localStorage
+  restoreFilterStates();
+
   // Feature filters
   const filterSpawners = document.getElementById('filter-spawners');
   const filterBenches = document.getElementById('filter-benches');
   const filterFlyPoints = document.getElementById('filter-fly-points');
+  const filterHolovators = document.getElementById('filter-holovators');
+  const filterLadders = document.getElementById('filter-ladders');
+  const filterWildZones = document.getElementById('filter-wild-zones');
+  const filterWildZoneBoundaries = document.getElementById('filter-wild-zone-boundaries');
+  const filterStaticAlphas = document.getElementById('filter-static-alphas');
   const pokemonSearch = document.getElementById('pokemon-search');
 
   if (filterSpawners) {
     filterSpawners.addEventListener('change', (e) => {
-      toggleMarkerVisibility(
-        spawnerMarkers,
-        (e.target as HTMLInputElement).checked
-      );
+      const checked = (e.target as HTMLInputElement).checked;
+      saveFilterState('filter-spawners', checked);
+      // Update visibility based on zoom level and filter state
+      updateSpawnerVisibility();
     });
   }
 
   if (filterBenches) {
     filterBenches.addEventListener('change', (e) => {
-      toggleMarkerVisibility(
-        benchMarkers,
-        (e.target as HTMLInputElement).checked
-      );
+      const checked = (e.target as HTMLInputElement).checked;
+      saveFilterState('filter-benches', checked);
+      toggleMarkerVisibility(benchMarkers, checked);
     });
   }
 
   if (filterFlyPoints) {
     filterFlyPoints.addEventListener('change', (e) => {
-      toggleMarkerVisibility(
-        flyPointMarkers,
-        (e.target as HTMLInputElement).checked
-      );
+      const checked = (e.target as HTMLInputElement).checked;
+      saveFilterState('filter-fly-points', checked);
+      toggleMarkerVisibility(flyPointMarkers, checked);
+    });
+  }
+
+  if (filterHolovators) {
+    filterHolovators.addEventListener('change', (e) => {
+      const checked = (e.target as HTMLInputElement).checked;
+      saveFilterState('filter-holovators', checked);
+      toggleMarkerVisibility(holovatorMarkers, checked);
+    });
+  }
+
+  if (filterLadders) {
+    filterLadders.addEventListener('change', (e) => {
+      const checked = (e.target as HTMLInputElement).checked;
+      saveFilterState('filter-ladders', checked);
+      toggleMarkerVisibility(ladderMarkers, checked);
+    });
+  }
+
+  if (filterWildZones) {
+    filterWildZones.addEventListener('change', (e) => {
+      const checked = (e.target as HTMLInputElement).checked;
+      saveFilterState('filter-wild-zones', checked);
+      toggleMarkerVisibility(wildZoneMarkers, checked);
+    });
+  }
+
+  if (filterWildZoneBoundaries) {
+    filterWildZoneBoundaries.addEventListener('change', (e) => {
+      const checked = (e.target as HTMLInputElement).checked;
+      saveFilterState('filter-wild-zone-boundaries', checked);
+      toggleLayerVisibility(wildZoneBoundaries, checked);
+    });
+  }
+
+  if (filterStaticAlphas) {
+    filterStaticAlphas.addEventListener('change', (e) => {
+      const checked = (e.target as HTMLInputElement).checked;
+      saveFilterState('filter-static-alphas', checked);
+      toggleMarkerVisibility(staticAlphaMarkers, checked);
     });
   }
 
@@ -1011,6 +1152,67 @@ function toggleMarkerVisibility<T>(
       map.removeLayer(marker);
     }
   });
+}
+
+// Toggle layer visibility (for non-marker layers like polygons)
+function toggleLayerVisibility(
+  layers: L.Layer[],
+  visible: boolean
+): void {
+  layers.forEach((layer) => {
+    if (visible) {
+      layer.addTo(map);
+    } else {
+      map.removeLayer(layer);
+    }
+  });
+}
+
+// Save filter state to localStorage
+function saveFilterState(filterId: string, checked: boolean): void {
+  try {
+    localStorage.setItem(filterId, checked.toString());
+  } catch (e) {
+    console.warn('Failed to save filter state:', e);
+  }
+}
+
+// Restore filter states from localStorage
+function restoreFilterStates(): void {
+  const filters = [
+    'filter-spawners',
+    'filter-benches',
+    'filter-fly-points',
+    'filter-holovators',
+    'filter-ladders',
+    'filter-wild-zones',
+    'filter-wild-zone-boundaries',
+    'filter-static-alphas',
+  ];
+
+  filters.forEach((filterId) => {
+    const checkbox = document.getElementById(filterId) as HTMLInputElement;
+    if (!checkbox) return;
+
+    try {
+      const saved = localStorage.getItem(filterId);
+      if (saved !== null) {
+        checkbox.checked = saved === 'true';
+      }
+    } catch (e) {
+      console.warn('Failed to restore filter state:', e);
+    }
+  });
+}
+
+// Get saved filter state
+function getFilterState(filterId: string): boolean {
+  try {
+    const saved = localStorage.getItem(filterId);
+    return saved !== null ? saved === 'true' : true; // Default to true (checked)
+  } catch (e) {
+    return true;
+  }
 }
 
 // Filter spawners by Pokemon name

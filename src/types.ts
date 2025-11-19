@@ -95,3 +95,12 @@ export interface SpawnerCluster {
   marker: L.Marker | null;
   radius: number; // Maximum distance from cluster center to any spawner
 }
+
+export interface WildZoneBoundary {
+  wzNumber: number;
+  type: 'circle' | 'polygon' | 'path' | 'rect';
+  center?: { lat: number; lng: number };
+  radius?: number;
+  points?: Array<{ lat: number; lng: number }>;
+  note?: string;
+}
