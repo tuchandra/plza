@@ -2,6 +2,16 @@
 
 Detailed changelog of major changes. See git log for commit-level details.
 
+## November 18, 2025
+
+### Wild Zone 20 Static Alpha Spawner Fix
+- Fixed critical data extraction bug for tableIDs 1084/1085
+- Restored all 67 Pokemon to Wild Zone 20 static alpha spawners (was only showing 6)
+- Root cause: HTML parser only captured first row group (6 Pokemon) instead of all 12 groups
+- Solution: Custom parser handles Serebii's group-based table structure with separator rows
+- Both spawners now correctly show: Raichu, Clefable, Alakazam, Machamp, Victreebel, Gengar, Kangaskhan, Starmie, Pinsir, Gyarados, Vaporeon, Jolteon, Flareon, Dragonite, Ariados, Heracross, Delibird, Skarmory, Tyranitar, Gardevoir, Sableye, Aggron, Medicham, Altaria, Absol, Metagross, Roserade, Garchomp, Lucario, Hippowdon, Leafeon, Glaceon, Gallade, Froslass, Simisage, Simisear, Simipour, Scolipede, Krookodile, Scrafty, Garbodor, Vanilluxe, Eelektross, Chandelure, Stunfisk, Diggersby, Talonflame, Vivillon, Florges, Gogoat, Pangoro, Furfrou, Aegislash, Malamar, Barbaracle, Dragalge, Heliolisk, Sylveon, Hawlucha, Dedenne, Carbink, Goodra, Klefki, Gourgeist, Noivern, Drampa, Falinks
+- Total spawn rate: 67 × 1.49% = 99.83%
+
 ## November 17, 2025
 
 ### Data Cleanup and Level Display Fix
