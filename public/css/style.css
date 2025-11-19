@@ -396,9 +396,23 @@ body {
   font-weight: 600;
 }
 
+.category-badge {
+  background: #6c757d;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
 .popup-header.bench-header {
   background: linear-gradient(135deg, #fdf6e3 0%, #f5e6d3 100%);
   border-bottom-color: #8b6f47;
+}
+
+.popup-header.unlabeled-header {
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe5cc 100%);
+  border-bottom-color: #e67e22;
 }
 
 /* Wild Zone Pokemon Grid */
@@ -509,6 +523,32 @@ body {
 }
 
 /* Custom Marker Styles */
+.unlabeled-fly-marker {
+  width: 44px;
+  height: 44px;
+  background: #e67e22;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  animation: pulse-marker 1.5s ease-in-out infinite;
+  position: relative;
+  z-index: 1000 !important;
+}
+
+@keyframes pulse-marker {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 3px 8px rgba(230, 126, 34, 0.4), 0 0 0 0 rgba(230, 126, 34, 0.7);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 3px 12px rgba(230, 126, 34, 0.6), 0 0 0 10px rgba(230, 126, 34, 0);
+  }
+}
+
 .spawner-marker {
   width: 12px;
   height: 12px;

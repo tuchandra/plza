@@ -1,49 +1,278 @@
 [
-  {"lat": -30, "lng": 266.5},
-  {"lat": -141, "lng": 351},
-  {"lat": -170, "lng": 464},
-  {"lat": -207.5, "lng": 264.25},
-  {"lat": -241.75, "lng": 169.5},
-  {"lat": -170, "lng": 47},
-  {"lat": -442.5, "lng": 131.5},
-  {"lat": -442.5, "lng": 383},
-  {"lat": -398, "lng": 247.5},
-  {"lat": -131, "lng": 74.5},
-  {"lat": -152, "lng": 166},
-  {"lat": -125, "lng": 359.5},
-  {"lat": -86, "lng": 407},
-  {"lat": -127, "lng": 445.875},
-  {"lat": -243.5, "lng": 485},
-  {"lat": -364, "lng": 350},
-  {"lat": -453.5, "lng": 364.5},
-  {"lat": -371.5, "lng": 246.5},
-  {"lat": -393, "lng": 261},
-  {"lat": -441, "lng": 164},
-  {"lat": -297.5, "lng": 279.5},
-  {"lat": -250, "lng": 132},
-  {"lat": -276.5, "lng": 170.5},
-  {"lat": -302.5, "lng": 81},
-  {"lat": -330.5, "lng": 53.5},
-  {"lat": -394.5, "lng": 75.5},
-  {"lat": -400.125, "lng": 432.75},
-  {"lat": -370.125, "lng": 172.5},
-  {"lat": -228.75, "lng": 165.375},
-  {"lat": -212.625, "lng": 393.75},
-  {"lat": -22.5, "lng": 308.5},
-  {"lat": -52.5, "lng": 381},
-  {"lat": -255, "lng": 350.5},
-  {"lat": -182, "lng": 300},
-  {"lat": -97.5, "lng": 264},
-  {"lat": -107.5, "lng": 232},
-  {"lat": -118.5, "lng": 164},
-  {"lat": -125, "lng": 137},
-  {"lat": -198, "lng": 177.5},
-  {"lat": -188, "lng": 73},
-  {"lat": -288, "lng": 255},
-  {"lat": -494, "lng": 273},
-  {"lat": -439, "lng": 335},
-  {"lat": -454.5, "lng": 399.5},
-  {"lat": -344.5, "lng": 459.5},
-  {"lat": -348, "lng": 239},
-  {"lat": -316, "lng": 166.5}
+  {
+    "lat": -30,
+    "lng": 266.5,
+    "name": "Rouge Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -141,
+    "lng": 351,
+    "name": "Hibernal Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -170,
+    "lng": 464,
+    "name": "Jaune Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -207.5,
+    "lng": 264.25,
+    "name": "Centrico Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -241.75,
+    "lng": 169.5,
+    "name": "Magenta Plaza Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -170,
+    "lng": 47,
+    "name": "Magenta Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -442.5,
+    "lng": 131.5,
+    "name": "Bleu Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -442.5,
+    "lng": 383,
+    "name": "Vert Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -398,
+    "lng": 247.5,
+    "name": "Vernal Pokémon Center",
+    "category": "Pokémon Center"
+  },
+  {
+    "lat": -131,
+    "lng": 74.5,
+    "name": "Café Triste",
+    "category": "Cafe"
+  },
+  {
+    "lat": -152,
+    "lng": 166,
+    "name": "Café Pokémon-Amie",
+    "category": "Cafe"
+  },
+  {
+    "lat": -125,
+    "lng": 359.5,
+    "name": "Café Kizuna",
+    "category": "Cafe"
+  },
+  {
+    "lat": -86,
+    "lng": 407,
+    "name": "Café Ultimo",
+    "category": "Cafe"
+  },
+  {
+    "lat": -127,
+    "lng": 445.875,
+    "name": "Café Action!",
+    "category": "Cafe"
+  },
+  {
+    "lat": -243.5,
+    "lng": 485,
+    "name": "Café Bataille",
+    "category": "Cafe"
+  },
+  {
+    "lat": -364,
+    "lng": 350,
+    "name": "Café Cyclone",
+    "category": "Cafe"
+  },
+  {
+    "lat": -453.5,
+    "lng": 364.5,
+    "name": "Café Introversion",
+    "category": "Cafe"
+  },
+  {
+    "lat": -371.5,
+    "lng": 246.5,
+    "name": "Café Woof",
+    "category": "Cafe"
+  },
+  {
+    "lat": -393,
+    "lng": 261,
+    "name": "Café Classe",
+    "category": "Cafe"
+  },
+  {
+    "lat": -441,
+    "lng": 164,
+    "name": "Truck No.2",
+    "category": "Nouveau Cafe Truck"
+  },
+  {
+    "lat": -297.5,
+    "lng": 279.5,
+    "name": "Nouveau Café",
+    "category": "Cafe"
+  },
+  {
+    "lat": -250,
+    "lng": 132,
+    "name": "No. 3",
+    "category": "Nouveau Cafe Truck"
+  },
+  {
+    "lat": -276.5,
+    "lng": 170.5,
+    "name": "Cafe Gallant",
+    "category": "Cafe"
+  },
+  {
+    "lat": -302.5,
+    "lng": 81,
+    "name": "Café Rouleau",
+    "category": "Cafe"
+  },
+  {
+    "lat": -330.5,
+    "lng": 53.5,
+    "name": "Shutterbug Café ",
+    "category": "Cafe"
+  },
+  {
+    "lat": -394.5,
+    "lng": 75.5,
+    "name": "Café Soleil",
+    "category": "Cafe"
+  },
+  {
+    "lat": -400.125,
+    "lng": 432.75,
+    "name": "Racine Construction",
+    "category": "Landmark"
+  },
+  {
+    "lat": -370.125,
+    "lng": 172.5,
+    "name": "Bleu Plaza",
+    "category": "Plaza"
+  },
+  {
+    "lat": -228.75,
+    "lng": 165.375,
+    "name": "Magenta Plaza",
+    "category": "Plaza"
+  },
+  {
+    "lat": -22.5,
+    "lng": 308.5,
+    "name": "Lumiose Museum",
+    "category": "Landmark"
+  },
+  {
+    "lat": -52.5,
+    "lng": 381,
+    "name": "Hotel Richissime",
+    "category": "Landmark"
+  },
+  {
+    "lat": -255,
+    "lng": 350.5,
+    "name": "Justice Dojo",
+    "category": "Landmark"
+  },
+  {
+    "lat": -182,
+    "lng": 300,
+    "name": "Restaurant Le Wow",
+    "category": "Restaurant"
+  },
+  {
+    "lat": -97.5,
+    "lng": 264,
+    "name": "Sushi High Roller",
+    "category": "Restaurant"
+  },
+  {
+    "lat": -107.5,
+    "lng": 232,
+    "name": "Looker Bureau",
+    "category": "Landmark"
+  },
+  {
+    "lat": -118.5,
+    "lng": 164,
+    "name": "Restaurant Le Yeah",
+    "category": "Restaurant"
+  },
+  {
+    "lat": -125,
+    "lng": 137,
+    "name": "Quasartico Inc.",
+    "category": "Landmark"
+  },
+  {
+    "lat": -198,
+    "lng": 177.5,
+    "name": "Lysandre Café",
+    "category": "Cafe"
+  },
+  {
+    "lat": -188,
+    "lng": 73,
+    "name": "Lumiose Sewers",
+    "category": "Landmark"
+  },
+  {
+    "lat": -288,
+    "lng": 255,
+    "name": "Centrico Plaza",
+    "category": "Plaza"
+  },
+  {
+    "lat": -494,
+    "lng": 273,
+    "name": "Pokémon Research Lab",
+    "category": "Pokémon Research Lab"
+  },
+  {
+    "lat": -439,
+    "lng": 335,
+    "name": "Hotel Z",
+    "category": "Hotel Z"
+  },
+  {
+    "lat": -454.5,
+    "lng": 399.5,
+    "name": "Gare de Lumiose",
+    "category": "Landmark"
+  },
+  {
+    "lat": -344.5,
+    "lng": 459.5,
+    "name": "Restaurant Le Nah",
+    "category": "Restaurant"
+  },
+  {
+    "lat": -348,
+    "lng": 239,
+    "name": "Lumiose Sewers",
+    "category": "Landmark"
+  },
+  {
+    "lat": -316,
+    "lng": 166.5,
+    "name": "Rust Syndicate Office",
+    "category": "Landmark"
+  }
 ]

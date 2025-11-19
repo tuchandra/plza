@@ -56,6 +56,7 @@ export interface FlyPoint {
   lng: number;
   radius?: number;
   name?: string;
+  category?: string;
 }
 
 export interface Holovator {
