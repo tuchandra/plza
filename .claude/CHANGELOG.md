@@ -4,6 +4,28 @@ Detailed changelog of major changes. See git log for commit-level details.
 
 ## November 18, 2025
 
+### Wild Zone Boundaries with Interactive Calibration
+- Added polygon/circle overlays for all 20 wild zones from PokeOS boundary data
+- Implemented SVG path parser supporting M/m, L/l, H/h, V/v, S/s, C/c, Z commands
+- Dynamic coordinate transformation from PokeOS SVG system to Serebii coordinates
+- Least-squares calibration using all 6 circle wild zones (average error: 0.74 units)
+- **Transformation parameters:** lng = x × 0.267951 - 0.97, lat = y × -0.268258 + 1.41
+- Interactive debug sliders with +/- buttons for real-time boundary adjustment
+- Green boundaries (25% opacity) with popup labels showing wild zone numbers
+- Raw PokeOS data stored in `public/data/wild_zone_boundaries_raw.json`
+- All 20 boundaries render correctly including 4 path-based zones (WZ 5, 11, 14, 18)
+
+**Debug Controls:**
+- Filter toggles for all marker types (spawners, benches, fly points, etc.)
+- localStorage persistence for filter states across page refreshes
+- Boundary transformation sliders (4-decimal precision display, full precision internally)
+- Reset button restores calibrated values
+
+**Supporting Scripts:**
+- `scripts/extract-pokeos-wild-zone-boundaries.js` - Browser console extraction from PokeOS
+- `scripts/calibrate-all-circles.js` - Least-squares fit calibration methodology
+- Additional exploration scripts for PokeOS/Gamer Guides data structure
+
 ### Fly Point Labels and Category-Specific Icons
 - Extracted 80 travel points from gamerguides.com data (`ggresp.json`)
 - Matched 42/47 fly points automatically via coordinate transformation (linear mapping with inverted Y)
@@ -123,7 +145,7 @@ Detailed changelog of major changes. See git log for commit-level details.
 - Guarantees coordinate/Pokemon alignment
 
 **Attribution:**
-- PokeOS: SVG icons (original version)
+- PokeOS: SVG icons (original version), wild zone boundary coordinates
 - Serebii: Map tiles, spawn data, coordinates
 - PokeAPI: Pokemon sprites
 - PokemonDB: Type badge colors

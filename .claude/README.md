@@ -6,12 +6,14 @@ Pokemon Legends: Z-A Interactive Map - Lumiose City map with precise spawner dat
 
 **Dataset (97% complete):**
 - 1,063 spawners (1,028 with Pokemon data)
-- 54 static alphas, 20 wild zones, 46 fly points (all labeled)
+- 54 static alphas, 20 wild zones (all with boundaries), 46 fly points (all labeled)
 - 253 benches, 23 holovators, 147 ladders
 
 **Tech:** TypeScript, Leaflet.js, Bun, GitHub Pages
 
 **Map:** 4096×4096px from Serebii zoom 3, coordinates scale ×8 (512 space → 4096px)
+
+**Wild Zone Boundaries:** All 20 zones with polygon/circle overlays, dynamic coordinate transformation from PokeOS SVG data, interactive calibration controls
 
 ## Key Files
 
@@ -35,6 +37,11 @@ See `docs/data-extraction-guide.md` for full details.
 **Fly point labels (gamerguides):**
 5. `scripts/match-flypoints-to-gamerguides.ts` - Match Serebii coords to gamerguides labels
 
+**Wild zone boundaries (PokeOS):**
+6. `scripts/extract-pokeos-wild-zone-boundaries.js` - Browser console, extract SVG boundary data
+7. `scripts/calibrate-all-circles.js` - Least-squares calibration using all 6 circle zones
+8. Runtime transformation in `src/map.ts` with interactive sliders
+
 **Critical:** Use tableIDs to link coordinates with Pokemon data. Serebii's table IDs ≠ marker array positions.
 
 ## Next Priorities
@@ -42,13 +49,13 @@ See `docs/data-extraction-guide.md` for full details.
 **High Priority:**
 - [x] Implement marker clustering/combining based on zoom level (overlapping spawners unclickable)
 - [x] Add location names to fly point popups (46/46 labeled via gamerguides)
-- [ ] Add visual boundaries around wild zones
+- [x] Add visual boundaries around wild zones (all 20 zones with interactive calibration)
+- [x] Add show/hide controls for all marker types (localStorage persistence)
 - [ ] Add wild zone entrance fly points (separate from regular fly points)
 - [ ] Fix wild zone 16 duplicate Ampharos in popup
 
 **Medium Priority:**
-- [ ] Implement PokeOS-style filtering (multi-toggle buttons)
-- [ ] Add show/hide controls for all marker types
+- [ ] Implement PokeOS-style filtering (multi-toggle buttons for types)
 - [ ] Hide spawners with no data available
 - [ ] Add type/Pokemon filtering
 - [ ] Better mobile UI

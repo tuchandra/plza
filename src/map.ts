@@ -47,9 +47,9 @@ let activeRadiusCircles: RadiusCircle[] = [];
 // Transformation parameters for wild zone boundaries
 // Calibrated using least-squares fit on all 6 circle wild zones
 let transformParams = {
-  lngScale: 0.2680,
+  lngScale: 0.267951,
   lngOffset: -0.97,
-  latScale: -0.2683,
+  latScale: -0.268258,
   latOffset: 1.41,
 };
 
@@ -1369,15 +1369,15 @@ function setupEventListeners(): void {
     resetButton.addEventListener('click', () => {
       // Reset to calibrated values (least-squares fit on all 6 circle wild zones)
       transformParams = {
-        lngScale: 0.2680,
+        lngScale: 0.267951,
         lngOffset: -0.97,
-        latScale: -0.2683,
+        latScale: -0.268258,
         latOffset: 1.41,
       };
 
       // Update UI
       if (lngScaleSlider) {
-        lngScaleSlider.value = '0.2680';
+        lngScaleSlider.value = '0.267951';
         document.getElementById('lng-scale-value')!.textContent = '0.2680';
       }
       if (lngOffsetSlider) {
@@ -1385,7 +1385,7 @@ function setupEventListeners(): void {
         document.getElementById('lng-offset-value')!.textContent = '-0.97';
       }
       if (latScaleSlider) {
-        latScaleSlider.value = '-0.2683';
+        latScaleSlider.value = '-0.268258';
         document.getElementById('lat-scale-value')!.textContent = '-0.2683';
       }
       if (latOffsetSlider) {
