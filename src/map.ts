@@ -359,11 +359,23 @@ function updateSpawnerVisibility(): void {
   const zoom = map.getZoom();
   const showClusters = zoom < 0;
 
+  // Build set of spawners that are in multi-spawner clusters
+  const clusteredSpawnerSet = new Set<Spawner>();
+  spawnerClusters.forEach((cluster) => {
+    if (cluster.spawners.length > 1) {
+      cluster.spawners.forEach(spawner => clusteredSpawnerSet.add(spawner));
+    }
+  });
+
   // Toggle individual spawner markers
-  spawnerMarkers.forEach(({ marker }) => {
-    if (showClusters) {
+  spawnerMarkers.forEach(({ marker, data }) => {
+    const isInCluster = clusteredSpawnerSet.has(data);
+
+    if (showClusters && isInCluster) {
+      // Hide spawners that are part of multi-spawner clusters
       map.removeLayer(marker);
     } else {
+      // Show isolated spawners and all spawners when zoomed in
       if (!map.hasLayer(marker)) {
         marker.addTo(map);
       }
