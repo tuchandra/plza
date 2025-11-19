@@ -194,7 +194,7 @@ body {
   width: 72px;
   height: 72px;
   flex-shrink: 0;
-  image-rendering: pixelated;
+  image-rendering: auto;
 }
 
 .pokemon-details {
@@ -436,7 +436,7 @@ body {
 .pokemon-sprite-small {
   width: 56px;
   height: 56px;
-  image-rendering: pixelated;
+  image-rendering: auto;
 }
 
 .pokemon-name-small {
