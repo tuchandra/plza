@@ -48,7 +48,17 @@ let activeRadiusCircles: RadiusCircle[] = [];
 
 // Boundary editing state
 let editingEnabled = false;
-let modifiedBoundaries: Map<number, { title: string; coordinates: [number, number][]; originalCoordinates: [number, number][] }> = new Map();
+let modifiedBoundaries: Map<number, {
+  title: string;
+  type: string;
+  coordinates?: [number, number][];
+  originalCoordinates?: [number, number][];
+  center?: { lat: number; lng: number };
+  radius?: number;
+  originalCenter?: { lat: number; lng: number };
+  originalRadius?: number;
+}> = new Map();
+let currentEditingCircle: { layer: L.Circle; wzId: number; wzTitle: string } | null = null;
 
 // Pre-computed visibility states for performance
 interface VisibilityState {
@@ -734,25 +744,72 @@ function createWildZoneBoundaries(): void {
   };
 
   boundaryData.forEach((wzData: any) => {
-    if (wzData.type !== 'polygon') {
-      console.warn(`Unsupported boundary type for ${wzData.title}: ${wzData.type}`);
+    let layer: L.Polygon | L.Circle;
+
+    // Handle both old format (wzNumber, points) and new format (id, coordinates)
+    const wzId = wzData.id || wzData.wzNumber;
+    const wzTitle = wzData.title || `Wild Zone ${wzData.wzNumber}`;
+
+    if (wzData.type === 'polygon' || wzData.type === 'path' || wzData.type === 'rect') {
+      // Get coordinates from either 'coordinates' (mapgenie) or 'points' (original)
+      const coords = wzData.coordinates || wzData.points;
+
+      if (!coords) {
+        console.warn(`No coordinates found for ${wzTitle}`);
+        return;
+      }
+
+      // Transform coordinates if they're in the original format (objects with lat/lng)
+      let transformedCoords: [number, number][];
+      if (coords[0] && typeof coords[0] === 'object' && 'lat' in coords[0]) {
+        // Original format: array of {lat, lng} objects - need to transform and scale
+        transformedCoords = coords.map((p: any) => [p.lat * 8, p.lng * 8]);
+      } else {
+        // Already transformed: array of [lat, lng] tuples
+        transformedCoords = coords;
+      }
+
+      layer = L.polygon(transformedCoords, boundaryStyle);
+
+      // Store original coordinates for polygons
+      (layer as any).originalCoordinates = JSON.parse(JSON.stringify(transformedCoords)); // Deep copy
+    } else if (wzData.type === 'circle') {
+      // Create circle with center and radius
+      // Check if coordinates are already transformed (mapgenie format) or need transformation (original format)
+      // Transformed coordinates have large absolute values (> 1000)
+      const isTransformed = Math.abs(wzData.center.lat) > 1000 || Math.abs(wzData.center.lng) > 1000;
+
+      const center: [number, number] = isTransformed
+        ? [wzData.center.lat, wzData.center.lng]
+        : [wzData.center.lat * 8, wzData.center.lng * 8];
+      const radius = isTransformed ? wzData.radius : wzData.radius * 8;
+
+      layer = L.circle(center, {
+        ...boundaryStyle,
+        radius: radius,
+      });
+
+      // Store original center and radius for circles (in unscaled format)
+      (layer as any).originalCenter = isTransformed
+        ? { lat: wzData.center.lat / 8, lng: wzData.center.lng / 8 }
+        : { ...wzData.center };
+      (layer as any).originalRadius = isTransformed ? wzData.radius / 8 : wzData.radius;
+    } else {
+      console.warn(`Unsupported boundary type for ${wzTitle}: ${wzData.type}`);
       return;
     }
 
-    // Coordinates are already transformed and scaled - use directly
-    const layer = L.polygon(wzData.coordinates, boundaryStyle);
-
     // Store metadata on the layer for editing
-    (layer as any).wzId = wzData.id;
-    (layer as any).wzTitle = wzData.title;
-    (layer as any).originalCoordinates = JSON.parse(JSON.stringify(wzData.coordinates)); // Deep copy
+    (layer as any).wzId = wzId;
+    (layer as any).wzTitle = wzTitle;
+    (layer as any).wzType = wzData.type;
 
     // Add popup with wild zone title
-    layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>${wzData.title}</h4></div></div>`);
+    layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>${wzTitle}</h4></div></div>`);
 
     // Enable editing when editing mode is on
     if (editingEnabled) {
-      enableLayerEditing(layer as L.Polygon);
+      enableLayerEditing(layer);
     }
 
     // Add to map
@@ -783,40 +840,68 @@ function generateDebugInfo(): void {
 }
 
 // Enable editing for a boundary layer
-function enableLayerEditing(layer: L.Polygon): void {
-  if (!(layer as any).enableEdit) return;
+function enableLayerEditing(layer: L.Polygon | L.Circle): void {
+  const wzType = (layer as any).wzType;
 
-  (layer as any).enableEdit();
+  if (wzType === 'circle') {
+    // For circles, use manual editor instead of drag editing
+    // Add click handler to open editor
+    layer.on('click', () => {
+      const wzId = (layer as any).wzId;
+      const wzTitle = (layer as any).wzTitle;
+      openCircleEditor(layer as L.Circle, wzId, wzTitle);
+    });
 
-  // Listen for edit events
-  layer.on('editable:vertex:dragend', () => {
-    onBoundaryEdited(layer);
-  });
+    // Visual feedback
+    layer.setStyle({ weight: 3, color: '#2196F3' });
+  } else {
+    // For polygons, enable drag editing
+    if (!(layer as any).enableEdit) return;
 
-  // Visual feedback when hovering in edit mode
-  layer.setStyle({ weight: 3 });
+    (layer as any).enableEdit();
+
+    // Listen for polygon vertex edit events
+    layer.on('editable:vertex:dragend', () => {
+      onBoundaryEdited(layer);
+    });
+
+    // Visual feedback when hovering in edit mode
+    layer.setStyle({ weight: 3 });
+  }
 }
 
 // Disable editing for a boundary layer
-function disableLayerEditing(layer: L.Polygon): void {
-  if (!(layer as any).disableEdit) return;
+function disableLayerEditing(layer: L.Polygon | L.Circle): void {
+  const wzType = (layer as any).wzType;
 
-  (layer as any).disableEdit();
+  if (wzType === 'circle') {
+    // Remove click handler for circles
+    layer.off('click');
+    layer.setStyle({ weight: 2, color: '#4CAF50' });
+  } else {
+    // Disable polygon editing
+    if (!(layer as any).disableEdit) return;
 
-  // Remove event listeners
-  layer.off('editable:vertex:dragend');
+    (layer as any).disableEdit();
 
-  // Reset visual style
-  layer.setStyle({ weight: 2 });
+    // Remove event listeners
+    layer.off('editable:vertex:dragend');
+
+    // Reset visual style
+    layer.setStyle({ weight: 2 });
+  }
 }
 
-// Handle boundary edit event
+// Handle boundary edit event (for polygons only, circles use manual editor)
 function onBoundaryEdited(layer: L.Polygon): void {
   const wzId = (layer as any).wzId;
   const wzTitle = (layer as any).wzTitle;
-  const originalCoords = (layer as any).originalCoordinates;
 
-  if (!wzId || !wzTitle || !originalCoords) return;
+  if (!wzId || !wzTitle) return;
+
+  // Only handle polygons here
+  const originalCoords = (layer as any).originalCoordinates;
+  if (!originalCoords) return;
 
   // Get current coordinates
   const latLngs = layer.getLatLngs()[0] as L.LatLng[];
@@ -825,6 +910,7 @@ function onBoundaryEdited(layer: L.Polygon): void {
   // Store modification
   modifiedBoundaries.set(wzId, {
     title: wzTitle,
+    type: 'polygon',
     coordinates: currentCoords,
     originalCoordinates: originalCoords,
   });
@@ -850,10 +936,16 @@ function updateBoundaryChangesUI(): void {
 
   let html = '';
   modifiedBoundaries.forEach((data, wzId) => {
-    const vertexCount = data.coordinates.length;
     html += `<div style="margin-bottom: 6px; padding: 4px; background: white; border-left: 3px solid #4CAF50;">`;
     html += `<strong>${data.title}</strong><br/>`;
-    html += `Modified ${vertexCount} vertices`;
+
+    if (data.type === 'circle') {
+      html += `Modified circle (center/radius changed)`;
+    } else {
+      const vertexCount = data.coordinates?.length || 0;
+      html += `Modified ${vertexCount} vertices`;
+    }
+
     html += `</div>`;
   });
 
@@ -867,12 +959,24 @@ function copyBoundaryChanges(): void {
     return;
   }
 
-  const changes = Array.from(modifiedBoundaries.entries()).map(([id, data]) => ({
-    id,
-    title: data.title,
-    type: 'polygon',
-    coordinates: data.coordinates,
-  }));
+  const changes = Array.from(modifiedBoundaries.entries()).map(([id, data]) => {
+    if (data.type === 'circle') {
+      return {
+        id,
+        title: data.title,
+        type: 'circle',
+        center: data.center,
+        radius: data.radius,
+      };
+    } else {
+      return {
+        id,
+        title: data.title,
+        type: 'polygon',
+        coordinates: data.coordinates,
+      };
+    }
+  });
 
   const json = JSON.stringify(changes, null, 2);
 
@@ -898,11 +1002,27 @@ function resetBoundaryChanges(): void {
   // Reset each modified boundary
   wildZoneBoundaries.forEach((layer) => {
     const wzId = (layer as any).wzId;
-    const originalCoords = (layer as any).originalCoordinates;
+    const wzType = (layer as any).wzType;
 
-    if (wzId && modifiedBoundaries.has(wzId) && originalCoords) {
-      // Reset to original coordinates
-      (layer as L.Polygon).setLatLngs(originalCoords);
+    if (wzId && modifiedBoundaries.has(wzId)) {
+      if (wzType === 'circle') {
+        const originalCenter = (layer as any).originalCenter;
+        const originalRadius = (layer as any).originalRadius;
+
+        if (originalCenter && originalRadius !== undefined) {
+          // Reset to original center and radius
+          const circleLayer = layer as L.Circle;
+          circleLayer.setLatLng([originalCenter.lat * 8, originalCenter.lng * 8]);
+          circleLayer.setRadius(originalRadius * 8);
+        }
+      } else {
+        const originalCoords = (layer as any).originalCoordinates;
+
+        if (originalCoords) {
+          // Reset to original coordinates
+          (layer as L.Polygon).setLatLngs(originalCoords);
+        }
+      }
     }
   });
 
@@ -919,11 +1039,96 @@ function toggleEditingMode(enabled: boolean): void {
 
   wildZoneBoundaries.forEach((layer) => {
     if (enabled) {
-      enableLayerEditing(layer as L.Polygon);
+      enableLayerEditing(layer as L.Polygon | L.Circle);
     } else {
-      disableLayerEditing(layer as L.Polygon);
+      disableLayerEditing(layer as L.Polygon | L.Circle);
     }
   });
+
+  // Close circle editor when editing is disabled
+  if (!enabled) {
+    closeCircleEditor();
+  }
+}
+
+// Open the circle editor UI
+function openCircleEditor(layer: L.Circle, wzId: number, wzTitle: string): void {
+  currentEditingCircle = { layer, wzId, wzTitle };
+
+  // Get current center and radius (unscaled)
+  const originalCenter = (layer as any).originalCenter;
+  const originalRadius = (layer as any).originalRadius;
+
+  if (!originalCenter || originalRadius === undefined) return;
+
+  // Check if already modified
+  const modified = modifiedBoundaries.get(wzId);
+  const currentCenter = modified?.center || originalCenter;
+  const currentRadius = modified?.radius || originalRadius;
+
+  // Show the editor
+  const editorDiv = document.getElementById('circle-editor');
+  const titleDiv = document.getElementById('circle-editor-title');
+  const radiusInput = document.getElementById('circle-radius-input') as HTMLInputElement;
+  const latInput = document.getElementById('circle-lat-input') as HTMLInputElement;
+  const lngInput = document.getElementById('circle-lng-input') as HTMLInputElement;
+
+  if (editorDiv && titleDiv && radiusInput && latInput && lngInput) {
+    editorDiv.style.display = 'block';
+    titleDiv.textContent = wzTitle;
+    radiusInput.value = currentRadius.toFixed(2);
+    latInput.value = currentCenter.lat.toFixed(2);
+    lngInput.value = currentCenter.lng.toFixed(2);
+  }
+}
+
+// Close the circle editor UI
+function closeCircleEditor(): void {
+  currentEditingCircle = null;
+  const editorDiv = document.getElementById('circle-editor');
+  if (editorDiv) {
+    editorDiv.style.display = 'none';
+  }
+}
+
+// Update circle from editor values
+function updateCircleFromEditor(): void {
+  if (!currentEditingCircle) return;
+
+  const { layer, wzId, wzTitle } = currentEditingCircle;
+
+  const radiusInput = document.getElementById('circle-radius-input') as HTMLInputElement;
+  const latInput = document.getElementById('circle-lat-input') as HTMLInputElement;
+  const lngInput = document.getElementById('circle-lng-input') as HTMLInputElement;
+
+  if (!radiusInput || !latInput || !lngInput) return;
+
+  const newRadius = parseFloat(radiusInput.value);
+  const newLat = parseFloat(latInput.value);
+  const newLng = parseFloat(lngInput.value);
+
+  if (isNaN(newRadius) || isNaN(newLat) || isNaN(newLng)) return;
+
+  // Update the circle on the map (scaled by 8)
+  layer.setLatLng([newLat * 8, newLng * 8]);
+  layer.setRadius(newRadius * 8);
+
+  // Get original values
+  const originalCenter = (layer as any).originalCenter;
+  const originalRadius = (layer as any).originalRadius;
+
+  // Store modification
+  modifiedBoundaries.set(wzId, {
+    title: wzTitle,
+    type: 'circle',
+    center: { lat: newLat, lng: newLng },
+    radius: newRadius,
+    originalCenter: originalCenter,
+    originalRadius: originalRadius,
+  });
+
+  // Update UI
+  updateBoundaryChangesUI();
 }
 
 // Create static alpha markers
@@ -1326,6 +1531,87 @@ function setupEventListeners(): void {
       resetBoundaryChanges();
     });
   }
+
+  // Circle editor controls
+  const circleEditorClose = document.getElementById('circle-editor-close');
+  const radiusInput = document.getElementById('circle-radius-input');
+  const latInput = document.getElementById('circle-lat-input');
+  const lngInput = document.getElementById('circle-lng-input');
+
+  if (circleEditorClose) {
+    circleEditorClose.addEventListener('click', () => {
+      closeCircleEditor();
+    });
+  }
+
+  // Radius controls
+  const radiusMinus10 = document.getElementById('circle-radius-minus-10');
+  const radiusMinus1 = document.getElementById('circle-radius-minus-1');
+  const radiusMinus01 = document.getElementById('circle-radius-minus-01');
+  const radiusPlus01 = document.getElementById('circle-radius-plus-01');
+  const radiusPlus1 = document.getElementById('circle-radius-plus-1');
+  const radiusPlus10 = document.getElementById('circle-radius-plus-10');
+
+  if (radiusMinus10) radiusMinus10.addEventListener('click', () => adjustCircleValue('radius', -10));
+  if (radiusMinus1) radiusMinus1.addEventListener('click', () => adjustCircleValue('radius', -1));
+  if (radiusMinus01) radiusMinus01.addEventListener('click', () => adjustCircleValue('radius', -0.1));
+  if (radiusPlus01) radiusPlus01.addEventListener('click', () => adjustCircleValue('radius', 0.1));
+  if (radiusPlus1) radiusPlus1.addEventListener('click', () => adjustCircleValue('radius', 1));
+  if (radiusPlus10) radiusPlus10.addEventListener('click', () => adjustCircleValue('radius', 10));
+
+  // Lat controls
+  const latMinus1 = document.getElementById('circle-lat-minus-1');
+  const latMinus01 = document.getElementById('circle-lat-minus-01');
+  const latPlus01 = document.getElementById('circle-lat-plus-01');
+  const latPlus1 = document.getElementById('circle-lat-plus-1');
+
+  if (latMinus1) latMinus1.addEventListener('click', () => adjustCircleValue('lat', -1));
+  if (latMinus01) latMinus01.addEventListener('click', () => adjustCircleValue('lat', -0.1));
+  if (latPlus01) latPlus01.addEventListener('click', () => adjustCircleValue('lat', 0.1));
+  if (latPlus1) latPlus1.addEventListener('click', () => adjustCircleValue('lat', 1));
+
+  // Lng controls
+  const lngMinus1 = document.getElementById('circle-lng-minus-1');
+  const lngMinus01 = document.getElementById('circle-lng-minus-01');
+  const lngPlus01 = document.getElementById('circle-lng-plus-01');
+  const lngPlus1 = document.getElementById('circle-lng-plus-1');
+
+  if (lngMinus1) lngMinus1.addEventListener('click', () => adjustCircleValue('lng', -1));
+  if (lngMinus01) lngMinus01.addEventListener('click', () => adjustCircleValue('lng', -0.1));
+  if (lngPlus01) lngPlus01.addEventListener('click', () => adjustCircleValue('lng', 0.1));
+  if (lngPlus1) lngPlus1.addEventListener('click', () => adjustCircleValue('lng', 1));
+
+  // Input change listeners
+  if (radiusInput) {
+    radiusInput.addEventListener('input', () => updateCircleFromEditor());
+  }
+  if (latInput) {
+    latInput.addEventListener('input', () => updateCircleFromEditor());
+  }
+  if (lngInput) {
+    lngInput.addEventListener('input', () => updateCircleFromEditor());
+  }
+}
+
+// Adjust circle value by increment
+function adjustCircleValue(type: 'radius' | 'lat' | 'lng', increment: number): void {
+  let input: HTMLInputElement | null = null;
+
+  if (type === 'radius') {
+    input = document.getElementById('circle-radius-input') as HTMLInputElement;
+  } else if (type === 'lat') {
+    input = document.getElementById('circle-lat-input') as HTMLInputElement;
+  } else if (type === 'lng') {
+    input = document.getElementById('circle-lng-input') as HTMLInputElement;
+  }
+
+  if (!input) return;
+
+  const currentValue = parseFloat(input.value) || 0;
+  const newValue = currentValue + increment;
+  input.value = newValue.toFixed(2);
+
+  updateCircleFromEditor();
 }
 
 // Toggle marker visibility
