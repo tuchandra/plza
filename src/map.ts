@@ -1,4 +1,6 @@
-import L from 'leaflet';
+// Use global Leaflet instance (loaded from CDN with Editable plugin)
+declare const L: any;
+
 import type {
   MapConfig,
   Spawner,
