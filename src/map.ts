@@ -1259,8 +1259,8 @@ function createWildZonePopup(zone: WildZone): string {
   const regularPokemon = zone.pokemon.filter(p => p.alphaChance < 100);
   const alphaPokemon = zone.pokemon.filter(p => p.alphaChance === 100);
 
-  // Only use two-section format for Wild Zone 20 (which has both types)
-  const useTwoSections = zone.tableID === 5020 && regularPokemon.length > 0 && alphaPokemon.length > 0;
+  // Use two-section format for any zone that has both regular and alpha spawns
+  const useTwoSections = regularPokemon.length > 0 && alphaPokemon.length > 0;
 
   let html = '<div class="wild-zone-popup">';
   html += '<div class="popup-header wild-zone-header">';
@@ -1279,7 +1279,7 @@ function createWildZonePopup(zone: WildZone): string {
   html += '<div class="popup-content">';
 
   if (useTwoSections) {
-    // Wild Zone 20: Show regular spawns, then alphas
+    // Show regular spawns first, then guaranteed alphas
     if (regularPokemon.length > 0) {
       html += '<div class="pokemon-grid">';
       regularPokemon.forEach((poke) => {
