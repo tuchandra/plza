@@ -6,4 +6,4 @@ public/main.js.map
 .DS_Store
 
 # Extraction data (intermediate files - kept for re-running pipeline)
-data/
+/data/
