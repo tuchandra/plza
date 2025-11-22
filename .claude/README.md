@@ -51,8 +51,8 @@ See `docs/data-extraction-guide.md` for full details.
 - [x] Add location names to fly point popups (46/46 labeled via gamerguides)
 - [x] Add visual boundaries around wild zones (all 20 zones with interactive calibration)
 - [x] Add show/hide controls for all marker types (localStorage persistence)
+- [x] Fix wild zone duplicate Pokemon in popups (two-section format for all zones)
 - [ ] Add wild zone entrance fly points (separate from regular fly points)
-- [ ] Fix wild zone 16 duplicate Ampharos in popup
 
 **Medium Priority:**
 - [ ] Implement PokeOS-style filtering (multi-toggle buttons for types)

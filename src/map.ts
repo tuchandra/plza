@@ -1255,13 +1255,6 @@ function toggleRadius(location: Bench | FlyPoint, type: string): void {
 
 // Create popup content for wild zone
 function createWildZonePopup(zone: WildZone): string {
-  // Separate Pokemon into regular and alpha spawns
-  const regularPokemon = zone.pokemon.filter(p => p.alphaChance < 100);
-  const alphaPokemon = zone.pokemon.filter(p => p.alphaChance === 100);
-
-  // Use two-section format for any zone that has both regular and alpha spawns
-  const useTwoSections = regularPokemon.length > 0 && alphaPokemon.length > 0;
-
   let html = '<div class="wild-zone-popup">';
   html += '<div class="popup-header wild-zone-header">';
   html += `<h4>${zone.name}</h4>`;
@@ -1278,46 +1271,23 @@ function createWildZonePopup(zone: WildZone): string {
 
   html += '<div class="popup-content">';
 
-  if (useTwoSections) {
-    // Show regular spawns first, then guaranteed alphas
-    if (regularPokemon.length > 0) {
-      html += '<div class="pokemon-grid">';
-      regularPokemon.forEach((poke) => {
-        const spriteUrl = getPokemonSprite(poke.pokedexNumber);
-        html += '<div class="pokemon-grid-item">';
-        html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" title="${poke.name}" />`;
-        html += `<div class="pokemon-name-small">${poke.name}</div>`;
-        html += '</div>';
-      });
-      html += '</div>';
-    }
+  // Single grid with all Pokemon, showing alpha icon for guaranteed alphas
+  html += '<div class="pokemon-grid">';
+  zone.pokemon.forEach((poke) => {
+    const spriteUrl = getPokemonSprite(poke.pokedexNumber);
+    const isGuaranteedAlpha = poke.alphaChance === 100;
 
-    // Alpha spawns section
-    if (alphaPokemon.length > 0) {
-      html += '<div class="pokemon-section-divider"></div>';
-      html += '<div class="pokemon-section-header">Possible Alpha Encounters</div>';
-      html += '<div class="pokemon-grid">';
-      alphaPokemon.forEach((poke) => {
-        const spriteUrl = getPokemonSprite(poke.pokedexNumber);
-        html += '<div class="pokemon-grid-item">';
-        html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" title="${poke.name}" />`;
-        html += `<div class="pokemon-name-small">${poke.name}</div>`;
-        html += '</div>';
-      });
-      html += '</div>';
+    html += '<div class="pokemon-grid-item">';
+    html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" title="${poke.name}" />`;
+    html += '<div class="pokemon-name-small">';
+    html += poke.name;
+    if (isGuaranteedAlpha) {
+      html += ` <img src="images/alpha-icon.svg" style="width: 14px; height: 14px; vertical-align: middle;" title="Alpha" />`;
     }
-  } else {
-    // Other wild zones: Simple single grid
-    html += '<div class="pokemon-grid">';
-    zone.pokemon.forEach((poke) => {
-      const spriteUrl = getPokemonSprite(poke.pokedexNumber);
-      html += '<div class="pokemon-grid-item">';
-      html += `<img src="${spriteUrl}" alt="${poke.name}" class="pokemon-sprite-small" title="${poke.name}" />`;
-      html += `<div class="pokemon-name-small">${poke.name}</div>`;
-      html += '</div>';
-    });
     html += '</div>';
-  }
+    html += '</div>';
+  });
+  html += '</div>';
 
   html += '</div>'; // Close popup-content
   html += '</div>'; // Close wild-zone-popup
