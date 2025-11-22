@@ -40,30 +40,9 @@ let holovatorMarkers: MarkerData<Holovator>[] = [];
 let ladderMarkers: MarkerData<Ladder>[] = [];
 let wildZoneMarkers: MarkerData<WildZone>[] = [];
 let wildZoneBoundaries: L.Layer[] = [];
-let boundaryData: any[] = []; // Store Mapgenie boundary data
+let boundaryData: any[] = []; // Store transformed boundary data
 let staticAlphaMarkers: MarkerData<StaticAlpha>[] = [];
 let activeRadiusCircles: RadiusCircle[] = [];
-
-// Transformation parameters for wild zone boundaries (Mapgenie)
-// Mapgenie uses a different coordinate system than Serebii. Two key challenges:
-// 1. Mapgenie has TWO coordinate sets: marker positions (lat/lng) and geometry polygons
-// 2. The transformation is not uniform - horizontal and vertical need different calibrations
-//
-// Calibration approach (after multiple failed attempts):
-// - Horizontal (lng): Calibrated using marker positions matched to wild zone spawner markers
-//   - Failed approaches: using geometry bounds (caused horizontal compression)
-// - Vertical (lat): Calibrated using PokeOS boundary centers as reference
-//   - Failed approaches: using spawner markers (bottom zones too far north)
-//   - Works because PokeOS boundaries represent the actual zone areas
-// - Geometry polygons: Transformed relative to their marker positions to preserve shape
-//
-// This hybrid approach achieves good alignment across all 20 wild zones
-let mapgenieTransformParams = {
-  lngScale: 964.243009,
-  lngOffset: 934.661387,
-  latScale: 974.795485,
-  latOffset: -941.697851,
-};
 
 // Pre-computed visibility states for performance
 interface VisibilityState {
@@ -168,9 +147,9 @@ async function loadData(): Promise<void> {
       console.log('No wild zone data available');
     }
 
-    // Load wild zone boundaries (Mapgenie coordinates)
+    // Load wild zone boundaries (pre-transformed coordinates)
     try {
-      const boundaryResponse = await fetch('coordinates-alt.json');
+      const boundaryResponse = await fetch('data/wild_zone_boundaries_mapgenie.json');
       if (boundaryResponse.ok) {
         boundaryData = await boundaryResponse.json();
         createWildZoneBoundaries();
@@ -730,21 +709,13 @@ function createWildZoneMarkers(wildZones: WildZone[]): void {
   });
 }
 
-// Transform Mapgenie coordinates to Serebii coordinate system
-function transformMapgenieCoords(mapgenieLat: number, mapgenieLng: number): { lat: number; lng: number } {
-  return {
-    lat: (mapgenieLat * mapgenieTransformParams.latScale) + mapgenieTransformParams.latOffset,
-    lng: (mapgenieLng * mapgenieTransformParams.lngScale) + mapgenieTransformParams.lngOffset,
-  };
-}
-
-// Create wild zone boundaries from Mapgenie data
+// Create wild zone boundaries from pre-transformed data
 function createWildZoneBoundaries(): void {
   // Clear existing boundaries
   wildZoneBoundaries.forEach(layer => map.removeLayer(layer));
   wildZoneBoundaries = [];
 
-  console.log('Creating wild zone boundaries with params:', mapgenieTransformParams);
+  console.log(`Creating ${boundaryData.length} wild zone boundaries from pre-transformed data`);
 
   // Style for boundaries - green with transparency
   const boundaryStyle = {
@@ -756,45 +727,13 @@ function createWildZoneBoundaries(): void {
   };
 
   boundaryData.forEach((wzData: any) => {
-    let layer: L.Layer;
-
-    // Each wild zone has a features array with geometry
-    if (!wzData.features || wzData.features.length === 0) {
-      console.warn(`No features for WZ${wzData.id}`);
+    if (wzData.type !== 'polygon') {
+      console.warn(`Unsupported boundary type for ${wzData.title}: ${wzData.type}`);
       return;
     }
 
-    const feature = wzData.features[0];
-    const geometry = feature.geometry;
-
-    if (geometry.type === 'Polygon') {
-      // Get the marker position for this wild zone
-      const markerLat = parseFloat(wzData.latitude);
-      const markerLng = parseFloat(wzData.longitude);
-
-      // Transform the marker position (this is accurate)
-      const transformedMarker = transformMapgenieCoords(markerLat, markerLng);
-
-      // Convert coordinates from Mapgenie format [lng, lat] to our system
-      // Transform each point relative to the marker position
-      const coordinates = geometry.coordinates[0]; // First ring of polygon
-      const latLngs: [number, number][] = coordinates.map((coord: [number, number]) => {
-        // Get offset from marker in mapgenie space
-        const latOffset = coord[1] - markerLat;
-        const lngOffset = coord[0] - markerLng;
-
-        // Apply the same offset in our transformed space
-        // Scale the offset by the transformation scales
-        const transformedLat = transformedMarker.lat + (latOffset * mapgenieTransformParams.latScale);
-        const transformedLng = transformedMarker.lng + (lngOffset * mapgenieTransformParams.lngScale);
-
-        return [transformedLat * 8, transformedLng * 8];
-      });
-      layer = L.polygon(latLngs, boundaryStyle);
-    } else {
-      console.warn(`Unsupported geometry type for WZ${wzData.id}: ${geometry.type}`);
-      return;
-    }
+    // Coordinates are already transformed and scaled - use directly
+    const layer = L.polygon(wzData.coordinates, boundaryStyle);
 
     // Add popup with wild zone title
     layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>${wzData.title}</h4></div></div>`);
@@ -811,99 +750,19 @@ function createWildZoneBoundaries(): void {
 }
 
 // Generate coordinate debug information
+// Note: Debug info removed after switching to pre-transformed boundaries
+// Transformation calibration is now done offline in scripts/transform-boundary-coordinates.ts
 function generateDebugInfo(): void {
   const debugDiv = document.getElementById('coord-debug-info');
   if (!debugDiv) return;
 
   let html = '<div style="font-size: 10px; font-family: monospace;">';
-
-  // Load PokeOS data for comparison
-  fetch('data/wild_zone_boundaries.json')
-    .then(res => res.json())
-    .then((pokeosData: any[]) => {
-      // Sort by wild zone number
-      const sortedData = [...boundaryData].sort((a, b) => {
-        const aNum = parseInt(a.title.replace('Wild Zone ', ''));
-        const bNum = parseInt(b.title.replace('Wild Zone ', ''));
-        return aNum - bNum;
-      });
-
-      // Also load wild zones for marker positions
-      fetch('data/wild_zones.json')
-        .then(res => res.json())
-        .then((wildZonesData: any[]) => {
-          // Group wild zones by table ID range (approx)
-          // WZ1: 5001, WZ2: 5002, etc.
-          const wzMarkerPositions = new Map<number, {lat: number, lng: number}>();
-          wildZonesData.forEach((wz: any) => {
-            const tableID = wz.tableID;
-            if (tableID >= 5001 && tableID <= 5020) {
-              const wzNum = tableID - 5000;
-              if (!wzMarkerPositions.has(wzNum)) {
-                wzMarkerPositions.set(wzNum, { lat: wz.lat, lng: wz.lng });
-              }
-            }
-          });
-
-          sortedData.forEach((mgWZ: any) => {
-            // Extract WZ number from title
-            const wzNum = parseInt(mgWZ.title.replace('Wild Zone ', ''));
-            const poWZ = pokeosData.find((wz: any) => wz.wzNumber === wzNum);
-            const actualMarker = wzMarkerPositions.get(wzNum);
-
-            if (!poWZ && !actualMarker) return;
-
-            // Use mapgenie MARKER position, not geometry center
-            const mgMarker = {
-              lat: parseFloat(mgWZ.latitude),
-              lng: parseFloat(mgWZ.longitude)
-            };
-
-            // Transform mapgenie marker
-            const transformed = transformMapgenieCoords(mgMarker.lat, mgMarker.lng);
-
-            // Use actual wild zone marker if available, otherwise PokeOS boundary center
-            let reference = actualMarker;
-            if (!reference && poWZ) {
-              if (poWZ.type === 'circle') {
-                reference = poWZ.center;
-              } else if (poWZ.points) {
-                let sumLat = 0, sumLng = 0;
-                poWZ.points.forEach((p: any) => {
-                  sumLat += p.lat;
-                  sumLng += p.lng;
-                });
-                reference = { lat: sumLat / poWZ.points.length, lng: sumLng / poWZ.points.length };
-              }
-            }
-
-            if (!reference) return;
-
-            // Calculate error
-            const errorLat = Math.abs(transformed.lat - reference.lat);
-            const errorLng = Math.abs(transformed.lng - reference.lng);
-            const totalError = Math.sqrt(errorLat * errorLat + errorLng * errorLng);
-
-            // Color code by error magnitude
-            let color = 'green';
-            if (totalError > 20) color = 'red';
-            else if (totalError > 10) color = 'orange';
-
-            const refType = actualMarker ? 'WZ Marker' : 'Boundary';
-
-            html += `<div style="margin-bottom: 6px; padding: 4px; background: white; border-left: 3px solid ${color};">`;
-            html += `<strong>WZ${wzNum}</strong><br/>`;
-            html += `MG Marker: (${mgMarker.lat.toFixed(3)}, ${mgMarker.lng.toFixed(3)})<br/>`;
-            html += `→ (${transformed.lat.toFixed(1)}, ${transformed.lng.toFixed(1)})<br/>`;
-            html += `${refType}: (${reference.lat.toFixed(1)}, ${reference.lng.toFixed(1)})<br/>`;
-            html += `<span style="color: ${color};">Δ: ${totalError.toFixed(1)} units</span>`;
-            html += `</div>`;
-          });
-
-          html += '</div>';
-          debugDiv.innerHTML = html;
-        });
-    });
+  html += '<div style="padding: 8px; background: #f0f0f0; margin-bottom: 4px;">';
+  html += `<strong>Loaded ${boundaryData.length} pre-transformed wild zone boundaries</strong><br/>`;
+  html += 'Using static coordinates from wild_zone_boundaries_mapgenie.json';
+  html += '</div>';
+  html += '</div>';
+  debugDiv.innerHTML = html;
 }
 
 // Create static alpha markers
