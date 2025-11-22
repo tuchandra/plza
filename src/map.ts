@@ -44,6 +44,10 @@ let boundaryData: any[] = []; // Store transformed boundary data
 let staticAlphaMarkers: MarkerData<StaticAlpha>[] = [];
 let activeRadiusCircles: RadiusCircle[] = [];
 
+// Boundary editing state
+let editingEnabled = false;
+let modifiedBoundaries: Map<number, { title: string; coordinates: [number, number][]; originalCoordinates: [number, number][] }> = new Map();
+
 // Pre-computed visibility states for performance
 interface VisibilityState {
   hiddenSpawners: Set<Spawner>;
@@ -60,6 +64,7 @@ export function initMap(): void {
     maxZoom: 2,
     zoomSnap: 0.25,
     zoomDelta: 0.25,
+    editable: true, // Enable Leaflet.Editable
   });
 
   // Add the map image as an overlay
@@ -735,8 +740,18 @@ function createWildZoneBoundaries(): void {
     // Coordinates are already transformed and scaled - use directly
     const layer = L.polygon(wzData.coordinates, boundaryStyle);
 
+    // Store metadata on the layer for editing
+    (layer as any).wzId = wzData.id;
+    (layer as any).wzTitle = wzData.title;
+    (layer as any).originalCoordinates = JSON.parse(JSON.stringify(wzData.coordinates)); // Deep copy
+
     // Add popup with wild zone title
     layer.bindPopup(`<div class="simple-popup"><div class="popup-header"><h4>${wzData.title}</h4></div></div>`);
+
+    // Enable editing when editing mode is on
+    if (editingEnabled) {
+      enableLayerEditing(layer as L.Polygon);
+    }
 
     // Add to map
     layer.addTo(map);
@@ -763,6 +778,150 @@ function generateDebugInfo(): void {
   html += '</div>';
   html += '</div>';
   debugDiv.innerHTML = html;
+}
+
+// Enable editing for a boundary layer
+function enableLayerEditing(layer: L.Polygon): void {
+  if (!(layer as any).enableEdit) return;
+
+  (layer as any).enableEdit();
+
+  // Listen for edit events
+  layer.on('editable:vertex:dragend', () => {
+    onBoundaryEdited(layer);
+  });
+
+  // Visual feedback when hovering in edit mode
+  layer.setStyle({ weight: 3 });
+}
+
+// Disable editing for a boundary layer
+function disableLayerEditing(layer: L.Polygon): void {
+  if (!(layer as any).disableEdit) return;
+
+  (layer as any).disableEdit();
+
+  // Remove event listeners
+  layer.off('editable:vertex:dragend');
+
+  // Reset visual style
+  layer.setStyle({ weight: 2 });
+}
+
+// Handle boundary edit event
+function onBoundaryEdited(layer: L.Polygon): void {
+  const wzId = (layer as any).wzId;
+  const wzTitle = (layer as any).wzTitle;
+  const originalCoords = (layer as any).originalCoordinates;
+
+  if (!wzId || !wzTitle || !originalCoords) return;
+
+  // Get current coordinates
+  const latLngs = layer.getLatLngs()[0] as L.LatLng[];
+  const currentCoords: [number, number][] = latLngs.map(ll => [ll.lat, ll.lng]);
+
+  // Store modification
+  modifiedBoundaries.set(wzId, {
+    title: wzTitle,
+    coordinates: currentCoords,
+    originalCoordinates: originalCoords,
+  });
+
+  // Update UI
+  updateBoundaryChangesUI();
+}
+
+// Update the boundary changes UI
+function updateBoundaryChangesUI(): void {
+  const changesDiv = document.getElementById('boundary-changes');
+  const changesList = document.getElementById('boundary-changes-list');
+
+  if (!changesDiv || !changesList) return;
+
+  if (modifiedBoundaries.size === 0) {
+    changesDiv.style.display = 'none';
+    changesList.textContent = 'No changes yet';
+    return;
+  }
+
+  changesDiv.style.display = 'block';
+
+  let html = '';
+  modifiedBoundaries.forEach((data, wzId) => {
+    const vertexCount = data.coordinates.length;
+    html += `<div style="margin-bottom: 6px; padding: 4px; background: white; border-left: 3px solid #4CAF50;">`;
+    html += `<strong>${data.title}</strong><br/>`;
+    html += `Modified ${vertexCount} vertices`;
+    html += `</div>`;
+  });
+
+  changesList.innerHTML = html;
+}
+
+// Copy boundary changes as JSON
+function copyBoundaryChanges(): void {
+  if (modifiedBoundaries.size === 0) {
+    alert('No changes to copy');
+    return;
+  }
+
+  const changes = Array.from(modifiedBoundaries.entries()).map(([id, data]) => ({
+    id,
+    title: data.title,
+    type: 'polygon',
+    coordinates: data.coordinates,
+  }));
+
+  const json = JSON.stringify(changes, null, 2);
+
+  // Copy to clipboard
+  navigator.clipboard.writeText(json).then(() => {
+    alert(`Copied ${changes.length} modified boundaries to clipboard`);
+  }).catch(err => {
+    console.error('Failed to copy:', err);
+    alert('Failed to copy to clipboard');
+  });
+}
+
+// Reset all boundary changes
+function resetBoundaryChanges(): void {
+  if (modifiedBoundaries.size === 0) {
+    return;
+  }
+
+  if (!confirm('Reset all boundary changes? This will restore original coordinates.')) {
+    return;
+  }
+
+  // Reset each modified boundary
+  wildZoneBoundaries.forEach((layer) => {
+    const wzId = (layer as any).wzId;
+    const originalCoords = (layer as any).originalCoordinates;
+
+    if (wzId && modifiedBoundaries.has(wzId) && originalCoords) {
+      // Reset to original coordinates
+      (layer as L.Polygon).setLatLngs(originalCoords);
+    }
+  });
+
+  // Clear modifications
+  modifiedBoundaries.clear();
+
+  // Update UI
+  updateBoundaryChangesUI();
+}
+
+// Toggle editing mode
+function toggleEditingMode(enabled: boolean): void {
+  editingEnabled = enabled;
+
+  wildZoneBoundaries.forEach((layer) => {
+    if (enabled) {
+      enableLayerEditing(layer as L.Polygon);
+    } else {
+      disableLayerEditing(layer as L.Polygon);
+    }
+  });
 }
 
 // Create static alpha markers
@@ -1142,6 +1301,29 @@ function setupEventListeners(): void {
     });
   }
 
+  // Boundary editing controls
+  const enableBoundaryEditing = document.getElementById('enable-boundary-editing');
+  const copyBoundaryChangesBtn = document.getElementById('copy-boundary-changes');
+  const resetBoundaryChangesBtn = document.getElementById('reset-boundary-changes');
+
+  if (enableBoundaryEditing) {
+    enableBoundaryEditing.addEventListener('change', (e) => {
+      const checked = (e.target as HTMLInputElement).checked;
+      toggleEditingMode(checked);
+    });
+  }
+
+  if (copyBoundaryChangesBtn) {
+    copyBoundaryChangesBtn.addEventListener('click', () => {
+      copyBoundaryChanges();
+    });
+  }
+
+  if (resetBoundaryChangesBtn) {
+    resetBoundaryChangesBtn.addEventListener('click', () => {
+      resetBoundaryChanges();
+    });
+  }
 }
 
 // Toggle marker visibility

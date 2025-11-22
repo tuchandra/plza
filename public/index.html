@@ -14,6 +14,12 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" />
 
+    <!-- Leaflet JS (loaded before Editable) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Leaflet.Editable plugin -->
+    <script src="https://unpkg.com/leaflet-editable@1.2.0/src/Leaflet.Editable.js"></script>
+
     <!-- Bundled App -->
     <script type="module" src="main.js" defer></script>
   </head>
@@ -73,6 +79,26 @@
             id="pokemon-search"
             placeholder="Search by name..."
           />
+        </div>
+
+        <div class="filter-section boundary-edit-section">
+          <h3>Boundary Editor</h3>
+          <label>
+            <input type="checkbox" id="enable-boundary-editing" />
+            Enable Editing Mode
+          </label>
+          <div id="boundary-changes" style="margin-top: 12px; display: none;">
+            <h4 style="margin: 0 0 8px 0; font-size: 13px;">Modified Boundaries</h4>
+            <div id="boundary-changes-list" style="font-size: 11px; max-height: 200px; overflow-y: auto; background: #fafafa; padding: 8px; border-radius: 4px; margin-bottom: 8px;">
+              No changes yet
+            </div>
+            <button id="copy-boundary-changes" style="width: 100%; padding: 6px; font-size: 12px; cursor: pointer;">
+              Copy Changes as JSON
+            </button>
+            <button id="reset-boundary-changes" style="width: 100%; padding: 6px; font-size: 12px; cursor: pointer; margin-top: 4px;">
+              Reset All Changes
+            </button>
+          </div>
         </div>
 
         <div class="filter-section debug-section">
