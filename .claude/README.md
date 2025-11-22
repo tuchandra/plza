@@ -13,7 +13,7 @@ Pokemon Legends: Z-A Interactive Map - Lumiose City map with precise spawner dat
 
 **Map:** 4096×4096px from Serebii zoom 3, coordinates scale ×8 (512 space → 4096px)
 
-**Wild Zone Boundaries:** All 20 zones with polygon/circle overlays, dynamic coordinate transformation from PokeOS SVG data, interactive calibration controls
+**Wild Zone Boundaries:** All 20 zones with overlays - 14 hand-drawn polygons, 6 circles (zones 2,3,7,8,16,20). Circles use manual editor with +/- controls for precise adjustment (no drag-to-resize due to CRS.Simple issues)
 
 ## Key Files
 

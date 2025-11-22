@@ -2,6 +2,38 @@
 
 Detailed changelog of major changes. See git log for commit-level details.
 
+## November 22, 2025
+
+### Circle Boundaries for Wild Zones 2, 3, 7, 8, 16, 20
+- Replaced polygon boundaries with proper circles for 6 circular wild zones
+- Created manual circle editor UI in sidebar with precise +/- controls (2 decimal precision)
+- Radius controls: -10, -1, -0.1, +0.1, +1, +10 buttons plus direct input
+- Center lat/lng controls: -1, -0.1, +0.1, +1 buttons plus direct input
+- Real-time circle updates on map as values are adjusted
+- Click any circle boundary in editing mode to open the editor panel
+
+**What worked:**
+- L.circle() renders correctly with CRS.Simple coordinate system
+- Manual editor provides precise control for aligning circles to game boundaries
+- Export functionality correctly outputs circle format (center + radius)
+- Polygon boundaries still use drag-to-edit (Leaflet.Editable)
+
+**What didn't work:**
+- Drag-to-resize for circles - Leaflet.Editable's radius handle with CRS.Simple causes values to explode (radius jumps to millions)
+- getRadius() returns incorrect values during drag events in simple coordinate systems
+- getBounds() calculation also unreliable for radius extraction
+- Solution: Disabled drag editing for circles entirely, using manual controls instead
+
+**Final circle coordinates (scaled by 8 for 4096px map):**
+- Wild Zone 2: center (-342.91, 320.13), radius 27.65
+- Wild Zone 3: center (-139, 256), radius 22.46
+- Wild Zone 7: center (-220.6, 146.54), radius 19.86
+- Wild Zone 8: center (-216.07, 369.3), radius 19.99
+- Wild Zone 16: center (-351.85, 186.68), radius 21.27
+- Wild Zone 20: center (-256.03, 256), radius 34.37
+
+**User intent:** Represent naturally circular wild zones as actual circles instead of polygons with many vertices. Needed precise manual controls because automatic transformation from PokeOS data didn't perfectly align with hand-drawn polygon boundaries, and drag-based resizing was incompatible with Leaflet's simple coordinate system.
+
 ## November 18, 2025
 
 ### Wild Zone Boundaries with Interactive Calibration
