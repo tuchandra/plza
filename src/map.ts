@@ -164,9 +164,9 @@ async function loadData(): Promise<void> {
       console.log('No wild zone data available');
     }
 
-    // Load wild zone boundaries (pre-transformed coordinates)
+    // Load wild zone boundaries
     try {
-      const boundaryResponse = await fetch('data/wild_zone_boundaries_mapgenie.json');
+      const boundaryResponse = await fetch('data/wild_zone_boundaries.json');
       if (boundaryResponse.ok) {
         boundaryData = await boundaryResponse.json();
         createWildZoneBoundaries();
@@ -746,54 +746,28 @@ function createWildZoneBoundaries(): void {
   boundaryData.forEach((wzData: any) => {
     let layer: L.Polygon | L.Circle;
 
-    // Handle both old format (wzNumber, points) and new format (id, coordinates)
-    const wzId = wzData.id || wzData.wzNumber;
-    const wzTitle = wzData.title || `Wild Zone ${wzData.wzNumber}`;
+    const wzId = wzData.id;
+    const wzTitle = wzData.title;
 
-    if (wzData.type === 'polygon' || wzData.type === 'path' || wzData.type === 'rect') {
-      // Get coordinates from either 'coordinates' (mapgenie) or 'points' (original)
-      const coords = wzData.coordinates || wzData.points;
-
-      if (!coords) {
-        console.warn(`No coordinates found for ${wzTitle}`);
-        return;
-      }
-
-      // Transform coordinates if they're in the original format (objects with lat/lng)
-      let transformedCoords: [number, number][];
-      if (coords[0] && typeof coords[0] === 'object' && 'lat' in coords[0]) {
-        // Original format: array of {lat, lng} objects - need to transform and scale
-        transformedCoords = coords.map((p: any) => [p.lat * 8, p.lng * 8]);
-      } else {
-        // Already transformed: array of [lat, lng] tuples
-        transformedCoords = coords;
-      }
-
-      layer = L.polygon(transformedCoords, boundaryStyle);
+    if (wzData.type === 'polygon') {
+      // Coordinates are already scaled (array of [lat, lng] tuples)
+      layer = L.polygon(wzData.coordinates, boundaryStyle);
 
       // Store original coordinates for polygons
-      (layer as any).originalCoordinates = JSON.parse(JSON.stringify(transformedCoords)); // Deep copy
+      (layer as any).originalCoordinates = JSON.parse(JSON.stringify(wzData.coordinates)); // Deep copy
     } else if (wzData.type === 'circle') {
-      // Create circle with center and radius
-      // Check if coordinates are already transformed (mapgenie format) or need transformation (original format)
-      // Transformed coordinates have large absolute values (> 1000)
-      const isTransformed = Math.abs(wzData.center.lat) > 1000 || Math.abs(wzData.center.lng) > 1000;
-
-      const center: [number, number] = isTransformed
-        ? [wzData.center.lat, wzData.center.lng]
-        : [wzData.center.lat * 8, wzData.center.lng * 8];
-      const radius = isTransformed ? wzData.radius : wzData.radius * 8;
+      // Circles are already scaled - use directly
+      const center: [number, number] = [wzData.center.lat, wzData.center.lng];
+      const radius = wzData.radius;
 
       layer = L.circle(center, {
         ...boundaryStyle,
         radius: radius,
       });
 
-      // Store original center and radius for circles (in unscaled format)
-      (layer as any).originalCenter = isTransformed
-        ? { lat: wzData.center.lat / 8, lng: wzData.center.lng / 8 }
-        : { ...wzData.center };
-      (layer as any).originalRadius = isTransformed ? wzData.radius / 8 : wzData.radius;
+      // Store unscaled values for editor (divide by 8 for user-friendly editing)
+      (layer as any).originalCenter = { lat: wzData.center.lat / 8, lng: wzData.center.lng / 8 };
+      (layer as any).originalRadius = wzData.radius / 8;
     } else {
       console.warn(`Unsupported boundary type for ${wzTitle}: ${wzData.type}`);
       return;
@@ -824,16 +798,14 @@ function createWildZoneBoundaries(): void {
 }
 
 // Generate coordinate debug information
-// Note: Debug info removed after switching to pre-transformed boundaries
-// Transformation calibration is now done offline in scripts/transform-boundary-coordinates.ts
 function generateDebugInfo(): void {
   const debugDiv = document.getElementById('coord-debug-info');
   if (!debugDiv) return;
 
   let html = '<div style="font-size: 10px; font-family: monospace;">';
   html += '<div style="padding: 8px; background: #f0f0f0; margin-bottom: 4px;">';
-  html += `<strong>Loaded ${boundaryData.length} pre-transformed wild zone boundaries</strong><br/>`;
-  html += 'Using static coordinates from wild_zone_boundaries_mapgenie.json';
+  html += `<strong>Loaded ${boundaryData.length} wild zone boundaries</strong><br/>`;
+  html += '14 hand-drawn polygons + 6 circles';
   html += '</div>';
   html += '</div>';
   debugDiv.innerHTML = html;

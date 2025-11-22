@@ -1,0 +1,482 @@
+[
+  {
+    "name": "Vert Pokémon Center",
+    "x": 13729,
+    "y": 15488,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Café Introversion",
+    "x": 13135,
+    "y": 15885,
+    "category": "Cafe"
+  },
+  {
+    "name": "Looker Bureau",
+    "x": 9184,
+    "y": 5521,
+    "category": "Landmark"
+  },
+  {
+    "name": "Wild Zone 1",
+    "x": 11390,
+    "y": 16545,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "",
+    "x": 12269,
+    "y": 15346,
+    "category": "Hotel Z"
+  },
+  {
+    "name": "Pokémon Research Lab",
+    "x": 10528,
+    "y": 17056,
+    "category": "Pokémon Research Lab"
+  },
+  {
+    "name": "Vert Sector 8",
+    "x": 13244,
+    "y": 15067,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "Restaurant Le Yeah",
+    "x": 7321,
+    "y": 5984,
+    "category": "Restaurant"
+  },
+  {
+    "name": "Wild Zone 2",
+    "x": 11868,
+    "y": 12590,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "",
+    "x": 10674,
+    "y": 11246,
+    "category": "Nouveau Cafe Truck"
+  },
+  {
+    "name": "Wild Zone 3",
+    "x": 9999,
+    "y": 6576,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Sushi High Roller",
+    "x": 10277,
+    "y": 5382,
+    "category": "Restaurant"
+  },
+  {
+    "name": "Truck No.2",
+    "x": 7360,
+    "y": 15505,
+    "category": "Nouveau Cafe Truck"
+  },
+  {
+    "name": "Gare de Lumiose",
+    "x": 14305,
+    "y": 15916,
+    "category": "Landmark"
+  },
+  {
+    "name": "Café Classe",
+    "x": 10152,
+    "y": 14008,
+    "category": "Cafe"
+  },
+  {
+    "name": "Vernal Pokémon Center",
+    "x": 9754,
+    "y": 14183,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Café Woof",
+    "x": 9691,
+    "y": 13397,
+    "category": "Cafe"
+  },
+  {
+    "name": "Wild Zone 5",
+    "x": 8752,
+    "y": 11663,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Magenta Plaza",
+    "x": 7411,
+    "y": 9160,
+    "category": "Plaza"
+  },
+  {
+    "name": "Café Pokémon-Amie",
+    "x": 7416,
+    "y": 6960,
+    "category": "Cafe"
+  },
+  {
+    "name": "Magenta Pokémon Center",
+    "x": 3870,
+    "y": 7497,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Café Triste",
+    "x": 4714,
+    "y": 6349,
+    "category": "Cafe"
+  },
+  {
+    "name": "Shutterbug Café ",
+    "x": 4068,
+    "y": 12237,
+    "category": "Cafe"
+  },
+  {
+    "name": "Café Soleil",
+    "x": 4734,
+    "y": 14088,
+    "category": "Cafe"
+  },
+  {
+    "name": "Bleu Pokémon Center",
+    "x": 6321,
+    "y": 15514,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Bleu Plaza",
+    "x": 7540,
+    "y": 13415,
+    "category": "Plaza"
+  },
+  {
+    "name": "Rust Syndicate Office",
+    "x": 7392,
+    "y": 11789,
+    "category": "Landmark"
+  },
+  {
+    "name": "Café Rouleau",
+    "x": 4877,
+    "y": 11402,
+    "category": "Cafe"
+  },
+  {
+    "name": "No. 3",
+    "x": 6536,
+    "y": 9880,
+    "category": "Nouveau Cafe Truck"
+  },
+  {
+    "name": "No. 3",
+    "x": 6566,
+    "y": 9912,
+    "category": "Nouveau Cafe Truck"
+  },
+  {
+    "name": "Magenta Plaza Pokémon Center",
+    "x": 7452,
+    "y": 9620,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Cafe Gallant",
+    "x": 7478,
+    "y": 10617,
+    "category": "Cafe"
+  },
+  {
+    "name": "Café Cyclone",
+    "x": 12831,
+    "y": 13431,
+    "category": "Cafe"
+  },
+  {
+    "name": "Centrico Pokémon Center",
+    "x": 10252,
+    "y": 8596,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Justice Dojo",
+    "x": 12754,
+    "y": 9878,
+    "category": "Landmark"
+  },
+  {
+    "name": "Hibernal Pokémon Center",
+    "x": 12770,
+    "y": 6653,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Restaurant Le Wow",
+    "x": 11310,
+    "y": 7793,
+    "category": "Restaurant"
+  },
+  {
+    "name": "Racine Construction",
+    "x": 15162,
+    "y": 14226,
+    "category": "Landmark"
+  },
+  {
+    "name": "Wild Zone 4",
+    "x": 11042,
+    "y": 4508,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Rouge Pokémon Center",
+    "x": 10226,
+    "y": 3368,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Lumiose Museum",
+    "x": 11598,
+    "y": 3163,
+    "category": "Landmark"
+  },
+  {
+    "name": "",
+    "x": 7349,
+    "y": 15159,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 6284,
+    "y": 11127,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 14959,
+    "y": 12862,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 11082,
+    "y": 11522,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 4788,
+    "y": 9595,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 6482,
+    "y": 7798,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 15205,
+    "y": 9258,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 12752,
+    "y": 7619,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 7929,
+    "y": 5872,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "",
+    "x": 12357,
+    "y": 5381,
+    "category": "Battle Zone"
+  },
+  {
+    "name": "Wild Zone 12",
+    "x": 8886,
+    "y": 14989,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 16",
+    "x": 7983,
+    "y": 12799,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 10",
+    "x": 4745,
+    "y": 12421,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 9",
+    "x": 4167,
+    "y": 10975,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 14",
+    "x": 3774,
+    "y": 9033,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 7",
+    "x": 6798,
+    "y": 8966,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 20 ",
+    "x": 10009,
+    "y": 9956,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 8",
+    "x": 13323,
+    "y": 8868,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 19",
+    "x": 14800,
+    "y": 7144,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 6",
+    "x": 16527,
+    "y": 10500,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 11",
+    "x": 15007,
+    "y": 11599,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 17",
+    "x": 14116,
+    "y": 14242,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 18",
+    "x": 5348,
+    "y": 5067,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 13",
+    "x": 8434,
+    "y": 3395,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Wild Zone 15",
+    "x": 14763,
+    "y": 5101,
+    "category": "Wild Zone"
+  },
+  {
+    "name": "Lumiose Sewers",
+    "x": 4700,
+    "y": 8059,
+    "category": "Landmark"
+  },
+  {
+    "name": "Lumiose Sewers",
+    "x": 9500,
+    "y": 12704,
+    "category": "Landmark"
+  },
+  {
+    "name": "Café Bataille",
+    "x": 16690,
+    "y": 9659,
+    "category": "Cafe"
+  },
+  {
+    "name": "Restaurant Le Nah",
+    "x": 16000,
+    "y": 12588,
+    "category": "Restaurant"
+  },
+  {
+    "name": "Jaune Pokémon Center",
+    "x": 16101,
+    "y": 7491,
+    "category": "Pokémon Center"
+  },
+  {
+    "name": "Hotel Richissime",
+    "x": 13641,
+    "y": 4001,
+    "category": "Landmark"
+  },
+  {
+    "name": "Café Action!",
+    "x": 15518,
+    "y": 6250,
+    "category": "Cafe"
+  },
+  {
+    "name": "Café Ultimo",
+    "x": 14409,
+    "y": 5036,
+    "category": "Cafe"
+  },
+  {
+    "name": "Café Kizuna",
+    "x": 13061,
+    "y": 6169,
+    "category": "Cafe"
+  },
+  {
+    "name": "Lysandre Café",
+    "x": 7757,
+    "y": 8390,
+    "category": "Cafe"
+  },
+  {
+    "name": "Lumiose Sewer Entrance",
+    "x": 6726,
+    "y": 15353,
+    "category": "Landmark"
+  },
+  {
+    "name": "Lysandre Labs Entrance",
+    "x": 7787,
+    "y": 7705,
+    "category": "Landmark"
+  },
+  {
+    "name": "Lumiose Sewers Entrance",
+    "x": 5613,
+    "y": 11641,
+    "category": "Landmark"
+  },
+  {
+    "name": "Lumiose Sewers Entrance",
+    "x": 5346,
+    "y": 8156,
+    "category": "Landmark"
+  }
+]

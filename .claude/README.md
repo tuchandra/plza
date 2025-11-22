@@ -37,10 +37,10 @@ See `docs/data-extraction-guide.md` for full details.
 **Fly point labels (gamerguides):**
 5. `scripts/match-flypoints-to-gamerguides.ts` - Match Serebii coords to gamerguides labels
 
-**Wild zone boundaries (PokeOS):**
-6. `scripts/extract-pokeos-wild-zone-boundaries.js` - Browser console, extract SVG boundary data
-7. `scripts/calibrate-all-circles.js` - Least-squares calibration using all 6 circle zones
-8. Runtime transformation in `src/map.ts` with interactive sliders
+**Wild zone boundaries:**
+- 14 hand-drawn polygons + 6 circles (zones 2,3,7,8,16,20)
+- Source data extraction scripts in `public/data/archive/` and `scripts/`
+- All coordinates stored in final map scale (no runtime transformation)
 
 **Critical:** Use tableIDs to link coordinates with Pokemon data. Serebii's table IDs ≠ marker array positions.
 

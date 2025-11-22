@@ -32,7 +32,13 @@ Detailed changelog of major changes. See git log for commit-level details.
 - Wild Zone 16: center (-351.85, 186.68), radius 21.27
 - Wild Zone 20: center (-256.03, 256), radius 34.37
 
-**User intent:** Represent naturally circular wild zones as actual circles instead of polygons with many vertices. Needed precise manual controls because automatic transformation from PokeOS data didn't perfectly align with hand-drawn polygon boundaries, and drag-based resizing was incompatible with Leaflet's simple coordinate system.
+**User intent:** Represent naturally circular wild zones as actual circles instead of polygons with many vertices. Needed precise manual controls because drag-based resizing was incompatible with Leaflet's simple coordinate system.
+
+**Data cleanup:**
+- Moved backup/intermediate files to `public/data/archive/`
+- Renamed `wild_zone_boundaries_mapgenie.json` to canonical `wild_zone_boundaries.json`
+- Removed coordinate transformation logic that detected "external" vs "our" format
+- Now one canonical boundary format (no runtime transformation needed)
 
 ## November 18, 2025
 
