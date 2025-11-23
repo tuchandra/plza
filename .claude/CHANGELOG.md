@@ -4,6 +4,28 @@ Detailed changelog of major changes. See git log for commit-level details.
 
 ## November 22, 2025
 
+### UI Polish and Bug Fixes
+- Fixed wild zone popup display: changed from two-section layout (Regular/Alpha) to inline display with alpha icons
+- Unified spawner marker colors from yellow/orange to light blue (#5dade2) to avoid conflict with holovators
+- Added map pan bounds (500px padding, maxBoundsViscosity 1.0) to prevent infinite panning
+- Fixed filter state persistence on page refresh - checkboxes now sync with actual map visibility
+- Editing mode always disabled on page load for safety
+- Moved boundary editor to debug section for cleaner UI organization
+- Removed "loaded 20 wild zone boundaries" debug message
+- Filtered out spawners without Pokemon data (35 spawners hidden, 1,028 shown)
+
+**Technical changes:**
+- Made `initMap()` async to properly await data loading before applying filter states
+- Split initialization: `restoreCheckboxStates()` (UI) runs early, `applyFilterStates()` (map) runs after data loads
+- Removed redundant "No spawn data available" popup checks since empty spawners are now filtered
+
+**Bug fixes:**
+- Wild Zone 16 "duplicate Ampharos" was actually correct data (regular + guaranteed alpha spawn)
+- Solution: Show alphas inline with icon instead of separate section
+- Serebii confirms two Ampharos entries: one regular (5% alpha chance), one guaranteed alpha (100%)
+
+**User intent:** Clean up UI inconsistencies, fix filter persistence bugs, improve visual clarity with consistent colors and inline alpha display.
+
 ### Circle Boundaries for Wild Zones 2, 3, 7, 8, 16, 20
 - Replaced polygon boundaries with proper circles for 6 circular wild zones
 - Created manual circle editor UI in sidebar with precise +/- controls (2 decimal precision)
