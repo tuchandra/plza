@@ -81,8 +81,13 @@
           />
         </div>
 
-        <div class="filter-section boundary-edit-section">
-          <h3>Boundary Editor</h3>
+        <div class="filter-section debug-section">
+          <h3>Debug</h3>
+          <div class="zoom-display">
+            Zoom: <span id="zoom-level">0</span>
+          </div>
+
+          <h4 style="margin-top: 16px; margin-bottom: 8px;">Boundary Editor</h4>
           <label>
             <input type="checkbox" id="enable-boundary-editing" />
             Enable Editing Mode
@@ -143,13 +148,6 @@
             <button id="reset-boundary-changes" style="width: 100%; padding: 6px; font-size: 12px; cursor: pointer; margin-top: 4px;">
               Reset All Changes
             </button>
-          </div>
-        </div>
-
-        <div class="filter-section debug-section">
-          <h3>Debug</h3>
-          <div class="zoom-display">
-            Zoom: <span id="zoom-level">0</span>
           </div>
 
           <h4 style="margin-top: 16px; margin-bottom: 8px;">Coordinate Debug</h4>

@@ -68,7 +68,7 @@ interface VisibilityState {
 const visibilityCache: Map<number, VisibilityState> = new Map();
 
 // Initialize the map
-export function initMap(): void {
+export async function initMap(): Promise<void> {
   // Create map without default tiles (we'll use an image overlay)
   map = L.map('map', {
     crs: L.CRS.Simple,
@@ -98,7 +98,7 @@ export function initMap(): void {
   map.on('zoomend', updateZoomDisplay);
 
   // Load data and create markers
-  loadData();
+  await loadData();
 
   // Setup event listeners
   setupEventListeners();
@@ -185,6 +185,9 @@ async function loadData(): Promise<void> {
     } catch (e) {
       console.log('No static alpha data available');
     }
+
+    // After all data is loaded, apply saved filter states
+    applyFilterStates();
   } catch (error) {
     console.error('Data loading error:', error);
     console.log('Data files not found - creating sample data structure');
@@ -802,13 +805,8 @@ function generateDebugInfo(): void {
   const debugDiv = document.getElementById('coord-debug-info');
   if (!debugDiv) return;
 
-  let html = '<div style="font-size: 10px; font-family: monospace;">';
-  html += '<div style="padding: 8px; background: #f0f0f0; margin-bottom: 4px;">';
-  html += `<strong>Loaded ${boundaryData.length} wild zone boundaries</strong><br/>`;
-  html += '14 hand-drawn polygons + 6 circles';
-  html += '</div>';
-  html += '</div>';
-  debugDiv.innerHTML = html;
+  // Debug info will be populated by other events
+  debugDiv.innerHTML = '<div style="font-size: 10px; font-family: monospace;"></div>';
 }
 
 // Enable editing for a boundary layer
@@ -1365,8 +1363,8 @@ function getPokemonSprite(pokemonId: number): string {
 
 // Setup event listeners for filters
 function setupEventListeners(): void {
-  // Restore filter states from localStorage
-  restoreFilterStates();
+  // Restore checkbox UI states from localStorage (actual filter application happens in loadData)
+  restoreCheckboxStates();
 
   // Feature filters
   const filterSpawners = document.getElementById('filter-spawners');
@@ -1593,8 +1591,8 @@ function saveFilterState(filterId: string, checked: boolean): void {
   }
 }
 
-// Restore filter states from localStorage
-function restoreFilterStates(): void {
+// Restore checkbox UI states from localStorage
+function restoreCheckboxStates(): void {
   const filters = [
     'filter-spawners',
     'filter-benches',
@@ -1619,6 +1617,36 @@ function restoreFilterStates(): void {
       console.warn('Failed to restore filter state:', e);
     }
   });
+
+  // Always disable editing mode on page load
+  const editCheckbox = document.getElementById('enable-boundary-editing') as HTMLInputElement;
+  if (editCheckbox) {
+    editCheckbox.checked = false;
+  }
+}
+
+// Apply filter states to map visibility
+function applyFilterStates(): void {
+  // Apply marker visibility based on saved states
+  toggleMarkerVisibility(benchMarkers, getFilterState('filter-benches'));
+  toggleMarkerVisibility(flyPointMarkers, getFilterState('filter-fly-points'));
+  toggleMarkerVisibility(holovatorMarkers, getFilterState('filter-holovators'));
+  toggleMarkerVisibility(ladderMarkers, getFilterState('filter-ladders'));
+  toggleMarkerVisibility(wildZoneMarkers, getFilterState('filter-wild-zones'));
+  toggleMarkerVisibility(staticAlphaMarkers, getFilterState('filter-static-alphas'));
+
+  // Apply boundary visibility
+  const boundariesEnabled = getFilterState('filter-wild-zone-boundaries');
+  wildZoneBoundaries.forEach((layer) => {
+    if (boundariesEnabled) {
+      layer.addTo(map);
+    } else {
+      map.removeLayer(layer);
+    }
+  });
+
+  // Spawners are handled separately by updateSpawnerVisibility (zoom-dependent)
+  updateSpawnerVisibility();
 }
 
 // Get saved filter state
