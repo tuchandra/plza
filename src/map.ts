@@ -69,16 +69,6 @@ const visibilityCache: Map<number, VisibilityState> = new Map();
 
 // Initialize the map
 export async function initMap(): Promise<void> {
-  // Create map without default tiles (we'll use an image overlay)
-  map = L.map('map', {
-    crs: L.CRS.Simple,
-    minZoom: -2,
-    maxZoom: 2,
-    zoomSnap: 0.25,
-    zoomDelta: 0.25,
-    editable: true, // Enable Leaflet.Editable
-  });
-
   // Add the map image as an overlay
   // Serebii's cvert scales 4096 -> 512, so coordinates are in 512 space
   // Our image is 4096x4096, so we scale by 8 for proper alignment
@@ -87,6 +77,25 @@ export async function initMap(): Promise<void> {
     [-4096, 0],
     [0, 4096],
   ];
+
+  // Set max bounds with some padding to prevent infinite panning
+  const padding = 500; // pixels of extra space around the map
+  const maxBounds: [[number, number], [number, number]] = [
+    [-4096 - padding, 0 - padding],
+    [0 + padding, 4096 + padding],
+  ];
+
+  // Create map without default tiles (we'll use an image overlay)
+  map = L.map('map', {
+    crs: L.CRS.Simple,
+    minZoom: -2,
+    maxZoom: 2,
+    zoomSnap: 0.25,
+    zoomDelta: 0.25,
+    editable: true, // Enable Leaflet.Editable
+    maxBounds: maxBounds,
+    maxBoundsViscosity: 1.0, // Make bounds "hard" - don't allow panning outside
+  });
 
   L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
