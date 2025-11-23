@@ -122,7 +122,12 @@ async function loadData(): Promise<void> {
       throw new Error(`Spawners fetch failed: ${spawnerResponse.status}`);
     }
     const spawnerData: Spawner[] = await spawnerResponse.json();
-    createSpawnerMarkers(spawnerData);
+
+    // Filter out spawners with no Pokemon data
+    const spawnersWithData = spawnerData.filter(s => s.pokemon && s.pokemon.length > 0);
+    console.log(`Loaded ${spawnerData.length} spawners, ${spawnersWithData.length} with Pokemon data`);
+
+    createSpawnerMarkers(spawnersWithData);
 
     // Load bench data
     const benchResponse = await fetch('data/benches.json');
@@ -362,17 +367,10 @@ function createClusterPopup(cluster: SpawnerCluster): string {
   html += `<h4>${cluster.spawners.length} Spawners</h4>`;
   html += '</div>';
 
-  if (cluster.spawners.every(s => s.pokemon.length === 0)) {
-    html += '<p class="no-data">No spawn data available</p>';
-    html += '</div>';
-    return html;
-  }
-
   html += '<div class="popup-content">';
 
   // Show each spawner's Pokemon separately
   cluster.spawners.forEach((spawner, index) => {
-    if (spawner.pokemon.length === 0) return;
 
     // Add divider between spawners
     if (index > 0) {
@@ -1313,12 +1311,6 @@ function createSpawnerPopup(spawner: Spawner): string {
       html += `<span class="respawn-badge">${spawner.respawnTime}s</span>`;
     }
     html += '</div>';
-  }
-
-  if (spawner.pokemon.length === 0) {
-    html += '<p class="no-data">No spawn data available</p>';
-    html += '</div>';
-    return html;
   }
 
   html += '<table class="pokemon-table">';
