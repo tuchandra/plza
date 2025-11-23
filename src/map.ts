@@ -270,7 +270,7 @@ function clusterSpawners(spawners: Spawner[], pixelThreshold: number = 100): Spa
 function createSpawnerMarkers(spawners: Spawner[]): void {
   // Create pokeball icon for spawners
   const pokeballIcon = L.divIcon({
-    html: `<div style="width: 24px; height: 24px; background: #ffd700; border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+    html: `<div style="width: 24px; height: 24px; background: #5dade2; border: 2px solid #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
       <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: #fff;">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
         <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
