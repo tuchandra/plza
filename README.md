@@ -64,8 +64,16 @@ GitHub Actions automatically builds and deploys to GitHub Pages on push to main.
 1. Run `bun run build`
 2. Deploy the `public/` folder to any static host
 
+## Technologies
+
+- [Leaflet.js](https://leafletjs.com/) - Interactive map library
+- [Bun](https://bun.sh/) - JavaScript runtime and bundler
+- [TypeScript](https://www.typescriptlang.org/) - Programming language
+
 ## Credits
 
+See [CREDITS.md](CREDITS.md) for full attribution.
+
 - Pokemon sprites from [PokeAPI](https://pokeapi.co/)
-- Map powered by [Leaflet.js](https://leafletjs.com/)
-- Inspired by Serebii's precise data and game8's radius visualization
+
+Special thanks to [Serebii](https://www.serebii.net/) for the spawn tables and location data that powers this map.
